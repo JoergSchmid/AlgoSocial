@@ -36,3 +36,27 @@
     transform: rotate(360deg);
   }
 }
+
+.navBar {
+  display: flex;
+  background-color: gray;
+  width: auto;
+  flex-direction: row;
+}
+
+.navBarIcon {
+  height: 40px;
+  width: 40px;
+}
+
+.navBar > div {
+  text-align: center;
+  width: 100px;
+  height: fit-content;
+  line-height: auto;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-top: auto;
+  margin-bottom: auto;
+  font-size: 15px;
+}

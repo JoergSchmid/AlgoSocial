@@ -1,18 +1,19 @@
+import { ReactComponent as Brand } from "../../logo.svg"
+
 export default function NavBar() {
     return (
-      <nav>
+      <nav className="navBar">
+        <div className="navBarIcon">
+          <Brand />
+        </div>
         <div>
-          <ul>
-            <li>
-              <a href="/">Home</a>
-            </li>
-            <li>
-              <a href="/profile">Profile</a>
-            </li>
-            <li>
-              <a href="/test">Test</a>
-            </li>
-          </ul>
+          <a href="/">Home</a>
+        </div>
+        <div>
+          <a href="/profile">Profile</a>
+        </div>
+        <div>
+          <a href="/test">Test</a>
         </div>
       </nav>
     );
