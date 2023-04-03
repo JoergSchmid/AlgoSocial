@@ -1,7 +1,10 @@
-export default function PostTimeline() {
+import React from "react";
+import Post from "./Post";
+
+export default function PostTimeline({ posts }) {
     return (
-        <>
-            <p>Timeline</p>
-        </>
+            posts.map(post => {
+                return <Post key={post} message={post} />
+            })
     );
 }
