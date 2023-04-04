@@ -1,10 +1,10 @@
-import { ReactComponent as Brand } from "../../logo.svg"
+import logo from "../../logo.svg"
 
 export default function NavBar() {
     return (
       <nav className="navBar">
         <div className="navBarIcon">
-          <Brand />
+          <img src={logo} />
         </div>
         <div>
           <a href="/">Home</a>
