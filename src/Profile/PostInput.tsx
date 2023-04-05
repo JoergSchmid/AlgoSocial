@@ -1,15 +1,19 @@
 import { useState } from "react";
 
-export default function PostInput({submitPost}) {
+interface submitPostProp {
+    submitPost: (text: string) => void;
+}
+
+export default function PostInput(submitPost: submitPostProp) {
     const [value, setValue] = useState("")
-    const handleChange = (event) => {
+    const handleChange = (event: any) => {
         setValue(event.target.value);
     };
 
     return (
         <>
             <form onSubmit={(event) => {
-                submitPost(value);
+                submitPost.submitPost(value);
                 event.preventDefault();
                 }}>
                 <textarea value={value} onChange={handleChange}></textarea>
