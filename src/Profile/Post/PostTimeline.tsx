@@ -1,7 +1,7 @@
 import Post from "./Post";
 
 interface postsProp {
-    posts: Array<string>;
+    posts: string[];
 }
 
 export default function PostTimeline(props: postsProp) {
