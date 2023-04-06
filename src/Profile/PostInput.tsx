@@ -1,23 +1,30 @@
 import { useState } from "react";
+import { postType } from "./Profile";
 
-type submitPostProp = {
-    submitPost: (text: string) => void;
+type submitPostProps = {
+    submitPost: (post: postType) => void;
 }
 
-export default function PostInput(submitPost: submitPostProp) {
-    const [textAreaValue, setTextAreaValue] = useState("")
-    const handleChange = (event: any) => {
-        setTextAreaValue(event.target.value);
+export default function PostInput(props: submitPostProps) {
+    const [titleValue, setTitleValue] = useState("")
+    const [messageValue, setMessageValue] = useState("")
+    const handleTitleChange = (event: any) => {
+        setTitleValue(event.target.value);
+    };
+    const handleMessageChange = (event: any) => {
+        setMessageValue(event.target.value);
     };
 
     return (
         <>
             <form onSubmit={(event) => {
-                submitPost.submitPost(textAreaValue);
+                props.submitPost({title: titleValue, message: messageValue});
                 event.preventDefault();
-                setTextAreaValue("");
+                setTitleValue("");
+                setMessageValue("");
                 }}>
-                <textarea value={textAreaValue} onChange={handleChange}></textarea>
+                <input type="text" value={titleValue} placeholder="Title" onChange={handleTitleChange}></input><br/>
+                <textarea value={messageValue} placeholder="Your post..." onChange={handleMessageChange}></textarea><br/>
                 <input type="submit" value={"Submit"}></input>
             </form>
             

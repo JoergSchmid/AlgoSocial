@@ -1,11 +1,10 @@
+import { postType } from "../Profile";
 import Post from "./Post";
 
-type postsProp = {
-    posts: string[];
-}
-
-export default function PostTimeline(props: postsProp) {
-    return <>{props.posts.map((post: string) => {
-        return (<Post message={post} />);
-    })}</>
+export default function PostTimeline(props: {posts: postType[]}) {
+    return <> {
+        props.posts.map(post => {
+            return <Post post={post}/>;
+        })
+    }</>
 }

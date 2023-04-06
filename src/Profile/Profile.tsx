@@ -4,15 +4,16 @@ import PostTimeline from "./Post/PostTimeline"
 import pic from "../static/images/Joerg.jpg"
 import { User } from "../App";
 
-export type postsInterface = {
-    posts: Array<string>
+export type postType = {
+    title: string,
+    message: string
 }
 
 export default function Profile({user}: {user: User}) {
-    const [posts, setPosts] = useState<string[]>([]);
+    const [posts, setPosts] = useState<postType[]>([]);
 
-    function submitPost(text: string) {
-        setPosts(posts => [...posts, text]);
+    function submitPost({title, message}: postType): void {
+        setPosts(posts => [...posts, {title, message}]);
     }
 
     return (
