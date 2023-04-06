@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PostInput from "./PostInput";
+import PostInput from "./Post/PostInput";
 import PostTimeline from "./Post/PostTimeline"
 import pic from "../static/images/Joerg.jpg"
 import { User } from "../App";

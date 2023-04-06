@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { postType } from "./Profile";
+import { postType } from "../Profile";
 
 type submitPostProps = {
     submitPost: (post: postType) => void;
