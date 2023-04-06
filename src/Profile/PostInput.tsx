@@ -5,19 +5,19 @@ type submitPostProp = {
 }
 
 export default function PostInput(submitPost: submitPostProp) {
-    const [value, setValue] = useState("")
+    const [textAreaValue, setTextAreaValue] = useState("")
     const handleChange = (event: any) => {
-        setValue(event.target.value);
+        setTextAreaValue(event.target.value);
     };
 
     return (
         <>
             <form onSubmit={(event) => {
-                submitPost.submitPost(value);
+                submitPost.submitPost(textAreaValue);
                 event.preventDefault();
-                setValue("");
+                setTextAreaValue("");
                 }}>
-                <textarea value={value} onChange={handleChange}></textarea>
+                <textarea value={textAreaValue} onChange={handleChange}></textarea>
                 <input type="submit" value={"Submit"}></input>
             </form>
             
