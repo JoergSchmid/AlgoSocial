@@ -15,6 +15,7 @@ export default function PostInput(submitPost: submitPostProp) {
             <form onSubmit={(event) => {
                 submitPost.submitPost(value);
                 event.preventDefault();
+                setValue("");
                 }}>
                 <textarea value={value} onChange={handleChange}></textarea>
                 <input type="submit" value={"Submit"}></input>
