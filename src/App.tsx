@@ -2,7 +2,7 @@ import "./App.css";
 import PageTemplate from "./PageTemplate/PageTemplate";
 import Profile from "./Profile/Profile"
 
-export interface User {
+export type User = {
   name: string,
   description: string
 }

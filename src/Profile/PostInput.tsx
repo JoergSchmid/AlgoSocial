@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-interface submitPostProp {
+type submitPostProp = {
     submitPost: (text: string) => void;
 }
 

@@ -1,6 +1,6 @@
 import Post from "./Post";
 
-interface postsProp {
+type postsProp = {
     posts: string[];
 }
 

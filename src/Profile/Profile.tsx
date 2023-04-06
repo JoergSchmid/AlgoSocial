@@ -4,7 +4,7 @@ import PostTimeline from "./Post/PostTimeline"
 import pic from "../static/images/Joerg.jpg"
 import { User } from "../App";
 
-export interface postsInterface {
+export type postsInterface = {
     posts: Array<string>
 }
 
