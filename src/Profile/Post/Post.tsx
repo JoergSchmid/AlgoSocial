@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
-import { postType } from "../Profile";
+import { PostType } from "../Profile";
 
-export default function Post({post}: {post: postType}) {
+export default function Post({post}: {post: PostType}) {
     return (
         <>
             <Typography variant="h4">{post.title}</Typography>

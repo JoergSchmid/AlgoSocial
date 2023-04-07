@@ -1,7 +1,7 @@
-import { postType } from "../Profile";
+import { PostType } from "../Profile";
 import { Button, TextField } from "@mui/material";
 
-export default function PostInput({submitPost}: {submitPost: (post: postType) => void}) {
+export default function PostInput({submitPost}: {submitPost: (post: PostType) => void}) {
     const handleSubmitButtonClick = (event: any) => {
         submitPost({title: event.target.title.value, message: event.target.message.value});
         event.preventDefault();

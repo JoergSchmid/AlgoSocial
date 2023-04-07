@@ -5,16 +5,16 @@ import pic from "../static/images/Joerg.jpg"
 import { User } from "../App";
 import Grid from "@mui/material/Unstable_Grid2";
 
-export type postType = {
+export type PostType = {
     title: string,
     message: string,
     post_id?: number
 }
 
 export default function Profile({user}: {user: User}) {
-    const [posts, setPosts] = useState<postType[]>([]);
+    const [posts, setPosts] = useState<PostType[]>([]);
 
-    function submitPost({title, message}: postType): void {
+    function submitPost({title, message}: PostType): void {
         setPosts(posts => [...posts, {title, message, post_id: posts.length}]);
     }
 
