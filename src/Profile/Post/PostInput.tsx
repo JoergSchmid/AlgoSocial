@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { postType } from "../Profile";
+import { Button, TextField } from "@mui/material";
 
 type submitPostProps = {
     submitPost: (post: postType) => void;
@@ -14,20 +15,18 @@ export default function PostInput(props: submitPostProps) {
     const handleMessageChange = (event: any) => {
         setMessageValue(event.target.value);
     };
+    const handleSubmitButtonClick = (event: any) => {
+        props.submitPost({title: titleValue, message: messageValue});
+        event.preventDefault();
+        setTitleValue("");
+        setMessageValue("");
+    }
 
     return (
         <>
-            <form onSubmit={(event) => {
-                props.submitPost({title: titleValue, message: messageValue});
-                event.preventDefault();
-                setTitleValue("");
-                setMessageValue("");
-                }}>
-                <input type="text" value={titleValue} placeholder="Title" onChange={handleTitleChange}></input><br/>
-                <textarea value={messageValue} placeholder="Your post..." onChange={handleMessageChange}></textarea><br/>
-                <input type="submit" value={"Submit"}></input>
-            </form>
-            
+            <TextField variant="standard" label="Title" value={titleValue} onChange={handleTitleChange} sx={{width: "40ch"}}></TextField><br/>
+            <TextField variant="outlined" label="Your post" value={messageValue} onChange={handleMessageChange} margin="dense" multiline sx={{width: "40ch"}}></TextField><br/>
+            <Button variant="contained" onClick={handleSubmitButtonClick}>Submit Post</Button>
         </>
     );
 }
