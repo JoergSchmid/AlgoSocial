@@ -7,7 +7,7 @@ export type User = {
   description: string
 }
 
-const testUser: User = {
+const exampleUser: User = {
   name: "Joerg",
   description: "A test user"
 }
@@ -16,7 +16,7 @@ export default function App() {
   return (
     <>
       <PageTemplate />
-      <Profile user={testUser}/>
+      <Profile user={exampleUser}/>
     </>
   );
 }
