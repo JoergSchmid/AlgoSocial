@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { postType } from "../Profile";
 import { Button, TextField } from "@mui/material";
 
@@ -7,26 +6,18 @@ type submitPostProps = {
 }
 
 export default function PostInput(props: submitPostProps) {
-    const [titleValue, setTitleValue] = useState("")
-    const [messageValue, setMessageValue] = useState("")
-    const handleTitleChange = (event: any) => {
-        setTitleValue(event.target.value);
-    };
-    const handleMessageChange = (event: any) => {
-        setMessageValue(event.target.value);
-    };
     const handleSubmitButtonClick = (event: any) => {
-        props.submitPost({title: titleValue, message: messageValue});
+        props.submitPost({title: event.target.title.value, message: event.target.message.value});
         event.preventDefault();
-        setTitleValue("");
-        setMessageValue("");
+        event.target.title.value = "";
+        event.target.message.value = "";
     }
 
     return (
-        <>
-            <TextField variant="standard" label="Title" value={titleValue} onChange={handleTitleChange} sx={{width: "40ch"}}></TextField><br/>
-            <TextField variant="outlined" label="Your post" value={messageValue} onChange={handleMessageChange} margin="dense" multiline sx={{width: "40ch"}}></TextField><br/>
-            <Button variant="contained" onClick={handleSubmitButtonClick}>Submit Post</Button>
-        </>
+        <form onSubmit={handleSubmitButtonClick}>
+            <TextField variant="standard" id="title" label="Title" sx={{width: "40ch"}}></TextField><br/>
+            <TextField variant="outlined" id="message" label="Your post" margin="dense" multiline sx={{width: "40ch"}}></TextField><br/>
+            <Button variant="contained" type="submit">Submit Post</Button>
+        </form>
     );
 }
