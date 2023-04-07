@@ -1,11 +1,11 @@
 import { Typography } from "@mui/material";
 import { postType } from "../Profile";
 
-export default function Post(props: {post: postType}) {
+export default function Post({post}: {post: postType}) {
     return (
         <>
-            <Typography variant="h4">{props.post.title}</Typography>
-            <Typography variant="body1">{props.post.message}</Typography>
+            <Typography variant="h4">{post.title}</Typography>
+            <Typography variant="body1">{post.message}</Typography>
         </>
     );
 }

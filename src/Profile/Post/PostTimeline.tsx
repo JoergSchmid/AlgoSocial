@@ -12,9 +12,9 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
   }));
 
-export default function PostTimeline(props: {posts: postType[]}) {
+export default function PostTimeline({posts}: {posts: postType[]}) {
     return <Grid container spacing={4}> {
-        props.posts.map(post => {
+        posts.map(post => {
             return (
                 <Grid key={post.title}>
                     <Item><Post post={post}/></Item>
