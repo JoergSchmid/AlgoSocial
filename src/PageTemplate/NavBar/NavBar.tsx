@@ -4,7 +4,7 @@ export default function NavBar() {
     return (
       <nav className="navBar">
         <div className="navBarIcon">
-          <img src={logo} />
+          <img src={logo} alt="Logo"/>
         </div>
         <div>
           <a href="/">Home</a>
