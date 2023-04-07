@@ -29,7 +29,7 @@ export default function Profile({user}: {user: User}) {
                     <h5>{user.description}</h5>
                 </Grid>
             </Grid>
-            <PostInput submitPost={submitPost}/>
+            <PostInput submitPost={submitPost}/><br/>
             <PostTimeline posts={posts} />
         </>
     );
