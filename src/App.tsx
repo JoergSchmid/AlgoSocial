@@ -4,12 +4,14 @@ import Profile from "./Profile/Profile"
 
 export type User = {
   name: string,
-  description: string
+  description: string,
+  picture: number
 }
 
 const exampleUser: User = {
   name: "Joerg",
-  description: "A test user"
+  description: "A test user",
+  picture: 0
 }
 
 export default function App() {
