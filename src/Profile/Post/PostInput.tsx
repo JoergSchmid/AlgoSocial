@@ -1,5 +1,5 @@
 import { PostType } from "../Profile";
-import { Button, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 
 export default function PostInput({submitPost}: {submitPost: (post: PostType) => void}) {
     const handleSubmitButtonClick = (event: any) => {
@@ -10,10 +10,12 @@ export default function PostInput({submitPost}: {submitPost: (post: PostType) =>
     }
 
     return (
-        <form onSubmit={handleSubmitButtonClick}>
-            <TextField variant="standard" id="title" label="Title" sx={{width: "40ch"}}></TextField><br/>
-            <TextField variant="outlined" id="message" label="Your post" margin="dense" multiline sx={{width: "40ch"}}></TextField><br/>
-            <Button variant="contained" type="submit">Submit Post</Button>
-        </form>
+        <Box sx={{width: 345, height: 160, backgroundColor: "lightgrey"}}>
+            <form onSubmit={handleSubmitButtonClick}>
+                <TextField variant="standard" id="title" label="Title" sx={{width: "40ch"}}></TextField><br/>
+                <TextField variant="outlined" id="message" label="Your post" margin="dense" multiline sx={{width: "40ch"}}></TextField><br/>
+                <Button variant="contained" type="submit" style={{float:"right"}}>Submit Post</Button>
+            </form>
+        </Box>
     );
 }
