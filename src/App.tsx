@@ -17,7 +17,7 @@ const exampleUser: User = {
 export default function App() {
   return (
     <>
-      <PageTemplate />
+      <PageTemplate user={exampleUser}/>
       <Profile user={exampleUser}/>
     </>
   );
