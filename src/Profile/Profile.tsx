@@ -5,6 +5,7 @@ import { User } from "../App";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Fab } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 export type PostType = {
     title: string,
@@ -33,10 +34,12 @@ export default function Profile({user}: {user: User}) {
                     <h5>{user.description}</h5>
                 </Grid>
             </Grid>
-            <Fab aria-label="add" color="primary" style={{margin: 10}} onClick={() => setShowPostInput(!showPostInput)}>
-                <AddIcon />
-            </Fab>
-            {showPostInput && <><PostInput submitPost={submitPost}/><br/></>}
+            <div style={{margin: 10}}>
+                <Fab aria-label="add" color="primary" style={{margin: 10}} onClick={() => setShowPostInput(!showPostInput)}>
+                    {showPostInput ? <RemoveIcon /> : <AddIcon />}
+                </Fab>
+                {showPostInput && <><PostInput submitPost={submitPost}/><br/></>}
+            </div>
             <PostTimeline posts={posts} />
         </>
     );
