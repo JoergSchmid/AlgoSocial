@@ -33,13 +33,17 @@ export default function Profile({user}: {user: User}) {
                     <h1>{user.name}</h1>
                     <h5>{user.description}</h5>
                 </Grid>
+                <Grid>
+                    <div style={{margin: 10}}>
+                        <Fab aria-label="add" color="primary" style={{margin: 10}} onClick={() => setShowPostInput(!showPostInput)}>
+                            {showPostInput ? <RemoveIcon /> : <AddIcon />}
+                        </Fab>
+                    </div>
+                </Grid>
+                <Grid>
+                    {showPostInput && <><PostInput submitPost={submitPost}/><br/></>}
+                </Grid>
             </Grid>
-            <div style={{margin: 10}}>
-                <Fab aria-label="add" color="primary" style={{margin: 10}} onClick={() => setShowPostInput(!showPostInput)}>
-                    {showPostInput ? <RemoveIcon /> : <AddIcon />}
-                </Fab>
-                {showPostInput && <><PostInput submitPost={submitPost}/><br/></>}
-            </div>
             <PostTimeline posts={posts} />
         </>
     );
