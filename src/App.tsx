@@ -27,7 +27,7 @@ export default function App() {
 
   return (
     <>
-      <NavBar user={exampleUser} avatar={avatar} />
+      <NavBar avatar={avatar} />
       <Profile user={exampleUser} avatar={avatar} changeAvatar={changeAvatar} />
     </>
   );

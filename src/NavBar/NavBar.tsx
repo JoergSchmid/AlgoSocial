@@ -2,12 +2,11 @@ import { AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Too
 import MenuIcon from '@mui/icons-material/Menu';
 import logo from "../static/images/logo.png"
 import { useState } from "react";
-import { User } from "../App";
 
 const pages = ['Home', 'Profile', 'Settings', '(NYI)'];
 const settings = ['Profile', 'Account', 'Logout'];
 
-export default function NavBar({ user, avatar }: { user: User, avatar: string }) {
+export default function NavBar({ avatar }: { avatar: string }) {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
