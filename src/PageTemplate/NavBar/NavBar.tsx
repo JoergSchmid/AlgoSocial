@@ -7,10 +7,9 @@ import { User } from "../../App";
 const pages = ['Home', 'Profile', 'Settings', '(NYI)'];
 const settings = ['Profile', 'Account', 'Logout'];
 
-export default function NavBar({user}: {user: User}) {
+export default function NavBar({user, avatar}: {user: User, avatar: string}) {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-  const profilePicture = require("../../static/images/profile_pictures/" + user.picture + ".jpg");
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -117,7 +116,7 @@ export default function NavBar({user}: {user: User}) {
         <Box sx={{ flexGrow: 0 }}>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="Profile" src={profilePicture} />
+              <Avatar alt="Profile" src={avatar} />
             </IconButton>
           </Tooltip>
           <Menu

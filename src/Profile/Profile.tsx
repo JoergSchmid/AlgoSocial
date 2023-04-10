@@ -13,21 +13,24 @@ export type PostType = {
     post_id?: number
 }
 
-export default function Profile({user}: {user: User}) {
+export default function Profile({user, avatar, changeAvatar}: {user: User, avatar: string, changeAvatar: (id?: number) => void}) {
     const [posts, setPosts] = useState<PostType[]>([]);
     const [showPostInput, setShowPostInput] = useState<boolean>(false);
-    const pic = require("../static/images/profile_pictures/" + user.picture + ".jpg");
 
     function submitPost({title, message}: PostType): void {
         setPosts(posts => [...posts, {title, message, post_id: posts.length}]);
         setShowPostInput(false);
     }
 
+    function handleImageClick(): void {
+        changeAvatar();
+    }
+
     return (
         <>
             <Grid container spacing={2} sx={{m: 2}}>
                 <Grid>
-                    <img src={pic} alt="Profile" width="100px" height="100px" />
+                    <img src={avatar} alt="Profile" width="100px" height="100px" onClick={handleImageClick} />
                 </Grid>
                 <Grid>
                     <h1>{user.name}</h1>
