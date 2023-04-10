@@ -22,15 +22,11 @@ export default function Profile({ user, avatar, changeAvatar }: { user: User, av
         setShowPostInput(false);
     }
 
-    function handleImageClick(): void {
-        changeAvatar();
-    }
-
     return (
         <>
             <Grid container spacing={2} sx={{ m: 2 }}>
                 <Grid>
-                    <img src={avatar} alt="Profile" width="100px" height="100px" onClick={handleImageClick} />
+                    <img src={avatar} alt="Profile" width="100px" height="100px" onClick={() => changeAvatar()} />
                 </Grid>
                 <Grid>
                     <h1>{user.name}</h1>
