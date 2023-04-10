@@ -18,7 +18,7 @@ const exampleUser: User = {
 export default function App() {
   const [avatar, setAvatar] = useState<string>(require("./static/images/profile_pictures/" + exampleUser.picture + ".jpg"))
   function changeAvatar(id?: number): void {
-    if(!id) {
+    if (!id) {
       id = (exampleUser.picture + 1) % 7;
     }
     exampleUser.picture = id;
@@ -27,8 +27,8 @@ export default function App() {
 
   return (
     <>
-      <PageTemplate user={exampleUser} avatar={avatar}/>
-      <Profile user={exampleUser} avatar={avatar} changeAvatar={changeAvatar}/>
+      <PageTemplate user={exampleUser} avatar={avatar} />
+      <Profile user={exampleUser} avatar={avatar} changeAvatar={changeAvatar} />
     </>
   );
 }

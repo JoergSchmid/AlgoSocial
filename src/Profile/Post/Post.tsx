@@ -9,13 +9,13 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
     minWidth: '100px',
     maxWidth: '400px'
-  }));
+}));
 
-export default function Post({post}: {post: PostType}) {
+export default function Post({ post }: { post: PostType }) {
     return (
         <Item>
-            <Typography variant="h4" style={{wordWrap: "break-word"}}>{post.title}</Typography>
-            <Typography variant="body1" style={{wordWrap: "break-word"}}>{post.message}</Typography>
+            <Typography variant="h4" style={{ wordWrap: "break-word" }}>{post.title}</Typography>
+            <Typography variant="body1" style={{ wordWrap: "break-word" }}>{post.message}</Typography>
         </Item>
     );
 }

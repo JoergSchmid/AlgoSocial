@@ -13,12 +13,12 @@ export type PostType = {
     post_id?: number
 }
 
-export default function Profile({user, avatar, changeAvatar}: {user: User, avatar: string, changeAvatar: (id?: number) => void}) {
+export default function Profile({ user, avatar, changeAvatar }: { user: User, avatar: string, changeAvatar: (id?: number) => void }) {
     const [posts, setPosts] = useState<PostType[]>([]);
     const [showPostInput, setShowPostInput] = useState<boolean>(false);
 
-    function submitPost({title, message}: PostType): void {
-        setPosts(posts => [...posts, {title, message, post_id: posts.length}]);
+    function submitPost({ title, message }: PostType): void {
+        setPosts(posts => [...posts, { title, message, post_id: posts.length }]);
         setShowPostInput(false);
     }
 
@@ -28,7 +28,7 @@ export default function Profile({user, avatar, changeAvatar}: {user: User, avata
 
     return (
         <>
-            <Grid container spacing={2} sx={{m: 2}}>
+            <Grid container spacing={2} sx={{ m: 2 }}>
                 <Grid>
                     <img src={avatar} alt="Profile" width="100px" height="100px" onClick={handleImageClick} />
                 </Grid>
@@ -37,14 +37,14 @@ export default function Profile({user, avatar, changeAvatar}: {user: User, avata
                     <h5>{user.description}</h5>
                 </Grid>
                 <Grid>
-                    <div style={{margin: 10}}>
-                        <Fab aria-label="add" color="primary" style={{margin: 10}} onClick={() => setShowPostInput(!showPostInput)}>
+                    <div style={{ margin: 10 }}>
+                        <Fab aria-label="add" color="primary" style={{ margin: 10 }} onClick={() => setShowPostInput(!showPostInput)}>
                             {showPostInput ? <RemoveIcon /> : <AddIcon />}
                         </Fab>
                     </div>
                 </Grid>
                 <Grid>
-                    {showPostInput && <><PostInput submitPost={submitPost}/><br/></>}
+                    {showPostInput && <><PostInput submitPost={submitPost} /><br /></>}
                 </Grid>
             </Grid>
             <PostTimeline posts={posts} />
