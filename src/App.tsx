@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
-import PageTemplate from "./PageTemplate/PageTemplate";
 import Profile from "./Profile/Profile"
+import NavBar from "./NavBar/NavBar";
 
 export type User = {
   name: string,
@@ -27,7 +27,7 @@ export default function App() {
 
   return (
     <>
-      <PageTemplate user={exampleUser} avatar={avatar} />
+      <NavBar user={exampleUser} avatar={avatar} />
       <Profile user={exampleUser} avatar={avatar} changeAvatar={changeAvatar} />
     </>
   );

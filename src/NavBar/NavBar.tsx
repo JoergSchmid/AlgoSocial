@@ -1,8 +1,8 @@
 import { AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography } from "@mui/material"
 import MenuIcon from '@mui/icons-material/Menu';
-import logo from "../../static/images/logo.png"
+import logo from "../static/images/logo.png"
 import { useState } from "react";
-import { User } from "../../App";
+import { User } from "../App";
 
 const pages = ['Home', 'Profile', 'Settings', '(NYI)'];
 const settings = ['Profile', 'Account', 'Logout'];
