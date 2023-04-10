@@ -23,7 +23,7 @@ export default function PostInput({submitPost}: {submitPost: (post: PostType) =>
     }
 
     return (
-        <Card variant="outlined" style={{width: 345, height: "auto", backgroundColor: "lightgrey"}}>
+        <Card variant="outlined" style={{width: 345, height: "auto", backgroundColor: "lightgrey", position: "absolute"}}>
             <form onSubmit={handleSubmitButtonClick}>
                 <TextField
                     variant="standard"
