@@ -6,23 +6,23 @@ import NavBar from "./NavBar/NavBar";
 export type User = {
   name: string,
   description: string,
-  picture: number
+  pictureIndex: number
 }
 
 const exampleUser: User = {
   name: "Joerg",
   description: "A test user",
-  picture: 0
+  pictureIndex: 0
 }
 
 export default function App() {
-  const [avatar, setAvatar] = useState<string>(require("./static/images/profile_pictures/" + exampleUser.picture + ".jpg"))
+  const [avatar, setAvatar] = useState<string>(require("./static/images/profile_pictures/" + exampleUser.pictureIndex + ".jpg"))
   function changeAvatar(id?: number): void {
     if (!id) {
-      id = (exampleUser.picture + 1) % 7;
+      id = (exampleUser.pictureIndex + 1) % 7;
     }
-    exampleUser.picture = id;
-    setAvatar(require("./static/images/profile_pictures/" + exampleUser.picture + ".jpg"));
+    exampleUser.pictureIndex = id;
+    setAvatar(require("./static/images/profile_pictures/" + exampleUser.pictureIndex + ".jpg"));
   }
 
   return (
