@@ -1,22 +1,34 @@
+import { useState } from "react";
 import "./App.css";
-import PageTemplate from "./PageTemplate/PageTemplate";
 import Profile from "./Profile/Profile"
+import NavBar from "./NavBar/NavBar";
 
 export type User = {
   name: string,
-  description: string
+  description: string,
+  pictureIndex: number
 }
 
-const testUser: User = {
+const exampleUser: User = {
   name: "Joerg",
-  description: "A test user"
+  description: "A test user",
+  pictureIndex: 0
 }
 
 export default function App() {
+  const [avatar, setAvatar] = useState<string>(require("./static/images/profile_pictures/" + exampleUser.pictureIndex + ".jpg"))
+  function changeAvatar(id?: number): void {
+    if (!id) {
+      id = (exampleUser.pictureIndex + 1) % 7;
+    }
+    exampleUser.pictureIndex = id;
+    setAvatar(require("./static/images/profile_pictures/" + exampleUser.pictureIndex + ".jpg"));
+  }
+
   return (
     <>
-      <PageTemplate />
-      <Profile user={testUser}/>
+      <NavBar avatar={avatar} />
+      <Profile user={exampleUser} avatar={avatar} changeAvatar={changeAvatar} />
     </>
   );
 }

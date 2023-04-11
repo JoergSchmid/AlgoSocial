@@ -1,33 +1,52 @@
 import { useState } from "react";
-import { postType } from "../Profile";
+import { PostType } from "../Profile";
+import { Card, Button, TextField } from "@mui/material";
 
-type submitPostProps = {
-    submitPost: (post: postType) => void;
-}
+export default function PostInput({ submitPost }: { submitPost: (post: PostType) => void }) {
+    const [title, setTitle] = useState<string>(" "); // Contains a space so it doesn´t start with an error message. Space is not really in text field.
+    const [message, setMessage] = useState<string>(" ");
 
-export default function PostInput(props: submitPostProps) {
-    const [titleValue, setTitleValue] = useState("")
-    const [messageValue, setMessageValue] = useState("")
-    const handleTitleChange = (event: any) => {
-        setTitleValue(event.target.value);
-    };
-    const handleMessageChange = (event: any) => {
-        setMessageValue(event.target.value);
-    };
+    const handleSubmitButtonClick = (event: any) => {
+        event.preventDefault();
+
+        if (event.target.title.value === "") {
+            setTitle("");
+            return;
+        }
+        if (event.target.message.value === "") {
+            setMessage("");
+            return;
+        }
+        submitPost({ title, message });
+        event.target.title.value = "";
+        event.target.message.value = "";
+    }
 
     return (
-        <>
-            <form onSubmit={(event) => {
-                props.submitPost({title: titleValue, message: messageValue});
-                event.preventDefault();
-                setTitleValue("");
-                setMessageValue("");
-                }}>
-                <input type="text" value={titleValue} placeholder="Title" onChange={handleTitleChange}></input><br/>
-                <textarea value={messageValue} placeholder="Your post..." onChange={handleMessageChange}></textarea><br/>
-                <input type="submit" value={"Submit"}></input>
+        <Card variant="outlined" style={{ width: 345, height: "auto", backgroundColor: "lightgrey", position: "absolute" }}>
+            <form onSubmit={handleSubmitButtonClick}>
+                <TextField
+                    variant="standard"
+                    id="title"
+                    label="Title"
+                    onChange={event => setTitle(event.target.value)}
+                    error={title === ""}
+                    helperText={title === "" ? "Please enter a title." : ""}
+                    sx={{ width: "40ch" }}
+                ></TextField><br />
+                <TextField
+                    variant="outlined"
+                    id="message"
+                    label="Your post"
+                    onChange={event => setMessage(event.target.value)}
+                    error={message === ""}
+                    helperText={message === "" ? "Please enter a text." : ""}
+                    margin="dense"
+                    multiline
+                    sx={{ width: "40ch" }}
+                ></TextField><br />
+                <Button variant="contained" type="submit" style={{ float: "right" }}>Submit Post</Button>
             </form>
-            
-        </>
+        </Card>
     );
 }

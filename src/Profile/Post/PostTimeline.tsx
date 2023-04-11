@@ -1,10 +1,16 @@
-import { postType } from "../Profile";
+import { PostType } from "../Profile";
 import Post from "./Post";
+import Grid from "@mui/material/Unstable_Grid2";
 
-export default function PostTimeline(props: {posts: postType[]}) {
-    return <> {
-        props.posts.map(post => {
-            return <Post post={post}/>;
+
+export default function PostTimeline({ posts }: { posts: PostType[] }) {
+    return <Grid container spacing={4}> {
+        posts.map(post => {
+            return (
+                <Grid key={post.title}>
+                    <Post post={post} />
+                </Grid>
+            );
         })
-    }</>
+    }</Grid>
 }
