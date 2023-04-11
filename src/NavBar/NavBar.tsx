@@ -1,10 +1,7 @@
-import { AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography } from "@mui/material"
+import { AppBar, Avatar, Box, Container, IconButton, Toolbar, Tooltip } from "@mui/material"
 import MenuIcon from '@mui/icons-material/Menu';
-import logo from "../static/images/logo.png"
 import { useState } from "react";
-
-const pages = ['Home', 'Profile', 'Settings', '(NYI)'];
-const settings = ['Profile', 'Account', 'Logout'];
+import { LeftLogoWhenBig, NavigationMenuWhenBig, PopupMenuWhenSmall, RightProfileIconMenu, TitleAndLogoWhenSmall } from "./NavBarComponents";
 
 export default function NavBar({ avatar }: { avatar: string }) {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -25,126 +22,6 @@ export default function NavBar({ avatar }: { avatar: string }) {
     setAnchorElUser(null);
   };
 
-  function LeftLogoWhenBig() {
-    return (
-      <>
-        <Avatar alt="Logo" src={logo} sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-        <Typography
-          variant="h6"
-          noWrap
-          component="a"
-          href="/"
-          sx={{
-            mr: 8,
-            display: { xs: "none", md: "flex" },
-            fontFamily: "monospace",
-            fontWeight: 200,
-            color: "inherit",
-            textDecoration: "none"
-          }}
-        >
-          Algorithmic social network
-        </Typography>
-      </>
-    );
-  }
-
-  function PopupMenuWhenSmall() {
-    return (
-      <Menu
-        id="menu-appbar"
-        anchorEl={anchorElNav}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-        open={Boolean(anchorElNav)}
-        onClose={handleCloseNavMenu}
-        sx={{
-          display: { xs: 'block', md: 'none' },
-        }}
-      >
-        {pages.map((page) => (
-          <MenuItem key={page} onClick={handleCloseNavMenu}>
-            <Typography textAlign="center">{page}</Typography>
-          </MenuItem>
-        ))}
-      </Menu>
-    );
-  }
-
-  function TitleAndLogoWhenSmall() {
-    return (
-      <>
-        <Typography
-          variant="h6"
-          noWrap
-          component="a"
-          href="/"
-          sx={{
-            mr: 8,
-            display: { xs: "flex", md: "none" },
-            fontFamily: "monospace",
-            fontWeight: 200,
-            color: "inherit",
-            textDecoration: "none"
-          }}
-        >
-          ALGO SOCIAL
-        </Typography>
-        <Avatar alt="Profile" src={logo} sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-      </>
-    );
-  }
-
-  function NavigationMenuWhenBig() {
-    return (
-      <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-        {pages.map((page) => (
-          <Button
-            key={page}
-            onClick={handleCloseNavMenu}
-            sx={{ my: 2, color: 'white', display: 'block' }}
-          >
-            {page}
-          </Button>
-        ))}
-      </Box>
-    );
-  }
-
-  function RightProfileIconMenu() {
-    return (
-      <Menu
-        sx={{ mt: '45px' }}
-        id="menu-appbar"
-        anchorEl={anchorElUser}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        open={Boolean(anchorElUser)}
-        onClose={handleCloseUserMenu}>
-
-        {settings.map((setting) => (
-          <MenuItem key={setting} onClick={handleCloseUserMenu}>
-            <Typography textAlign="center">{setting}</Typography>
-          </MenuItem>
-        ))}
-      </Menu>
-    );
-  }
-
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -161,11 +38,11 @@ export default function NavBar({ avatar }: { avatar: string }) {
             >
               <MenuIcon />
             </IconButton>
-            <PopupMenuWhenSmall />
+            <PopupMenuWhenSmall anchorElNav={anchorElNav} handleCloseNavMenu={handleCloseNavMenu} />
           </Box>
 
           <TitleAndLogoWhenSmall />
-          <NavigationMenuWhenBig />
+          <NavigationMenuWhenBig handleCloseNavMenu={handleCloseNavMenu} />
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
@@ -173,7 +50,7 @@ export default function NavBar({ avatar }: { avatar: string }) {
                 <Avatar alt="Profile" src={avatar} />
               </IconButton>
             </Tooltip>
-            <RightProfileIconMenu />
+            <RightProfileIconMenu anchorElUser={anchorElUser} handleCloseUserMenu={handleCloseUserMenu} />
           </Box>
         </Toolbar>
       </Container>
