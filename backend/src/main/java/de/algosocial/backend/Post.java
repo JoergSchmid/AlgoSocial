@@ -1,37 +1,26 @@
 package de.algosocial.backend;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import java.util.Arrays;
+import java.util.List;
 
-import java.util.Date;
+public record Post(int id, int userID, String title, String message) {
 
-@Entity
-public class Post {
+    private static List<Post> posts = Arrays.asList(
+            new Post(1, 1, "Hello World", "My first post!"),
+            new Post(2, 1, "Second Title", "And second post."),
+            new Post(3, 2, "Number 3!", "Third time´s the charm!")
+    );
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
-    private String title;
-    private String message;
-    private Date creationDate;
-
-    protected Post() {}
-
-    public Post(String title, String message) {
-        this.title = title;
-        this.message = message;
-        this.creationDate = new Date();
+    public static Post getById(int id) {
+        return posts.stream()
+                .filter(post -> post.id() == id)
+                .findFirst()
+                .orElse(null);
     }
 
-    @Override
-    public String toString() {
-        return "Post{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", message='" + message + '\'' +
-                ", creationDate=" + creationDate +
-                '}';
+    public static Post[] getAllById(int id) {
+        return posts.stream()
+                .filter(post -> post.userID() == id)
+                .toArray(Post[]::new);
     }
 }
