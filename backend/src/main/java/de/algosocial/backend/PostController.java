@@ -1,29 +1,39 @@
 package de.algosocial.backend;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
+import java.util.List;
 
 @Controller
 public class PostController {
+    @Autowired
+    PostRepository postRepository;
+    @Autowired
+    UserRepository userRepository;
+
     @QueryMapping
     public Post postById(@Argument int id) {
-        return Post.getById(id);
+        return postRepository.findById(id);
     }
 
     @QueryMapping
-    public User userById(@Argument int id) {
-        return User.getById(id);
+    public List<Post> allPosts() {
+        return (List<Post>) postRepository.findAll();
+    }
+
+    @MutationMapping
+    public Post addPost(@Argument int userId, @Argument String title, @Argument String message) {
+        Post post = new Post(userId, title, message);
+        postRepository.save(post);
+        return post;
     }
 
     @SchemaMapping
-    public Post post(User user) {
-        return Post.getById(user.postId());
-    }
-
-    @SchemaMapping
-    public Post[] posts(User user) {
-        return Post.getAllById(user.postId());
+    public User user(Post post) {
+        return userRepository.findById(post.getUserId());
     }
 }

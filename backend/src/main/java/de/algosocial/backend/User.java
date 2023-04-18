@@ -1,19 +1,34 @@
 package de.algosocial.backend;
-import java.util.Arrays;
-import java.util.List;
 
-public record User(int id, String name, int postId) {
+import jakarta.annotation.Nonnull;
+import jakarta.persistence.*;
+import org.jetbrains.annotations.NotNull;
 
-    private static List<User> users = Arrays.asList(
-            new User(1, "Joerg", 1),
-            new User(2, "Mady", 2),
-            new User(3, "Felix", 3)
-    );
+@Entity
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+    @Nonnull
+    @Column(unique=true)
+    private final String name;
 
-    public static User getById(int id) {
-        return users.stream()
-                .filter(user -> user.id() == id)
-                .findFirst()
-                .orElse(null);
+    public User(@NotNull String name) {
+        this.name = name;
     }
+
+    protected User() {
+        this.name = "__Invalid_name__";
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    @Nonnull
+    public String getName() {
+        return name;
+    }
+
+
 }
