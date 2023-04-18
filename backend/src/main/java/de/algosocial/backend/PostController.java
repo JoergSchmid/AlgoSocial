@@ -32,6 +32,12 @@ public class PostController {
         return post;
     }
 
+    @MutationMapping
+    public int removePost(@Argument int id) {
+        postRepository.delete(postRepository.findById(id));
+        return id;
+    }
+
     @SchemaMapping
     public User user(Post post) {
         return userRepository.findById(post.getUserId());
