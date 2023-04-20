@@ -2,6 +2,8 @@ import { useState } from "react";
 import "./App.css";
 import Profile from "./Profile/Profile"
 import NavBar from "./NavBar/NavBar";
+import React from 'react';
+window.React = React;
 
 export type User = {
   name: string,
