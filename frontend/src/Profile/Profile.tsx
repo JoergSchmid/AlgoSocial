@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PostInput from "./Post/PostInput";
 import PostTimeline from "./Post/PostTimeline";
 import { User } from "../App";
@@ -6,6 +6,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { Fab } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { fetchPosts } from "./Post/FetchPosts";
 
 export type PostType = {
     title: string,
@@ -20,6 +21,13 @@ export default function Profile({ user, avatar, changeAvatar }: { user: User, av
     function submitPost({ title, message }: PostType): void {
         setPosts(posts => [...posts, { title, message, post_id: posts.length }]);
         setShowPostInput(false);
+    }
+
+    let fetchedPosts = fetchPosts();
+    if (fetchedPosts !== null) {
+        useEffect(() => {
+            setPosts(fetchedPosts);
+        }, [])
     }
 
     return (
