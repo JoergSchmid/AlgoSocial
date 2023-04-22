@@ -1,4 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
+import { PostType } from "../Profile";
 
 const GET_ALL_POSTS = gql`
     query GetALLPosts {
@@ -10,12 +11,12 @@ const GET_ALL_POSTS = gql`
     }
 `;
 
-export function fetchPosts() {
+export function fetchPosts(): PostType[] {
     const { loading, error, data } = useQuery(GET_ALL_POSTS, {
         fetchPolicy: 'no-cache'
     });
 
-    if (loading || error) return null;
+    if (loading || error) return [];
 
     return data.allPosts;
     // return data.allPosts.map((post: PostType) => {

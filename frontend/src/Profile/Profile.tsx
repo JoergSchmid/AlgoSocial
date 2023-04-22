@@ -24,11 +24,9 @@ export default function Profile({ user, avatar, changeAvatar }: { user: User, av
     }
 
     let fetchedPosts = fetchPosts();
-    if (fetchedPosts !== null) {
-        useEffect(() => {
-            setPosts(fetchedPosts);
-        }, [])
-    }
+    useEffect(() => {
+        setPosts(fetchedPosts);
+    }, [fetchedPosts])
 
     return (
         <>
