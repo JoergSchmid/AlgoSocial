@@ -6,7 +6,8 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { Fab } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { fetchPosts } from "./Post/gqlRequests";
+import { ADD_POST, FetchPosts, GET_ALL_POSTS } from "./Post/gqlRequests";
+import { gql, useMutation } from "@apollo/client";
 
 export type PostType = {
     title: string,
@@ -17,13 +18,15 @@ export type PostType = {
 export default function Profile({ user, avatar, changeAvatar }: { user: User, avatar: string, changeAvatar: (id?: number) => void }) {
     const [posts, setPosts] = useState<PostType[]>([]);
     const [showPostInput, setShowPostInput] = useState<boolean>(false);
+    const [useAddPost] = useMutation(ADD_POST);
 
     function submitPost({ title, message }: PostType): void {
         setPosts(posts => [...posts, { title, message, post_id: posts.length }]);
+        useAddPost({ variables: { userId: 1, title, message } });
         setShowPostInput(false);
     }
 
-    let fetchedPosts = fetchPosts();
+    let fetchedPosts = FetchPosts();
     useEffect(() => {
         setPosts(fetchedPosts);
     }, [fetchedPosts])
