@@ -19,7 +19,4 @@ export function fetchPosts(): PostType[] {
     if (loading || error) return [];
 
     return data.allPosts;
-    // return data.allPosts.map((post: PostType) => {
-    //     return (<Post post={post} />)
-    // });
 }

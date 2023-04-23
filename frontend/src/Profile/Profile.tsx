@@ -6,7 +6,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { Fab } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { fetchPosts } from "./Post/FetchPosts";
+import { fetchPosts } from "./Post/gqlRequests";
 
 export type PostType = {
     title: string,
