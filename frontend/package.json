@@ -30,8 +30,12 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "eslint": "latest",
     "eslint-config-react": "^1.1.7",
-    "eslint-config-react-app": "^7.0.1"
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-react": "latest"
   },
   "eslintConfig": {
     "extends": [

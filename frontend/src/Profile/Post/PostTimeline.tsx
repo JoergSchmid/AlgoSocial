@@ -1,3 +1,4 @@
+import React from 'react';
 import { PostType } from "../Profile";
 import Post from "./Post";
 import Grid from "@mui/material/Unstable_Grid2";

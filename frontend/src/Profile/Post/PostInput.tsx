@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from "react";
 import { PostType } from "../Profile";
 import { Card, Button, TextField } from "@mui/material";
@@ -6,20 +7,25 @@ export default function PostInput({ submitPost }: { submitPost: (post: PostType)
     const [title, setTitle] = useState<string>(" "); // Contains a space so it doesn´t start with an error message. Space is not really in text field.
     const [message, setMessage] = useState<string>(" ");
 
-    const handleSubmitButtonClick = (event: any) => {
+    const handleSubmitButtonClick = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        if (event.target.title.value === "") {
+        const target = event.target as typeof event.target & {
+            title: { value: string };
+            message: { value: string };
+        };
+
+        if (target.title.value === "") {
             setTitle("");
             return;
         }
-        if (event.target.message.value === "") {
+        if (target.message.value === "") {
             setMessage("");
             return;
         }
         submitPost({ title, message });
-        event.target.title.value = "";
-        event.target.message.value = "";
+        target.title.value = "";
+        target.message.value = "";
     }
 
     return (

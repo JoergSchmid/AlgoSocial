@@ -26,7 +26,6 @@ export function FetchPosts(): PostType[] {
         fetchPolicy: 'no-cache',
         pollInterval: 10000
     });
-
     if (loading || error) return [];
 
     return data.allPosts;

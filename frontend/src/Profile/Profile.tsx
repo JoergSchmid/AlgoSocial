@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from "react";
 import PostInput from "./Post/PostInput";
 import PostTimeline from "./Post/PostTimeline";
@@ -6,8 +7,8 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { Fab } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { ADD_POST, FetchPosts, GET_ALL_POSTS } from "./Post/gqlRequests";
-import { gql, useMutation } from "@apollo/client";
+import { ADD_POST, FetchPosts } from "./Post/gqlRequests";
+import { useMutation } from "@apollo/client";
 
 export type PostType = {
     title: string,
@@ -26,7 +27,7 @@ export default function Profile({ user, avatar, changeAvatar }: { user: User, av
         setShowPostInput(false);
     }
 
-    let fetchedPosts = FetchPosts();
+    const fetchedPosts = FetchPosts();
     useEffect(() => {
         setPosts(fetchedPosts);
     }, [fetchedPosts])
