@@ -1,4 +1,4 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 import { PostType } from "../Profile";
 
 export const GET_ALL_POSTS = gql`
@@ -23,7 +23,8 @@ export const ADD_POST = gql`
 
 export function FetchPosts(): PostType[] {
     const { loading, error, data } = useQuery(GET_ALL_POSTS, {
-        fetchPolicy: 'no-cache'
+        fetchPolicy: 'no-cache',
+        pollInterval: 10000
     });
 
     if (loading || error) return [];
