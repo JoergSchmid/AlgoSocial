@@ -1,5 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import { PostType } from "../Profile";
+import { User } from "../../App";
 
 export const GET_ALL_POSTS = gql`
     query GetALLPosts {
@@ -11,14 +12,49 @@ export const GET_ALL_POSTS = gql`
     }
 `;
 
+export const POST_BY_ID = gql`
+    query postById($id: Int!) {
+        postById(id: $id)  {
+            id
+            title
+            message
+        }
+    }
+`;
+
+export const USER_BY_ID = gql`
+    query userById($id: Int!) {
+        userById(id: $id) {
+            id
+            title
+            message
+        }
+    }
+`;
+
+export const USER_BY_NAME = gql`
+    query username($name: String!) {
+        userByName(name: $name) {
+            id
+            name
+        }
+    }
+`;
+
 export const ADD_POST = gql`
     mutation addPost($userId: Int!, $title: String!, $message: String!) {
     addPost(userId: $userId, title: $title, message: $message) {
-      id
-      title
-      message
+        id
+        title
+        message
     }
   }
+`;
+
+export const REMOVE_POST = gql`
+    mutation removePost($id: Int!) {
+        removePost(id: $id)
+    }
 `;
 
 export function FetchPosts(): PostType[] {
@@ -29,4 +65,18 @@ export function FetchPosts(): PostType[] {
     if (loading || error) return [];
 
     return data.allPosts;
+}
+
+export function GetPostById(id: number): PostType {
+    const { loading, error, data } = useQuery(POST_BY_ID, { variables: { id: { id } } });
+    if (loading || error) return { title: "", message: "" };
+
+    return data.postById;
+}
+
+export function GetUserByName(name: string): User {
+    const { loading, error, data } = useQuery(USER_BY_NAME, { variables: { name: { name } } });
+    if (loading || error) return { name, description: "loading...", pictureIndex: 0 };
+
+    return data.postById;
 }
