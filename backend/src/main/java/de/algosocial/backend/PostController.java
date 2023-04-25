@@ -25,6 +25,11 @@ public class PostController {
         return (List<Post>) postRepository.findAll();
     }
 
+    @QueryMapping
+    public List<Post> postsByUserId(@Argument int id) {
+        return (List<Post>) postRepository.findByUserId(id);
+    }
+
     @MutationMapping
     public Post addPost(@Argument int userId, @Argument String title, @Argument String message) {
         Post post = new Post(userId, title, message);
