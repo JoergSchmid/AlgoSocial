@@ -76,7 +76,7 @@ export function GetPostById(id: number): PostType {
 
 export function GetUserByName(name: string): User {
     const { loading, error, data } = useQuery(USER_BY_NAME, { variables: { name: { name } } });
-    if (loading || error) return { name, description: "loading...", pictureIndex: 0 };
+    if (loading || error) return { userId: 0, name, description: "loading...", pictureIndex: 0 };
 
     return data.postById;
 }
