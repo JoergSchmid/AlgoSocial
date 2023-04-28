@@ -4,7 +4,7 @@ import PostInput from "./Post/PostInput";
 import PostTimeline from "./Post/PostTimeline";
 import { User } from "../App";
 import Grid from "@mui/material/Unstable_Grid2";
-import { Button, Fab } from "@mui/material";
+import { Fab } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { ADD_POST, GET_ALL_POSTS_BY_USER_ID } from "./Post/gqlRequests";
@@ -23,18 +23,17 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
     const { data } = useQuery(GET_ALL_POSTS_BY_USER_ID, {
         variables: { id: user.userId },
         fetchPolicy: 'no-cache',
-        //pollInterval: 10000
+        pollInterval: 10000
     });
 
     useEffect(() => {
         if (data) { setPosts(data.postsByUserId) }
     }, [data])
-    //setPosts(data.postsByUserId);
 
     function submitPost({ title, message }: PostType): void {
         setPosts(posts => [...posts, { title, message, post_id: posts.length }]);
         setShowPostInput(false);
-        useAddPost({ variables: { userId: 1, title, message } });
+        useAddPost({ variables: { userId: user.userId, title, message } });
     }
 
     return (
@@ -56,12 +55,6 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
                 </Grid>
                 <Grid>
                     {showPostInput && <><PostInput submitPost={submitPost} /><br /></>}
-                </Grid>
-                <Grid>
-                    <Button variant="text" onClick={() => {
-                        setPosts(data.postsByUserId);
-                        console.log(data);
-                    }}>Refresh</Button>
                 </Grid>
             </Grid>
             <PostTimeline posts={posts} />

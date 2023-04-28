@@ -77,22 +77,6 @@ export function FetchPosts(): PostType[] {
     return data.allPosts;
 }
 
-export function FetchPostsByUserId(userId: number): PostType[] {
-    console.log("In FetchPostsByUserId:");
-    console.log("userId: " + userId);
-    const { loading, error, data } = useQuery(GET_ALL_POSTS_BY_USER_ID, {
-        variables: { id: userId },
-        fetchPolicy: 'no-cache',
-        //pollInterval: 10000
-    });
-    console.log("error: " + error);
-    if (loading || error) return [];
-
-    console.log("data: " + data);
-
-    return data.postsByUserId;
-}
-
 export function GetPostById(id: number): PostType {
     const { loading, error, data } = useQuery(POST_BY_ID, { variables: { id: { id } } });
     if (loading || error) return { title: "", message: "" };
