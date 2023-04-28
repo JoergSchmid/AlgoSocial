@@ -12,6 +12,16 @@ export const GET_ALL_POSTS = gql`
     }
 `;
 
+export const GET_ALL_POSTS_BY_USER_ID = gql`
+    query postsByUserId($id: ID!) {
+        postsByUserId(id: $id) {
+            id
+            title
+            message
+        }
+    }
+`;
+
 export const POST_BY_ID = gql`
     query postById($id: Int!) {
         postById(id: $id)  {
@@ -65,6 +75,22 @@ export function FetchPosts(): PostType[] {
     if (loading || error) return [];
 
     return data.allPosts;
+}
+
+export function FetchPostsByUserId(userId: number): PostType[] {
+    console.log("In FetchPostsByUserId:");
+    console.log("userId: " + userId);
+    const { loading, error, data } = useQuery(GET_ALL_POSTS_BY_USER_ID, {
+        variables: { id: userId },
+        fetchPolicy: 'no-cache',
+        //pollInterval: 10000
+    });
+    console.log("error: " + error);
+    if (loading || error) return [];
+
+    console.log("data: " + data);
+
+    return data.postsByUserId;
 }
 
 export function GetPostById(id: number): PostType {

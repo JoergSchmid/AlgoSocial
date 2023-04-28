@@ -1,14 +1,14 @@
 import React from 'react';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PostInput from "./Post/PostInput";
 import PostTimeline from "./Post/PostTimeline";
 import { User } from "../App";
 import Grid from "@mui/material/Unstable_Grid2";
-import { Fab } from "@mui/material";
+import { Button, Fab } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { ADD_POST, FetchPosts } from "./Post/gqlRequests";
-import { useMutation } from "@apollo/client";
+import { ADD_POST, GET_ALL_POSTS_BY_USER_ID } from "./Post/gqlRequests";
+import { useMutation, useQuery } from "@apollo/client";
 
 export type PostType = {
     title: string,
@@ -20,17 +20,19 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
     const [posts, setPosts] = useState<PostType[]>([]);
     const [showPostInput, setShowPostInput] = useState<boolean>(false);
     const [useAddPost] = useMutation(ADD_POST);
+    const { data } = useQuery(GET_ALL_POSTS_BY_USER_ID, {
+        variables: { id: user.userId },
+        fetchPolicy: 'no-cache',
+        //pollInterval: 10000
+    });
+
+    //setPosts(data.postsByUserId);
 
     function submitPost({ title, message }: PostType): void {
         setPosts(posts => [...posts, { title, message, post_id: posts.length }]);
-        useAddPost({ variables: { userId: 1, title, message } });
         setShowPostInput(false);
+        useAddPost({ variables: { userId: 1, title, message } });
     }
-
-    const fetchedPosts = FetchPosts();
-    useEffect(() => {
-        setPosts(fetchedPosts);
-    }, [fetchedPosts])
 
     return (
         <>
@@ -51,6 +53,12 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
                 </Grid>
                 <Grid>
                     {showPostInput && <><PostInput submitPost={submitPost} /><br /></>}
+                </Grid>
+                <Grid>
+                    <Button variant="text" onClick={() => {
+                        setPosts(data.postsByUserId);
+                        console.log(data);
+                    }}>Refresh</Button>
                 </Grid>
             </Grid>
             <PostTimeline posts={posts} />
