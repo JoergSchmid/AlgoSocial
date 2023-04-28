@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from "react";
 import PostInput from "./Post/PostInput";
 import PostTimeline from "./Post/PostTimeline";
@@ -26,6 +26,9 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
         //pollInterval: 10000
     });
 
+    useEffect(() => {
+        if (data) { setPosts(data.postsByUserId) }
+    }, [data])
     //setPosts(data.postsByUserId);
 
     function submitPost({ title, message }: PostType): void {
