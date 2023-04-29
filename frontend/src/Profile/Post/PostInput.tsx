@@ -58,7 +58,7 @@ export default function PostInput({ submitPost }: { submitPost: (post: PostType)
                         multiline
                         sx={{ width: "40ch" }}
                     ></TextField><br />
-                    <Button variant="contained" type="submit" style={{ float: "right", borderRadius: "12px" }}>Submit Post</Button>
+                    <Button variant="contained" type="submit" style={{ float: "right", borderRadius: "12px", marginBottom: "5px" }}>Submit Post</Button>
                 </form>
             </CardContent>
         </Card>
