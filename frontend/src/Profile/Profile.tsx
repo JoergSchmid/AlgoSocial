@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PostInput from "./Post/PostInput";
 import PostTimeline from "./Post/PostTimeline";
+import LoadIcon from "./Post/LoadIcon";
 import { User } from "../App";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Fab } from "@mui/material";
@@ -18,6 +19,7 @@ export type PostType = {
 export default function Profile({ user, avatar, changeUser }: { user: User, avatar: string, changeUser: (id?: number) => void }) {
     const [posts, setPosts] = useState<PostType[]>([]);
     const [showPostInput, setShowPostInput] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [useAddPost, { error: mutationError }] = useMutation(ADD_POST);
     const { data: fetchedData, error: fetchedError } = useQuery(GET_ALL_POSTS_BY_USER_ID, {
         variables: { id: user.userId },
@@ -26,7 +28,10 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
     });
 
     useEffect(() => {
-        if (fetchedData) { setPosts(fetchedData.postsByUserId) }
+        if (fetchedData) {
+            setPosts(fetchedData.postsByUserId);
+            setIsLoading(false);
+        }
     }, [fetchedData])
 
     function submitPost({ title, message }: PostType): void {
@@ -43,6 +48,7 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
 
     return (
         <>
+            {isLoading && <LoadIcon />}
             <Grid container spacing={2} sx={{ m: 2 }}>
                 <Grid>
                     <img src={avatar} alt="Profile" width="100px" height="100px" onClick={() => changeUser()} />
