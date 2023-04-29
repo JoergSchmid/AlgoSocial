@@ -32,8 +32,8 @@ export default function PostInput({ submitPost }: { submitPost: (post: PostType)
         <Card variant="outlined" style={{
             width: 390,
             height: "auto",
-            backgroundColor: "lightgrey",
-            border: "2px solid black",
+            backgroundColor: "#eeeeee",
+            border: "1px solid black",
             borderRadius: '16px'
         }}>
             <CardContent>
