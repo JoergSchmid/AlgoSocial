@@ -37,6 +37,11 @@
   }
 }
 
+.error {
+  color: red;
+  font-size: larger;
+}
+
 .navBar {
   display: flex;
   background-color: gray;

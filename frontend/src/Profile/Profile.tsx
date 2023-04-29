@@ -19,22 +19,28 @@ export type PostType = {
 export default function Profile({ user, avatar, changeUser }: { user: User, avatar: string, changeUser: (id?: number) => void }) {
     const [posts, setPosts] = useState<PostType[]>([]);
     const [showPostInput, setShowPostInput] = useState<boolean>(false);
-    const [useAddPost] = useMutation(ADD_POST);
-    const { data } = useQuery(GET_ALL_POSTS_BY_USER_ID, {
+    const [useAddPost, { error: mutationError }] = useMutation(ADD_POST);
+    const { data: fetchedData, error: fetchedError } = useQuery(GET_ALL_POSTS_BY_USER_ID, {
         variables: { id: user.userId },
         fetchPolicy: 'no-cache',
         pollInterval: 10000
     });
 
     useEffect(() => {
-        if (data) { setPosts(data.postsByUserId) }
-    }, [data])
+        if (fetchedData) { setPosts(fetchedData.postsByUserId) }
+    }, [fetchedData])
 
     function submitPost({ title, message }: PostType): void {
         setPosts(posts => [...posts, { title, message, post_id: posts.length }]);
         setShowPostInput(false);
-        useAddPost({ variables: { userId: user.userId, title, message } });
+        useAddPost({
+            variables: { userId: user.userId, title, message }
+        });
     }
+
+    //Logging errors
+    if (fetchedError) { console.log(fetchedError); }
+    if (mutationError) { console.log(mutationError); }
 
     return (
         <>
@@ -55,6 +61,10 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
                 </Grid>
                 <Grid>
                     {showPostInput && <><PostInput submitPost={submitPost} /><br /></>}
+                </Grid>
+                <Grid>
+                    {fetchedError && <><p className='error'>Error Fetisching posts: {fetchedError.name}</p><br /></>}
+                    {mutationError && <><p className='error'>Error sending post to server: {mutationError.name}</p><br /></>}
                 </Grid>
             </Grid>
             <PostTimeline posts={posts} />
