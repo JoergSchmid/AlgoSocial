@@ -23,7 +23,7 @@ export const GET_ALL_POSTS_BY_USER_ID = gql`
 `;
 
 export const POST_BY_ID = gql`
-    query postById($id: Int!) {
+    query postById($id: ID!) {
         postById(id: $id)  {
             id
             title
@@ -33,7 +33,7 @@ export const POST_BY_ID = gql`
 `;
 
 export const USER_BY_ID = gql`
-    query userById($id: Int!) {
+    query userById($id: ID!) {
         userById(id: $id) {
             id
             title
@@ -62,7 +62,7 @@ export const ADD_POST = gql`
 `;
 
 export const REMOVE_POST = gql`
-    mutation removePost($id: Int!) {
+    mutation removePost($id: ID!) {
         removePost(id: $id)
     }
 `;
