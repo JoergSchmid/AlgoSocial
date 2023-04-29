@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useState } from "react";
+import React, { useEffect, useState } from 'react';
 import PostInput from "./Post/PostInput";
 import PostTimeline from "./Post/PostTimeline";
 import { User } from "../App";
