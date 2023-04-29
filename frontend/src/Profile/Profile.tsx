@@ -13,7 +13,7 @@ import { useMutation, useQuery } from "@apollo/client";
 export type PostType = {
     title: string,
     message: string,
-    post_id?: number
+    id?: number
 }
 
 export default function Profile({ user, avatar, changeUser }: { user: User, avatar: string, changeUser: (id?: number) => void }) {
