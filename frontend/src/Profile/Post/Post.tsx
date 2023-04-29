@@ -13,6 +13,7 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
     minWidth: '100px',
     maxWidth: '400px',
+    borderRadius: "16px",
     position: "relative"
 }));
 

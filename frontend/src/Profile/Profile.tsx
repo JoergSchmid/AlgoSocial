@@ -51,7 +51,7 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
             {isLoading && <LoadIcon />}
             <Grid container spacing={2} sx={{ m: 2 }}>
                 <Grid>
-                    <img src={avatar} alt="Profile" width="100px" height="100px" onClick={() => changeUser()} />
+                    <img src={avatar} alt="Profile" width="100px" height="100px" style={{ borderRadius: "8px" }} onClick={() => changeUser()} />
                 </Grid>
                 <Grid>
                     <h1>{user.name}</h1>
