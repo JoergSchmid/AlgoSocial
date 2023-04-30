@@ -17,18 +17,8 @@ const Item = styled(Paper)(({ theme }) => ({
     position: "relative"
 }));
 
-export default function Post({ post }: { post: PostType }) {
+export default function Post({ post, deletePost }: { post: PostType, deletePost: (id: number) => void }) {
     const [showDeleteButton, setShowDeleteButton] = useState<boolean>(false);
-    const [useDeletePost, { error: postDeletionError }] = useMutation(REMOVE_POST);
-
-    function deletePost(): void {
-        useDeletePost({
-            variables: { id: post.id }
-        });
-    }
-
-    // Error log
-    if (postDeletionError) { console.log(postDeletionError) }
 
     return (
         <Item onMouseEnter={() => setShowDeleteButton(true)} onMouseLeave={() => setShowDeleteButton(false)} >
@@ -43,11 +33,10 @@ export default function Post({ post }: { post: PostType }) {
                     bottom: "5px",
                     width: "fit-content"
                 }}
-                onClick={deletePost}
+                onClick={() => deletePost(post.id)}
             >
                 <DeleteSweepIcon />
             </Button>}
-            {postDeletionError && <p className='error'>Error occured when trying to delete post: {postDeletionError.name}</p>}
         </Item>
     );
 }

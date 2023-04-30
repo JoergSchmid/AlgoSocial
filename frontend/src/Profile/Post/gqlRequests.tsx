@@ -79,7 +79,7 @@ export function FetchPosts(): PostType[] {
 
 export function GetPostById(id: number): PostType {
     const { loading, error, data } = useQuery(POST_BY_ID, { variables: { id: { id } } });
-    if (loading || error) return { title: "", message: "" };
+    if (loading || error) return { title: "", message: "", id };
 
     return data.postById;
 }

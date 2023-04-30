@@ -4,12 +4,12 @@ import Post from "./Post";
 import Grid from "@mui/material/Unstable_Grid2";
 
 
-export default function PostTimeline({ posts }: { posts: PostType[] }) {
+export default function PostTimeline({ posts, deletePost }: { posts: PostType[], deletePost: (id: number) => void }) {
     return <Grid container spacing={4}> {
         posts.map(post => {
             return (
                 <Grid key={post.title}>
-                    <Post post={post} />
+                    <Post post={post} deletePost={() => deletePost(post.id)} />
                 </Grid>
             );
         })

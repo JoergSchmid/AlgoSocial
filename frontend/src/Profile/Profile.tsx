@@ -7,7 +7,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { Fab } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { ADD_POST, GET_ALL_POSTS_BY_USER_ID } from "./Post/gqlRequests";
+import { ADD_POST, GET_ALL_POSTS_BY_USER_ID, REMOVE_POST } from "./Post/gqlRequests";
 import { useMutation, useQuery } from "@apollo/client";
 
 export type PostType = {
@@ -21,7 +21,8 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
     const [showPostInput, setShowPostInput] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [useAddPost, { error: mutationError }] = useMutation(ADD_POST);
-    const { data: fetchedData, error: fetchedError } = useQuery(GET_ALL_POSTS_BY_USER_ID, {
+    const [useDeletePost, { error: postDeletionError }] = useMutation(REMOVE_POST);
+    const { data: fetchedData, error: fetchedError, refetch } = useQuery(GET_ALL_POSTS_BY_USER_ID, {
         variables: { id: user.userId },
         fetchPolicy: 'no-cache',
         pollInterval: 10000
@@ -35,16 +36,22 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
     }, [fetchedData])
 
     function submitPost({ title, message }: PostType): void {
-        setPosts(posts => [...posts, { title, message, post_id: posts.length }]);
+        setPosts(posts => [...posts, { title, message, id: posts.length }]);
         setShowPostInput(false);
-        useAddPost({
-            variables: { userId: user.userId, title, message }
+        refetch();
+    }
+
+    function deletePost(id: number): void {
+        useDeletePost({
+            variables: { id }
         });
+        refetch();
     }
 
     //Logging errors
     if (fetchedError) { console.log(fetchedError); }
     if (mutationError) { console.log(mutationError); }
+    if (postDeletionError) { console.log(postDeletionError) }
 
     return (
         <>
@@ -70,9 +77,10 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
                 <Grid>
                     {fetchedError && <><p className='error'>Error Fetisching posts: {fetchedError.name}</p><br /></>}
                     {mutationError && <><p className='error'>Error sending post to server: {mutationError.name}</p><br /></>}
+                    {postDeletionError && <p className='error'>Error occured when trying to delete post: {postDeletionError.name}</p>}
                 </Grid>
             </Grid>
-            <PostTimeline posts={posts} />
+            <PostTimeline posts={posts} deletePost={deletePost} />
         </>
     );
 }
