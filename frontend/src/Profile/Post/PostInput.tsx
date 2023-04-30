@@ -23,7 +23,7 @@ export default function PostInput({ submitPost }: { submitPost: (post: PostType)
             setMessage("");
             return;
         }
-        submitPost({ title, message });
+        submitPost({ title, message, id: -1 });
         target.title.value = "";
         target.message.value = "";
     }
