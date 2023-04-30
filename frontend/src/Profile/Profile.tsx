@@ -38,6 +38,7 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
     function submitPost({ title, message }: PostType): void {
         setPosts(posts => [...posts, { title, message, id: posts.length }]);
         setShowPostInput(false);
+        setIsLoading(true);
         useAddPost({
             variables: { userId: user.userId, title, message }
         });
@@ -45,6 +46,7 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
     }
 
     function deletePost(id: number): void {
+        setIsLoading(true);
         useDeletePost({
             variables: { id }
         });
