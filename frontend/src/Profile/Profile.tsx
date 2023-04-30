@@ -75,7 +75,7 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
                     {showPostInput && <><PostInput submitPost={submitPost} /><br /></>}
                 </Grid>
                 <Grid>
-                    {fetchedError && <><p className='error'>Error Fetisching posts: {fetchedError.name}</p><br /></>}
+                    {fetchedError && <><p className='error'>Error Fetching posts: {fetchedError.name}</p><br /></>}
                     {mutationError && <><p className='error'>Error sending post to server: {mutationError.name}</p><br /></>}
                     {postDeletionError && <p className='error'>Error occured when trying to delete post: {postDeletionError.name}</p>}
                 </Grid>
