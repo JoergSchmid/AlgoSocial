@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Button, Paper, Typography, styled } from "@mui/material";
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import { PostType } from "../Profile";
-import { useMutation } from '@apollo/client';
-import { REMOVE_POST } from './gqlRequests';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#eee',
