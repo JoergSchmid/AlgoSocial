@@ -74,10 +74,10 @@ export default function App() {
   }, [theme])
 
   return (
-    <div className={theme}>
+    <>
       <NavBar avatar={avatar} />
       <ToggleThemeButton theme={theme} toggleTheme={toggleTheme} />
       <Profile user={user} avatar={avatar} changeUser={changeUser} />
-    </div>
+    </>
   );
 }
