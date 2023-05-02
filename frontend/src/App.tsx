@@ -3,9 +3,7 @@ import { useState } from "react";
 import "./App.css";
 import Profile from "./Profile/Profile"
 import NavBar from "./NavBar/NavBar";
-import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
-import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
-import { Button } from 'react-bootstrap';
+import ToggleThemeButton from './ToggleTheme/ToggleThemeButton';
 window.React = React;
 
 export type User = {
@@ -78,13 +76,7 @@ export default function App() {
   return (
     <div className={theme}>
       <NavBar avatar={avatar} />
-      <Button
-        variant='outline-primary'
-        onClick={toggleTheme}
-        style={{ marginLeft: "5px", marginTop: "5px" }}
-      >
-        {theme === "light" ? <LightModeOutlinedIcon /> : <DarkModeRoundedIcon />}
-      </Button>
+      <ToggleThemeButton theme={theme} toggleTheme={toggleTheme} />
       <Profile user={user} avatar={avatar} changeUser={changeUser} />
     </div>
   );
