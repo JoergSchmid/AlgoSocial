@@ -20,8 +20,8 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
     const [posts, setPosts] = useState<PostType[]>([]);
     const [showPostInput, setShowPostInput] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [useAddPost, { error: mutationError }] = useMutation(ADD_POST);
-    const [useDeletePost, { error: postDeletionError }] = useMutation(REMOVE_POST);
+    const [requestAddPost, { error: mutationError }] = useMutation(ADD_POST);
+    const [requestDeletePost, { error: postDeletionError }] = useMutation(REMOVE_POST);
     const { data: fetchedData, error: fetchedError, refetch } = useQuery(GET_ALL_POSTS_BY_USER_ID, {
         variables: { id: user.userId },
         fetchPolicy: 'no-cache',
@@ -39,7 +39,7 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
         setPosts(posts => [...posts, { title, message, id: posts.length }]);
         setShowPostInput(false);
         setIsLoading(true);
-        useAddPost({
+        requestAddPost({
             variables: { userId: user.userId, title, message }
         });
         refetch();
@@ -47,7 +47,7 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
 
     function deletePost(id: number): void {
         setIsLoading(true);
-        useDeletePost({
+        requestDeletePost({
             variables: { id }
         });
         refetch();
