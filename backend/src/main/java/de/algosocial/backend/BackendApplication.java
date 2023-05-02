@@ -24,22 +24,4 @@ public class BackendApplication {
 		SpringApplication.run(BackendApplication.class, args);
 	}
 
-	@GetMapping("/hello")
-	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
-		return String.format("Hello %s!", name);
-	}
-
-	@GetMapping("/createPost")
-	public String create(@RequestParam(value = "userid", defaultValue = "1") String userId,
-						 @RequestParam(value = "title", defaultValue = "title") String title,
-						 @RequestParam(value = "message", defaultValue = "message") String message) {
-		postRepository.save(new Post(Integer.parseInt(userId), title, message));
-		return "Created new post!";
-	}
-
-	@GetMapping("/createUser")
-	public String createUser(@RequestParam(value = "name", defaultValue = "joerg") String name) {
-		userRepository.save(new User(name));
-		return "Created new user!";
-	}
 }
