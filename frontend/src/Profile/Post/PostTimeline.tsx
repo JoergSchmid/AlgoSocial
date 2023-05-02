@@ -9,7 +9,7 @@ export default function PostTimeline({ posts, deletePost }: { posts: PostType[],
         posts.map(post => {
             return (
                 <Grid key={post.title}>
-                    <Post post={post} deletePost={() => deletePost(post.id)} />
+                    <Post post={post} deletePost={deletePost} />
                 </Grid>
             );
         })
