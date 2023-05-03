@@ -20,8 +20,8 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
     const [posts, setPosts] = useState<PostType[]>([]);
     const [showPostInput, setShowPostInput] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [requestAddPost, { error: mutationError }] = useMutation(ADD_POST);
-    const [requestDeletePost, { error: postDeletionError }] = useMutation(REMOVE_POST);
+    const [requestAddPost, { error: addPostError }] = useMutation(ADD_POST);
+    const [requestDeletePost, { error: deletePostError }] = useMutation(REMOVE_POST);
     const { data: fetchedData, error: fetchedError, refetch } = useQuery(GET_ALL_POSTS_BY_USER_ID, {
         variables: { id: user.userId },
         fetchPolicy: 'no-cache',
@@ -55,8 +55,8 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
 
     //Logging errors
     if (fetchedError) { console.log(fetchedError); }
-    if (mutationError) { console.log(mutationError); }
-    if (postDeletionError) { console.log(postDeletionError) }
+    if (addPostError) { console.log(addPostError); }
+    if (deletePostError) { console.log(deletePostError) }
 
     return (
         <>
@@ -81,8 +81,8 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
                 </Grid>
                 <Grid>
                     {fetchedError && <><p className='error'>Error Fetching posts: {fetchedError.name}</p><br /></>}
-                    {mutationError && <><p className='error'>Error sending post to server: {mutationError.name}</p><br /></>}
-                    {postDeletionError && <p className='error'>Error occured when trying to delete post: {postDeletionError.name}</p>}
+                    {addPostError && <><p className='error'>Error sending post to server: {addPostError.name}</p><br /></>}
+                    {deletePostError && <p className='error'>Error occured when trying to delete post: {deletePostError.name}</p>}
                 </Grid>
             </Grid>
             <PostTimeline posts={posts} deletePost={deletePost} />
