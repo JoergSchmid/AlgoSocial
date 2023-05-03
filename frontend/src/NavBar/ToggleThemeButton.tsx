@@ -5,9 +5,9 @@ import { Button } from 'react-bootstrap';
 export default function toggleThemeButton({ theme, toggleTheme }: { theme: string, toggleTheme: () => void }) {
     return (
         <Button
-            variant='outline-primary'
+            variant='outline-light'
             onClick={toggleTheme}
-            style={{ marginLeft: "5px", marginTop: "5px" }}
+            style={{ marginRight: "10px" }}
         >
             {theme === "light" ? <LightModeOutlinedIcon /> : <DarkModeRoundedIcon />}
         </Button>

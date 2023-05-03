@@ -3,7 +3,7 @@ import { useState } from "react";
 import "./App.css";
 import Profile from "./Profile/Profile"
 import NavBar from "./NavBar/NavBar";
-import ToggleThemeButton from './ToggleTheme/ToggleThemeButton';
+import ToggleThemeButton from './NavBar/ToggleThemeButton';
 window.React = React;
 
 export type User = {
@@ -48,19 +48,12 @@ const exampleUsers: User[] = [
 ]
 
 export default function App() {
-  const [theme, setTheme] = useState<string>("light");
   const [user, setUser] = useState<User>(exampleUsers[0]);
   // ToDo: require() not to eslint standards. Should use import, but we only need one picture conditioned with index.
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const avatar = require("./static/images/profile_pictures/" + user.pictureIndex + ".jpg");
 
-  function toggleTheme() {
-    if (theme === "light") {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
-  }
+
 
   function changeUser(id?: number): void {
     if (!id) {
@@ -69,14 +62,9 @@ export default function App() {
     setUser(exampleUsers[id]);
   }
 
-  useEffect(() => {
-    document.body.className = theme;
-  }, [theme])
-
   return (
     <>
       <NavBar avatar={avatar} />
-      <ToggleThemeButton theme={theme} toggleTheme={toggleTheme} />
       <Profile user={user} avatar={avatar} changeUser={changeUser} />
     </>
   );

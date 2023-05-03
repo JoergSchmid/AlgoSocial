@@ -1,11 +1,25 @@
 import { AppBar, Avatar, Box, Container, IconButton, Toolbar, Tooltip } from "@mui/material"
 import MenuIcon from '@mui/icons-material/Menu';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LeftLogoWhenBig, NavigationMenuWhenBig, PopupMenuWhenSmall, RightProfileIconMenu, TitleAndLogoWhenSmall } from "./NavBarComponents";
+import ToggleThemeButton from "./ToggleThemeButton";
 
 export default function NavBar({ avatar }: { avatar: string }) {
+  const [theme, setTheme] = useState<string>("light");
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+
+  function toggleTheme() {
+    if (theme === "light") {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  }
+
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme])
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -26,6 +40,7 @@ export default function NavBar({ avatar }: { avatar: string }) {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          <ToggleThemeButton theme={theme} toggleTheme={toggleTheme} />
           <LeftLogoWhenBig />
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
