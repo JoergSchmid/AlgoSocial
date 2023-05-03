@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useState } from "react";
 import "./App.css";
 import Profile from "./Profile/Profile"
 import NavBar from "./NavBar/NavBar";
-import ToggleThemeButton from './NavBar/ToggleThemeButton';
 window.React = React;
 
 export type User = {
