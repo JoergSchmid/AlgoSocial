@@ -20,7 +20,9 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
     const [posts, setPosts] = useState<PostType[]>([]);
     const [showPostInput, setShowPostInput] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [requestAddPost, { error: addPostError }] = useMutation(ADD_POST);
+    const [requestAddPost, { error: addPostError }] = useMutation(ADD_POST, {
+        onCompleted: (): Promise<ApolloQueryResult<any>> => refetch()
+    });
     const [requestDeletePost, { error: deletePostError }] = useMutation(REMOVE_POST, {
         onCompleted: (): Promise<ApolloQueryResult<any>> => refetch()
     });
@@ -43,7 +45,6 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
         requestAddPost({
             variables: { userId: user.userId, title, message }
         });
-        refetch();
     }
 
     function deletePost(id: number): void {
@@ -51,7 +52,6 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
         requestDeletePost({
             variables: { id }
         });
-        refetch();
     }
 
     //Logging errors
