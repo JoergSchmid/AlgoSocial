@@ -36,7 +36,7 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
     }, [fetchedData])
 
     function submitPost({ title, message }: PostType): void {
-        setPosts(posts => [...posts, { title, message, id: posts.length }]);
+        setPosts(posts => [...posts, { title, message, id: -posts.length }]);
         setShowPostInput(false);
         setIsLoading(true);
         requestAddPost({
