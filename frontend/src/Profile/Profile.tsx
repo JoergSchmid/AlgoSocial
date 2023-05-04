@@ -8,7 +8,7 @@ import { Fab } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { ADD_POST, GET_ALL_POSTS_BY_USER_ID, REMOVE_POST } from "./Post/gqlRequests";
-import { useMutation, useQuery } from "@apollo/client";
+import { ApolloQueryResult, useMutation, useQuery } from "@apollo/client";
 
 export type PostType = {
     title: string,
@@ -21,7 +21,9 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
     const [showPostInput, setShowPostInput] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [requestAddPost, { error: addPostError }] = useMutation(ADD_POST);
-    const [requestDeletePost, { error: deletePostError }] = useMutation(REMOVE_POST);
+    const [requestDeletePost, { error: deletePostError }] = useMutation(REMOVE_POST, {
+        onCompleted: (): Promise<ApolloQueryResult<any>> => refetch()
+    });
     const { data: fetchedData, error: fetchedError, refetch } = useQuery(GET_ALL_POSTS_BY_USER_ID, {
         variables: { id: user.userId },
         fetchPolicy: 'no-cache',
