@@ -1,0 +1,26 @@
+type Query {
+    postById(id: ID): Post
+    allPosts: [Post]
+    postsByUserId(id: ID): [Post]
+    userById(id: ID): User
+    userByName(name: String): User
+    allUsers: [User]
+}
+
+type Mutation {
+    addPost(userId: Int, title: String, message: String): Post
+    removePost(id: ID): ID
+}
+
+type User {
+    id: ID!
+    name: String
+    posts: [Post]
+}
+
+type Post {
+    id: ID!
+    user: User
+    title: String
+    message: String
+}
