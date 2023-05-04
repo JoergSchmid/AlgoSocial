@@ -19,7 +19,7 @@ export default function Post({ post, deletePost }: { post: PostType, deletePost:
     const [showDeleteButton, setShowDeleteButton] = useState<boolean>(false);
 
     return (
-        <Item onMouseEnter={() => setShowDeleteButton(true)} onMouseLeave={() => setShowDeleteButton(false)} >
+        <Item onMouseEnter={() => { if (post.id > 0) setShowDeleteButton(true) }} onMouseLeave={() => setShowDeleteButton(false)} >
             <Typography variant="h4" style={{ wordWrap: "break-word" }}>{post.title}</Typography>
             <Typography variant="body1" style={{ wordWrap: "break-word", marginBottom: "20px" }}>{post.message}</Typography>
             {showDeleteButton && <Button
