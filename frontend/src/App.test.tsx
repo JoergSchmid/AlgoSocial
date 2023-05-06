@@ -33,9 +33,9 @@ test('finds the first example user "Joerg"', () => {
   expect(exampleUser).toBeInTheDocument();
 });
 
-test('can create a new post', () => {
+test('can generate a complete post', () => {
   render(
-    <Post post={{ title: test_post.title, message: test_post.message, id: -5 }} deletePost={(id: number) => { }}></Post>
+    <Post post={{ title: test_post.title, message: test_post.message, id: test_user.userId }} deletePost={(id: number) => { }}></Post>
   );
 
   expect(screen.getByText(RegExp(test_post.title))).toBeInTheDocument();
