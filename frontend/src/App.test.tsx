@@ -20,9 +20,8 @@ test('finds the first example user "Joerg"', () => {
 
 test('can create a new post', () => {
   render(
-    <ApolloProvider client={client}>
-      <Post post={{ title: "test_title", message: "test_message", id: -5 }} deletePost={(id: number) => { }}></Post>
-    </ApolloProvider>);
+    <Post post={{ title: "test_title", message: "test_message", id: -5 }} deletePost={(id: number) => { }}></Post>
+  );
 
   expect(screen.getByText(/test_title/)).toBeInTheDocument();
   expect(screen.getByText(/test_message/)).toBeInTheDocument();
