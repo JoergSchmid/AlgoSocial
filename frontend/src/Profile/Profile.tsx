@@ -72,8 +72,8 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
                 </Grid>
                 <Grid>
                     <div style={{ margin: 10 }}>
-                        <Fab aria-label="add" color="primary" style={{ margin: 10 }} onClick={() => setShowPostInput(!showPostInput)}>
-                            {showPostInput ? <RemoveIcon /> : <AddIcon />}
+                        <Fab id="btnTogglePostInput" color="primary" style={{ margin: 10 }} onClick={() => setShowPostInput(!showPostInput)}>
+                            {showPostInput ? <RemoveIcon id="removeIcon" /> : <AddIcon id="addIcon" />}
                         </Fab>
                     </div>
                 </Grid>
