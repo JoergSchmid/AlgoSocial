@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from '@cfaester/enzyme-adapter-react-18';
 
@@ -48,28 +48,29 @@ test('can generate a complete post', () => {
 });
 
 test('can add a Post with PostInput', () => {
-  const wrapper = mount(
-    <ApolloProvider client={client}>
-      <Profile user={test_user} avatar={avatar} changeUser={() => { }} />
-    </ApolloProvider>
-  )
+  // const wrapper = mount(
+  //   <ApolloProvider client={client}>
+  //     <Profile user={test_user} avatar={avatar} changeUser={() => { }} />
+  //   </ApolloProvider>
+  // )
+  render(<ApolloProvider client={client}>
+    <Profile user={test_user} avatar={avatar} changeUser={() => { }} />
+  </ApolloProvider>);
 
-  //PostInput should start closed
+  // PostInput should start closed
   expect(screen.queryByLabelText(/title/i)).not.toBeInTheDocument();
-  expect(wrapper.find('#removeIcon').exists()).toBe(false);
-  expect(wrapper.find('#addIcon').exists()).toBe(true);
-
-
-  // ToDo: This test fails. wrapper finds 5 elements. No good solution found yet.
-  // Current workarount: Use the .last() node. .first() does NOT work.
-
-  //expect(wrapper.find("#btnTogglePostInput").length).toEqual(1);
+  expect(screen.queryByTestId('removeIcon')).not.toBeInTheDocument();
+  expect(screen.getByTestId('addIcon')).toBeInTheDocument();
 
   // Click the addIcon <Fab>
-  wrapper.find('#btnTogglePostInput').last().simulate('click');
-  expect(wrapper.find('#removeIcon').exists()).toBe(true);
-  expect(wrapper.find('#addIcon').exists()).toBe(false);
+  act(() => {
+    screen.getByTestId("btn").click();
+  });
 
-  //ToDo: Enter text and message
+  // Check, if the Icon switched
+  expect(screen.getByTestId('removeIcon')).toBeInTheDocument();
+  expect(screen.queryByTestId('addIcon')).not.toBeInTheDocument();
+
+  //ToDo: Enter title and message
 });
 
