@@ -64,7 +64,7 @@ test('can add a Post with PostInput', () => {
 
   // Click the addIcon <Fab>
   act(() => {
-    screen.getByTestId("btn").click();
+    screen.getByTestId("btn_TogglePostInput").click();
   });
 
   // Check, if the Icon switched
