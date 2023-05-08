@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from '@cfaester/enzyme-adapter-react-18';
 
@@ -48,11 +48,6 @@ test('can generate a complete post', () => {
 });
 
 test('can add a Post with PostInput', () => {
-  // const wrapper = mount(
-  //   <ApolloProvider client={client}>
-  //     <Profile user={test_user} avatar={avatar} changeUser={() => { }} />
-  //   </ApolloProvider>
-  // )
   render(<ApolloProvider client={client}>
     <Profile user={test_user} avatar={avatar} changeUser={() => { }} />
   </ApolloProvider>);
@@ -71,6 +66,20 @@ test('can add a Post with PostInput', () => {
   expect(screen.getByTestId('removeIcon')).toBeInTheDocument();
   expect(screen.queryByTestId('addIcon')).not.toBeInTheDocument();
 
-  //ToDo: Enter title and message
+  // Check, if TextFields and Button are present
+  expect(screen.getByLabelText("Title")).toBeInTheDocument();
+  expect(screen.getByLabelText("Message")).toBeInTheDocument();
+  expect(screen.getByTestId("btn_submit")).toBeInTheDocument();
+
+  // Check, if TextFields are empty
+  expect(screen.getByLabelText("Title")).toHaveValue("");
+  expect(screen.getByLabelText("Message")).toHaveValue("");
+
+  // Submit new post
+  fireEvent.change(screen.getByLabelText("Title"), { target: { value: test_post.title } });
+  fireEvent.change(screen.getByLabelText("Message"), { target: { value: test_post.message } });
+  act(() => {
+    screen.getByTestId("btn_submit").click();
+  });
 });
 
