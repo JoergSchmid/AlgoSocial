@@ -26,70 +26,76 @@ const test_post: PostType = {
   message: "This is a test post for testing purposes."
 }
 
-test('finds the first example user "Joerg"', () => {
-  render(
-    <ApolloProvider client={client}>
-      <App />
+describe('App component', () => {
+  test('finds the first example user "Joerg"', () => {
+    render(
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>);
+    const exampleUser = screen.getByText(/Joerg/);
+    expect(exampleUser).toBeInTheDocument();
+  });
+})
+
+describe('Post component', () => {
+  test('can generate a complete post', () => {
+    render(
+      <Post post={{ title: test_post.title, message: test_post.message, id: test_user.userId }} deletePost={(id: number) => { }}></Post>
+    );
+
+    expect(screen.getByText(RegExp(test_post.title))).toBeInTheDocument();
+    expect(screen.getByText(RegExp(test_post.message))).toBeInTheDocument();
+  });
+})
+
+describe('Profile component', () => {
+  test('can add a Post with PostInput', () => {
+    render(<ApolloProvider client={client}>
+      <Profile user={test_user} avatar={avatar} changeUser={() => { }} />
     </ApolloProvider>);
-  const exampleUser = screen.getByText(/Joerg/);
-  expect(exampleUser).toBeInTheDocument();
-});
 
-test('can generate a complete post', () => {
-  render(
-    <Post post={{ title: test_post.title, message: test_post.message, id: test_user.userId }} deletePost={(id: number) => { }}></Post>
-  );
+    // PostInput should start closed
+    expect(screen.queryByLabelText(/title/i)).not.toBeInTheDocument();
+    expect(screen.queryByTestId('removeIcon')).not.toBeInTheDocument();
+    expect(screen.getByTestId('addIcon')).toBeInTheDocument();
 
-  expect(screen.getByText(RegExp(test_post.title))).toBeInTheDocument();
-  expect(screen.getByText(RegExp(test_post.message))).toBeInTheDocument();
-});
+    // Click the addIcon <Fab>
+    act(() => {
+      screen.getByTestId("btn_TogglePostInput").click();
+    });
 
-test('can add a Post with PostInput', () => {
-  render(<ApolloProvider client={client}>
-    <Profile user={test_user} avatar={avatar} changeUser={() => { }} />
-  </ApolloProvider>);
+    // Check, if the Icon switched
+    expect(screen.getByTestId('removeIcon')).toBeInTheDocument();
+    expect(screen.queryByTestId('addIcon')).not.toBeInTheDocument();
 
-  // PostInput should start closed
-  expect(screen.queryByLabelText(/title/i)).not.toBeInTheDocument();
-  expect(screen.queryByTestId('removeIcon')).not.toBeInTheDocument();
-  expect(screen.getByTestId('addIcon')).toBeInTheDocument();
+    // Check, if TextFields and Button are present
+    expect(screen.getByLabelText("Title")).toBeInTheDocument();
+    expect(screen.getByLabelText("Message")).toBeInTheDocument();
+    expect(screen.getByTestId("btn_submit")).toBeInTheDocument();
 
-  // Click the addIcon <Fab>
-  act(() => {
-    screen.getByTestId("btn_TogglePostInput").click();
+    // Check, if TextFields are empty
+    expect(screen.getByLabelText("Title")).toHaveValue("");
+    expect(screen.getByLabelText("Message")).toHaveValue("");
+
+    // Submit new post
+    const titleInput = screen.getByLabelText("Title");
+    const messageInput = screen.getByLabelText("Message");
+    fireEvent.change(titleInput, { target: { value: test_post.title } });
+    fireEvent.change(messageInput, { target: { value: test_post.message } });
+    expect(titleInput).toHaveValue(test_post.title);
+    expect(messageInput).toHaveValue(test_post.message);
+    act(() => {
+      screen.getByTestId("btn_submit").click();
+    });
+
+    // Check, if PostInput is closed again
+    expect(screen.queryByLabelText(/title/i)).not.toBeInTheDocument();
+    expect(screen.queryByTestId('removeIcon')).not.toBeInTheDocument();
+    expect(screen.getByTestId('addIcon')).toBeInTheDocument();
+
+    // Check for test_post on the page
+    expect(screen.getByText(RegExp(test_post.title))).toBeInTheDocument();
+    expect(screen.getByText(RegExp(test_post.message))).toBeInTheDocument();
   });
-
-  // Check, if the Icon switched
-  expect(screen.getByTestId('removeIcon')).toBeInTheDocument();
-  expect(screen.queryByTestId('addIcon')).not.toBeInTheDocument();
-
-  // Check, if TextFields and Button are present
-  expect(screen.getByLabelText("Title")).toBeInTheDocument();
-  expect(screen.getByLabelText("Message")).toBeInTheDocument();
-  expect(screen.getByTestId("btn_submit")).toBeInTheDocument();
-
-  // Check, if TextFields are empty
-  expect(screen.getByLabelText("Title")).toHaveValue("");
-  expect(screen.getByLabelText("Message")).toHaveValue("");
-
-  // Submit new post
-  const titleInput = screen.getByLabelText("Title");
-  const messageInput = screen.getByLabelText("Message");
-  fireEvent.change(titleInput, { target: { value: test_post.title } });
-  fireEvent.change(messageInput, { target: { value: test_post.message } });
-  expect(titleInput).toHaveValue(test_post.title);
-  expect(messageInput).toHaveValue(test_post.message);
-  act(() => {
-    screen.getByTestId("btn_submit").click();
-  });
-
-  // Check, if PostInput is closed again
-  expect(screen.queryByLabelText(/title/i)).not.toBeInTheDocument();
-  expect(screen.queryByTestId('removeIcon')).not.toBeInTheDocument();
-  expect(screen.getByTestId('addIcon')).toBeInTheDocument();
-
-  // Check for test_post on the page
-  expect(screen.getByText(RegExp(test_post.title))).toBeInTheDocument();
-  expect(screen.getByText(RegExp(test_post.message))).toBeInTheDocument();
-});
+})
 
