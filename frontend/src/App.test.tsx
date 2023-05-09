@@ -78,10 +78,23 @@ test('can add a Post with PostInput', () => {
   expect(screen.getByLabelText("Message")).toHaveValue("");
 
   // Submit new post
-  fireEvent.change(screen.getByLabelText("Title"), { target: { value: test_post.title } });
-  fireEvent.change(screen.getByLabelText("Message"), { target: { value: test_post.message } });
+  const titleInput = screen.getByLabelText("Title");
+  const messageInput = screen.getByLabelText("Message");
+  fireEvent.change(titleInput, { target: { value: test_post.title } });
+  fireEvent.change(messageInput, { target: { value: test_post.message } });
+  expect(titleInput).toHaveValue(test_post.title);
+  expect(messageInput).toHaveValue(test_post.message);
   act(() => {
     screen.getByTestId("btn_submit").click();
   });
+
+  // Check, if PostInput is closed again
+  expect(screen.queryByLabelText(/title/i)).not.toBeInTheDocument();
+  expect(screen.queryByTestId('removeIcon')).not.toBeInTheDocument();
+  expect(screen.getByTestId('addIcon')).toBeInTheDocument();
+
+  // Check for test_post on the page
+  expect(screen.getByText(RegExp(test_post.title))).toBeInTheDocument();
+  expect(screen.getByText(RegExp(test_post.message))).toBeInTheDocument();
 });
 
