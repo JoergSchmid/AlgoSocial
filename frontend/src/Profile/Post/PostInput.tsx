@@ -7,25 +7,17 @@ export default function PostInput({ submitPost }: { submitPost: (post: PostType)
     const [title, setTitle] = useState<string>(" "); // Contains a space so it doesn´t start with an error message. Space is not really in text field.
     const [message, setMessage] = useState<string>(" ");
 
+    function isEmpty(text: string): boolean {
+        return text === "" || text === " ";
+    }
+
     const handleSubmitButtonClick = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const target = event.target as typeof event.target & {
-            title: { value: string };
-            message: { value: string };
-        };
-
-        if (target.title.value === "") {
-            setTitle("");
-            return;
-        }
-        if (target.message.value === "") {
-            setMessage("");
+        if (isEmpty(title) || isEmpty(message)) {
             return;
         }
         submitPost({ title, message, id: -1 });
-        target.title.value = "";
-        target.message.value = "";
     }
 
     return (
