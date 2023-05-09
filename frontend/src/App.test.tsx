@@ -1,15 +1,10 @@
 import React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from '@cfaester/enzyme-adapter-react-18';
-
 import App from './App';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import Post from './Profile/Post/Post';
 import Profile, { PostType } from './Profile/Profile';
 import { User } from "./App";
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const client = new ApolloClient({
   uri: '/graphql',
