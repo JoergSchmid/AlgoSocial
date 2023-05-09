@@ -23,6 +23,8 @@ const test_user: User = {
   pictureIndex: 0
 }
 
+const avatar = require("./static/images/profile_pictures/" + test_user.pictureIndex + ".jpg");
+
 const test_post: PostType = {
   id: -1,
   title: "A test post",
