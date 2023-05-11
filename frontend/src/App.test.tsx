@@ -96,6 +96,21 @@ describe('Profile component', () => {
     // Check for test_post on the page
     expect(screen.getByText(RegExp(test_post.title))).toBeInTheDocument();
     expect(screen.getByText(RegExp(test_post.message))).toBeInTheDocument();
-  });
-})
 
+    // Move mouse on post and click the delete button
+    expect(screen.getByTestId("postContainer")).toBeInTheDocument();
+    fireEvent.mouseEnter(screen.getByTestId("postContainer"));
+    expect(screen.getByTestId("btn_delete")).toBeInTheDocument();
+    act(() => {
+      screen.getByTestId("btn_delete").click();
+      // note: post will not be removed without server connection
+    });
+
+    // Check, if delete button disappears
+    fireEvent.mouseLeave(screen.getByTestId("postContainer"));
+    expect(screen.queryByTestId("btn_delete")).not.toBeInTheDocument();
+
+    // Check for loading button indicating a delete request to the server has been sent
+    expect(screen.getByTestId("loadIcon")).toBeInTheDocument();
+  })
+})

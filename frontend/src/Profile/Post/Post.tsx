@@ -16,14 +16,19 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function Post({ post, deletePost }: { post: PostType, deletePost: (id: number) => void }) {
-    const [showDeleteButton, setShowDeleteButton] = useState<boolean>(false);
+    const [showDeleteButton, setShowDeleteButton] = useState<boolean>(true);
 
     return (
-        <Item onMouseEnter={() => { if (post.id > 0) setShowDeleteButton(true) }} onMouseLeave={() => setShowDeleteButton(false)} >
+        <Item
+            data-testid="postContainer"
+            onMouseEnter={() => { if (post.id > 0) setShowDeleteButton(true) }}
+            onMouseLeave={() => setShowDeleteButton(false)}
+        >
             <Typography variant="h4" style={{ wordWrap: "break-word" }}>{post.title}</Typography>
             <Typography variant="body1" style={{ wordWrap: "break-word", marginBottom: "20px" }}>{post.message}</Typography>
             {showDeleteButton && <Button
                 variant='text'
+                data-testid="btn_delete"
                 style={{
                     color: "darkred",
                     position: "absolute",
