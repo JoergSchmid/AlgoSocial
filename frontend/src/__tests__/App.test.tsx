@@ -1,10 +1,10 @@
 import React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import App from './App';
+import App from '../App';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-import Post from './Profile/Post/Post';
-import Profile, { PostType } from './Profile/Profile';
-import { User } from "./App";
+import Post from '../Profile/Post/Post';
+import Profile, { PostType } from '../Profile/Profile';
+import { User } from "../App";
 
 const client = new ApolloClient({
   uri: '/graphql',
@@ -18,7 +18,7 @@ const test_user: User = {
   pictureIndex: 0
 }
 
-const avatar = require("./static/images/profile_pictures/" + test_user.pictureIndex + ".jpg");
+const avatar = require("../static/images/profile_pictures/" + test_user.pictureIndex + ".jpg");
 
 const test_post: PostType = {
   id: 1,
