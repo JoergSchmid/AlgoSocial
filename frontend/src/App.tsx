@@ -46,8 +46,8 @@ const exampleUsers: User[] = [
   }
 ]
 
-export default function App() {
-  const [user, setUser] = useState<User>(exampleUsers[0]);
+export default function App({ userList = exampleUsers }: { userList?: User[] }) {
+  const [user, setUser] = useState<User>(userList[0]);
   // ToDo: require() not to eslint standards. Should use import, but we only need one picture conditioned with index.
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const avatar = require("./static/images/profile_pictures/" + user.pictureIndex + ".jpg");
@@ -56,7 +56,7 @@ export default function App() {
 
   function changeUser(id?: number): void {
     if (!id) {
-      id = (user.userId + 1) % 6;
+      id = (user.userId + 1) % userList.length;
     }
     setUser(exampleUsers[id]);
   }
