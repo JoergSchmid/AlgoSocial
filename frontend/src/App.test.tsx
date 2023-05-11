@@ -69,17 +69,18 @@ describe('Profile component', () => {
     expect(screen.queryByTestId('addIcon')).not.toBeInTheDocument();
 
     // Check, if TextFields and Button are present
-    expect(screen.getByLabelText("Title")).toBeInTheDocument();
-    expect(screen.getByLabelText("Message")).toBeInTheDocument();
-    expect(screen.getByTestId("btn_submit")).toBeInTheDocument();
-
-    // Check, if TextFields are empty
-    expect(screen.getByLabelText("Title")).toHaveValue("");
-    expect(screen.getByLabelText("Message")).toHaveValue("");
-
-    // Submit new post
     const titleInput = screen.getByLabelText("Title");
     const messageInput = screen.getByLabelText("Message");
+    const buttonSubmit = screen.getByTestId("btn_submit");
+    expect(titleInput).toBeInTheDocument();
+    expect(messageInput).toBeInTheDocument();
+    expect(buttonSubmit).toBeInTheDocument();
+
+    // Check, if TextFields are empty
+    expect(titleInput).toHaveValue("");
+    expect(messageInput).toHaveValue("");
+
+    // Submit new post
     fireEvent.change(titleInput, { target: { value: test_post.title } });
     fireEvent.change(messageInput, { target: { value: test_post.message } });
     expect(titleInput).toHaveValue(test_post.title);
