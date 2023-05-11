@@ -16,7 +16,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function Post({ post, deletePost }: { post: PostType, deletePost: (id: number) => void }) {
-    const [showDeleteButton, setShowDeleteButton] = useState<boolean>(true);
+    const [showDeleteButton, setShowDeleteButton] = useState<boolean>(false);
 
     return (
         <Item
