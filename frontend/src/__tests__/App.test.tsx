@@ -10,14 +10,21 @@ export const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-export const test_user: User = {
-  userId: -1,
-  name: "test_user",
-  description: "A user designed for testing",
-  pictureIndex: 0
-}
+export const testUsers: User[] = [
+  {
+    userId: -1,
+    name: "test_user",
+    description: "A user designed for testing",
+    pictureIndex: 0
+  }, {
+    userId: -2,
+    name: "Second user for testing",
+    description: "This is a description!",
+    pictureIndex: 0
+  }
+]
 
-export const avatar = require("../static/images/profile_pictures/" + test_user.pictureIndex + ".jpg");
+export const avatar = require("../static/images/profile_pictures/" + testUsers[0].pictureIndex + ".jpg");
 
 export const test_post: PostType = {
   id: 1,

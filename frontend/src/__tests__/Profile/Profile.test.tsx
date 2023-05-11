@@ -2,12 +2,12 @@ import React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { ApolloProvider } from '@apollo/client';
 import Profile from '../../Profile/Profile';
-import { avatar, client, test_post, test_user } from '../App.test';
+import { avatar, client, test_post, testUsers } from '../App.test';
 
 describe('Profile component', () => {
     test('can add a Post with PostInput', () => {
         render(<ApolloProvider client={client}>
-            <Profile user={test_user} avatar={avatar} changeUser={() => { }} />
+            <Profile user={testUsers[0]} avatar={avatar} changeUser={() => { }} />
         </ApolloProvider>);
 
         // PostInput should start closed
@@ -69,5 +69,5 @@ describe('Profile component', () => {
 
         // Check for loading button indicating a delete request to the server has been sent
         expect(screen.getByTestId("loadIcon")).toBeInTheDocument();
-    })
+    });
 })
