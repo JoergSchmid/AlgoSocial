@@ -21,7 +21,7 @@ const test_user: User = {
 const avatar = require("./static/images/profile_pictures/" + test_user.pictureIndex + ".jpg");
 
 const test_post: PostType = {
-  id: -1,
+  id: 1,
   title: "A test post",
   message: "This is a test post for testing purposes."
 }
