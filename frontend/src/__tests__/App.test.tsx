@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import App from '../App';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { PostType } from '../Profile/Profile';
@@ -37,8 +37,34 @@ describe('App component', () => {
     render(
       <ApolloProvider client={client}>
         <App />
-      </ApolloProvider>);
+      </ApolloProvider>
+    );
     const exampleUser = screen.getByText(/Joerg/);
     expect(exampleUser).toBeInTheDocument();
   });
+
+  test('can toggle dark mode', () => {
+    render(
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
+    );
+
+    const btn_toggleTheme = screen.getByTestId("btn_toggleTheme");
+
+    expect(btn_toggleTheme).toBeInTheDocument();
+    expect(document.body).toHaveClass("light");
+
+    act(() => {
+      btn_toggleTheme.click();
+    })
+
+    expect(document.body).toHaveClass("dark");
+
+    act(() => {
+      btn_toggleTheme.click();
+    })
+
+    expect(document.body).toHaveClass("light");
+  })
 })
