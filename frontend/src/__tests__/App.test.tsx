@@ -12,12 +12,12 @@ export const client = new ApolloClient({
 
 export const testUsers: User[] = [
   {
-    userId: -1,
+    userId: 0,
     name: "test_user",
     description: "A user designed for testing",
     pictureIndex: 0
   }, {
-    userId: -2,
+    userId: 1,
     name: "Second user for testing",
     description: "This is a description!",
     pictureIndex: 0
@@ -42,6 +42,26 @@ describe('App component', () => {
     const exampleUser = screen.getByText(/Joerg/);
     expect(exampleUser).toBeInTheDocument();
   });
+
+  test('can switch between users by clicking profile picture', () => {
+    render(
+      <ApolloProvider client={client}>
+        <App userList={testUsers} />
+      </ApolloProvider>
+    );
+
+    const profilePicture = screen.getByTestId("profilePicture");
+
+    expect(profilePicture).toBeInTheDocument();
+    expect(screen.getByText(RegExp(testUsers[0].description))).toBeInTheDocument();
+
+    act(() => {
+      profilePicture.click();
+    })
+
+    expect(screen.queryByText(RegExp(testUsers[0].description))).not.toBeInTheDocument();
+    expect(screen.getByText(RegExp(testUsers[1].description))).toBeInTheDocument();
+  })
 
   test('can toggle dark mode', () => {
     render(
