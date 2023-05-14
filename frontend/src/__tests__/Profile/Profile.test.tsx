@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { ApolloProvider } from '@apollo/client';
 import Profile from '../../Profile/Profile';
@@ -6,6 +6,11 @@ import { avatar, client, test_post, testUsers } from '../App.test';
 
 describe('Profile component', () => {
     test('can add a Post with PostInput', () => {
+        // Mock the showDeleteButton hook
+        const realUseState: any = React.useState;
+        const stubInitialState = [true];
+        jest.spyOn(React, "useState").mockImplementation(() => realUseState(stubInitialState))
+
         render(<ApolloProvider client={client}>
             <Profile user={testUsers[0]} avatar={avatar} changeUser={() => { }} />
         </ApolloProvider>);
@@ -51,21 +56,22 @@ describe('Profile component', () => {
         expect(screen.getByTestId('addIcon')).toBeInTheDocument();
 
         // Check for test_post on the page
+        expect(screen.getByTestId("postContainer")).toBeInTheDocument();
         expect(screen.getByText(RegExp(test_post.title))).toBeInTheDocument();
         expect(screen.getByText(RegExp(test_post.message))).toBeInTheDocument();
 
-        // Move mouse on post and click the delete button
-        expect(screen.getByTestId("postContainer")).toBeInTheDocument();
-        fireEvent.mouseEnter(screen.getByTestId("postContainer"));
-        expect(screen.getByTestId("btn_delete")).toBeInTheDocument();
+        // MouseOver postContainer event, which sets "showDeleteButton" hook to true,
+        // mocked by setting useState above, since only real, fetched posts can be deleted.
+        const deleteButton = screen.getByTestId("btn_delete");
+        expect(deleteButton).toBeInTheDocument();
         act(() => {
-            screen.getByTestId("btn_delete").click();
+            deleteButton.click();
             // note: post will not be removed without server connection
         });
 
         // Check, if delete button disappears
         fireEvent.mouseLeave(screen.getByTestId("postContainer"));
-        expect(screen.queryByTestId("btn_delete")).not.toBeInTheDocument();
+        expect(deleteButton).not.toBeInTheDocument();
 
         // Check for loading button indicating a delete request to the server has been sent
         expect(screen.getByTestId("loadIcon")).toBeInTheDocument();
