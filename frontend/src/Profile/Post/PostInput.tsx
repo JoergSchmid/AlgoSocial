@@ -7,25 +7,17 @@ export default function PostInput({ submitPost }: { submitPost: (post: PostType)
     const [title, setTitle] = useState<string>(" "); // Contains a space so it doesn´t start with an error message. Space is not really in text field.
     const [message, setMessage] = useState<string>(" ");
 
+    function isEmpty(text: string): boolean {
+        return text === "" || text === " ";
+    }
+
     const handleSubmitButtonClick = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const target = event.target as typeof event.target & {
-            title: { value: string };
-            message: { value: string };
-        };
-
-        if (target.title.value === "") {
-            setTitle("");
-            return;
-        }
-        if (target.message.value === "") {
-            setMessage("");
+        if (isEmpty(title) || isEmpty(message)) {
             return;
         }
         submitPost({ title, message, id: -1 });
-        target.title.value = "";
-        target.message.value = "";
     }
 
     return (
@@ -50,7 +42,7 @@ export default function PostInput({ submitPost }: { submitPost: (post: PostType)
                     <TextField
                         variant="outlined"
                         id="message"
-                        label="Your post"
+                        label="Message"
                         onChange={event => setMessage(event.target.value)}
                         error={message === ""}
                         helperText={message === "" ? "Please enter a text." : ""}
@@ -58,7 +50,12 @@ export default function PostInput({ submitPost }: { submitPost: (post: PostType)
                         multiline
                         sx={{ width: "40ch" }}
                     ></TextField><br />
-                    <Button variant="contained" type="submit" style={{ float: "right", borderRadius: "12px", marginBottom: "5px" }}>Submit Post</Button>
+                    <Button
+                        variant="contained"
+                        type="submit"
+                        data-testid="btn_submit"
+                        style={{ float: "right", borderRadius: "12px", marginBottom: "5px" }}
+                    >Submit Post</Button>
                 </form>
             </CardContent>
         </Card>

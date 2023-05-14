@@ -64,7 +64,15 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
             {isLoading && <LoadIcon />}
             <Grid container spacing={2} sx={{ m: 2 }}>
                 <Grid>
-                    <img src={avatar} alt="Profile" width="100px" height="100px" style={{ borderRadius: "8px" }} onClick={() => { changeUser(); setShowPostInput(false); }} />
+                    <img
+                        data-testid="profilePicture"
+                        src={avatar}
+                        alt="Profile"
+                        width="100px"
+                        height="100px"
+                        style={{ borderRadius: "8px" }}
+                        onClick={() => { changeUser(); setShowPostInput(false); }}
+                    />
                 </Grid>
                 <Grid>
                     <h1>{user.name}</h1>
@@ -72,8 +80,8 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
                 </Grid>
                 <Grid>
                     <div style={{ margin: 10 }}>
-                        <Fab aria-label="add" color="primary" style={{ margin: 10 }} onClick={() => setShowPostInput(!showPostInput)}>
-                            {showPostInput ? <RemoveIcon /> : <AddIcon />}
+                        <Fab data-testid="btn_TogglePostInput" color="primary" style={{ margin: 10 }} onClick={() => setShowPostInput(!showPostInput)}>
+                            {showPostInput ? <RemoveIcon data-testid="removeIcon" /> : <AddIcon data-testid="addIcon" />}
                         </Fab>
                     </div>
                 </Grid>
