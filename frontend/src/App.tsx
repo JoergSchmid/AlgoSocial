@@ -58,7 +58,7 @@ export default function App({ userList = exampleUsers }: { userList?: User[] }) 
     if (!id) {
       id = (user.userId + 1) % userList.length;
     }
-    setUser(exampleUsers[id]);
+    setUser(userList[id]);
   }
 
   return (
