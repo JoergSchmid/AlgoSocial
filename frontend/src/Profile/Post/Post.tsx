@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Paper, Typography, styled } from "@mui/material";
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import { PostType } from "../Profile";
@@ -16,7 +16,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function Post({ post, deletePost }: { post: PostType, deletePost: (id: number) => void }) {
-    const [showDeleteButton, setShowDeleteButton] = React.useState<boolean>(false);
+    const [showDeleteButton, setShowDeleteButton] = useState<boolean>(false);
 
     return (
         <Item
