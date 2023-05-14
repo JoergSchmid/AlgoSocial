@@ -51,16 +51,18 @@ describe('App component', () => {
     );
 
     const profilePicture = screen.getByTestId("profilePicture");
+    const queryTestUser = (id: number) => { return screen.queryByText(RegExp(testUsers[id].description)) }
+    const getTestUser = (id: number) => { return screen.getByText(RegExp(testUsers[id].description)) }
 
     expect(profilePicture).toBeInTheDocument();
-    expect(screen.getByText(RegExp(testUsers[0].description))).toBeInTheDocument();
+    expect(getTestUser(0)).toBeInTheDocument();
 
     act(() => {
       profilePicture.click();
     })
 
-    expect(screen.queryByText(RegExp(testUsers[0].description))).not.toBeInTheDocument();
-    expect(screen.getByText(RegExp(testUsers[1].description))).toBeInTheDocument();
+    expect(queryTestUser(0)).not.toBeInTheDocument();
+    expect(getTestUser(1)).toBeInTheDocument();
   })
 
   test('can toggle dark mode', () => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { ApolloProvider } from '@apollo/client';
 import Profile from '../../Profile/Profile';
@@ -11,14 +11,17 @@ describe('Profile component', () => {
         const stubInitialState = [true];
         jest.spyOn(React, "useState").mockImplementation(() => realUseState(stubInitialState))
 
-        render(<ApolloProvider client={client}>
-            <Profile user={testUsers[0]} avatar={avatar} changeUser={() => { }} />
-        </ApolloProvider>);
+        render(
+            <ApolloProvider client={client}>
+                <Profile user={testUsers[0]} avatar={avatar} changeUser={() => { }} />
+            </ApolloProvider>
+        );
 
         // PostInput should start closed
+        const addIcon = screen.getByTestId('addIcon');
         expect(screen.queryByLabelText(/title/i)).not.toBeInTheDocument();
         expect(screen.queryByTestId('removeIcon')).not.toBeInTheDocument();
-        expect(screen.getByTestId('addIcon')).toBeInTheDocument();
+        expect(addIcon).toBeInTheDocument();
 
         // Click the addIcon <Fab>
         act(() => {
@@ -26,8 +29,9 @@ describe('Profile component', () => {
         });
 
         // Check, if the Icon switched
-        expect(screen.getByTestId('removeIcon')).toBeInTheDocument();
-        expect(screen.queryByTestId('addIcon')).not.toBeInTheDocument();
+        const removeIcon = screen.getByTestId('removeIcon');
+        expect(removeIcon).toBeInTheDocument();
+        expect(addIcon).not.toBeInTheDocument();
 
         // Check, if TextFields and Button are present
         const titleInput = screen.getByLabelText("Title");
@@ -52,7 +56,7 @@ describe('Profile component', () => {
 
         // Check, if PostInput is closed again
         expect(screen.queryByLabelText(/title/i)).not.toBeInTheDocument();
-        expect(screen.queryByTestId('removeIcon')).not.toBeInTheDocument();
+        expect(removeIcon).not.toBeInTheDocument();
         expect(screen.getByTestId('addIcon')).toBeInTheDocument();
 
         // Check for test_post on the page
