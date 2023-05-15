@@ -1,4 +1,4 @@
-import { MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { Button, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import { useState } from "react"
 
 
@@ -38,15 +38,49 @@ export default function Algorithms() {
             <br />
             <TextField
                 variant="outlined"
-                type="number"
-                id="input_isPrime"
-                data-testid="input_isPrime"
-                label="input number for prime test"
+                hidden={algorithm !== "isPrime"}
+                id="input_number"
+                data-testid="input_number"
+                label="Enter number"
                 onChange={event => setInput(+event.target.value)}
-                helperText={input === null ? "Please enter a number." : ""}
                 margin="dense"
                 multiline
                 sx={{ width: "40ch" }}
+            />
+            <TextField
+                variant="outlined"
+                hidden={algorithm !== "bubblesort" && algorithm !== "quicksort"}
+                id="input_multiple_numbers"
+                data-testid="input_multiple_numbers"
+                label="Try '8,128,42,5,...'"
+                onChange={event => setInput(+event.target.value)}
+                margin="dense"
+                multiline
+                sx={{ width: "40ch" }}
+            />
+            <br />
+            <Button
+                id="submit_algorithm"
+                data-testid="submit_algorithm"
+                variant="contained"
+            >
+                Start
+            </Button>
+
+            <br /> <br />
+
+            <TextField
+                id="query_status"
+                data-testid="query_status"
+                label="Status:NYI"
+                disabled
+            />
+            <br />
+            <TextField
+                id="query_result"
+                data-testid="query_result"
+                label="ResultBox"
+                disabled
             />
         </>
     )
