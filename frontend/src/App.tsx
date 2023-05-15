@@ -3,6 +3,8 @@ import { useState } from "react";
 import "./App.css";
 import Profile from "./Profile/Profile"
 import NavBar from "./NavBar/NavBar";
+import Algorithms from './Algorithms/Algorithms';
+import { pages } from './NavBar/NavBarComponents';
 window.React = React;
 
 export type User = {
@@ -46,13 +48,12 @@ const exampleUsers: User[] = [
   }
 ]
 
-export default function App({ userList = exampleUsers }: { userList?: User[] }) {
+export default function App({ userList = exampleUsers, openPage = "Profile" }: { userList?: User[], openPage?: string }) {
   const [user, setUser] = useState<User>(userList[0]);
+  const [page, setPage] = useState<string>(openPage)
   // ToDo: require() not to eslint standards. Should use import, but we only need one picture conditioned with index.
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const avatar = require("./static/images/profile_pictures/" + user.pictureIndex + ".jpg");
-
-
 
   function changeUser(id?: number): void {
     if (!id) {
@@ -61,10 +62,18 @@ export default function App({ userList = exampleUsers }: { userList?: User[] }) 
     setUser(userList[id]);
   }
 
+  function changePage(toPage: string): void {
+    if (!pages.includes(toPage)) {
+      setPage("Profile");
+    }
+    setPage(toPage);
+  }
+
   return (
     <>
-      <NavBar avatar={avatar} />
-      <Profile user={user} avatar={avatar} changeUser={changeUser} />
+      <NavBar avatar={avatar} changePage={changePage} />
+      {page === "Profile" && <Profile user={user} avatar={avatar} changeUser={changeUser} />}
+      {page === "Algorithms" && <Algorithms />}
     </>
   );
 }

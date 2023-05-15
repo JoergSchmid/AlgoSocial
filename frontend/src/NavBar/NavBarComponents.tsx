@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, Menu, MenuItem, Typography } from "@mui/material"
 import logo from "../static/images/logo.png"
 
-const pages = ['Home', 'Profile', 'Settings', '(NYI)'];
+export const pages = ['Profile', 'Algorithms'];
 const settings = ['Profile', 'Account', 'Logout'];
 
 export function LeftLogoWhenBig() {
@@ -28,7 +28,11 @@ export function LeftLogoWhenBig() {
     );
 }
 
-export function PopupMenuWhenSmall({ anchorElNav, handleCloseNavMenu }: { anchorElNav: null | HTMLElement, handleCloseNavMenu: (event: React.MouseEvent<HTMLElement>) => void }) {
+export function PopupMenuWhenSmall({ anchorElNav, handleCloseNavMenu, handlePageButtonClick }: {
+    anchorElNav: null | HTMLElement,
+    handleCloseNavMenu: (event: React.MouseEvent<HTMLElement>) => void,
+    handlePageButtonClick: (page: string) => void
+}) {
     return (
         <Menu
             id="menu-appbar"
@@ -49,7 +53,7 @@ export function PopupMenuWhenSmall({ anchorElNav, handleCloseNavMenu }: { anchor
             }}
         >
             {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={() => handlePageButtonClick(page)}>
                     <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
             ))}
@@ -81,13 +85,13 @@ export function TitleAndLogoWhenSmall() {
     );
 }
 
-export function NavigationMenuWhenBig({ handleCloseNavMenu }: { handleCloseNavMenu: (event: React.MouseEvent<HTMLElement>) => void }) {
+export function NavigationMenuWhenBig({ handlePageButtonClick }: { handlePageButtonClick: (page: string) => void }) {
     return (
         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
                 <Button
                     key={page}
-                    onClick={handleCloseNavMenu}
+                    onClick={() => handlePageButtonClick(page)}
                     sx={{ my: 2, color: 'white', display: 'block' }}
                 >
                     {page}

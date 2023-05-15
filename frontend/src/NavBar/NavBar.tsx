@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { LeftLogoWhenBig, NavigationMenuWhenBig, PopupMenuWhenSmall, RightProfileIconMenu, TitleAndLogoWhenSmall } from "./NavBarComponents";
 import ToggleThemeButton from "./ToggleThemeButton";
 
-export default function NavBar({ avatar }: { avatar: string }) {
+export default function NavBar({ avatar, changePage }: { avatar: string, changePage: (toPage: string) => void }) {
   const [theme, setTheme] = useState<string>("light");
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
@@ -36,6 +36,10 @@ export default function NavBar({ avatar }: { avatar: string }) {
     setAnchorElUser(null);
   };
 
+  const handlePageButtonClick = (page: string) => {
+    changePage(page);
+  }
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -53,11 +57,11 @@ export default function NavBar({ avatar }: { avatar: string }) {
             >
               <MenuIcon />
             </IconButton>
-            <PopupMenuWhenSmall anchorElNav={anchorElNav} handleCloseNavMenu={handleCloseNavMenu} />
+            <PopupMenuWhenSmall anchorElNav={anchorElNav} handleCloseNavMenu={handleCloseNavMenu} handlePageButtonClick={handlePageButtonClick} />
           </Box>
 
           <TitleAndLogoWhenSmall />
-          <NavigationMenuWhenBig handleCloseNavMenu={handleCloseNavMenu} />
+          <NavigationMenuWhenBig handlePageButtonClick={handlePageButtonClick} />
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
