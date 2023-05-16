@@ -8,6 +8,7 @@ type Query {
     allUsers: [User]
 
     isPrime(number: Int!): Boolean!
+    bubbleSort(numbers: [Int!]!): [Int!]!
 }
 
 type Mutation {

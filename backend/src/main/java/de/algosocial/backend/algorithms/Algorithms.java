@@ -4,6 +4,9 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
+import java.util.Collections;
+import java.util.List;
+
 @Controller
 public class Algorithms {
     @QueryMapping
@@ -21,5 +24,17 @@ public class Algorithms {
                 return false;
 
         return true;
+    }
+
+    @QueryMapping
+    public List<Integer> bubbleSort(@Argument List<Integer> numbers) {
+        for(int i = numbers.size(); i > 1; i--) {
+            for(int n = 0; n < i-1; n++) {
+                if(numbers.get(n) > numbers.get(n + 1)) {
+                    Collections.swap(numbers, n, n+1);
+                }
+            }
+        }
+        return numbers;
     }
 }
