@@ -2,9 +2,12 @@ type Query {
     postById(id: ID): Post
     allPosts: [Post]
     postsByUserId(id: ID): [Post]
+
     userById(id: ID): User
     userByName(name: String): User
     allUsers: [User]
+
+    isPrime(number: Int!): Boolean!
 }
 
 type Mutation {
