@@ -5,7 +5,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class IsPrime {
+public class Algorithms {
     @QueryMapping
     public boolean isPrime(@Argument int number) {
         if(number == 2 || number == 3)
