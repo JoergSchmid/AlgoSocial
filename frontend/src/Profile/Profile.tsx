@@ -7,7 +7,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { Fab } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { ADD_POST, GET_ALL_POSTS_BY_USER_ID, REMOVE_POST } from "./Post/gqlRequests";
+import { ADD_POST, GET_ALL_POSTS_BY_USER_ID, REMOVE_POST } from "../Requests/gqlRequests";
 import { ApolloQueryResult, useMutation, useQuery } from "@apollo/client";
 
 export type PostType = {

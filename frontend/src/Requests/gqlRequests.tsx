@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
-import { PostType } from "../Profile";
-import { User } from "../../App";
+import { PostType } from "../Profile/Profile";
+import { User } from "../App";
 
 export const GET_ALL_POSTS = gql`
     query GetALLPosts {
