@@ -9,6 +9,7 @@ type Query {
 
     isPrime(number: Int!): Boolean!
     bubbleSort(numbers: [Int!]!): [Int!]!
+    quickSort(numbers: [Int!]!): [Int!]!
 }
 
 type Mutation {

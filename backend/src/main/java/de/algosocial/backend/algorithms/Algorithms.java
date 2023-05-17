@@ -4,6 +4,7 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,5 +37,34 @@ public class Algorithms {
             }
         }
         return numbers;
+    }
+
+    @QueryMapping
+    public List<Integer> quickSort(@Argument List<Integer> numbers) {
+        if (numbers.size() <= 1) {
+            return numbers;
+        }
+
+        int pivot = numbers.get(0);
+        List<Integer> less = new ArrayList<>();
+        List<Integer> equal = new ArrayList<>();
+        List<Integer> greater = new ArrayList<>();
+
+        for (int num : numbers) {
+            if (num < pivot) {
+                less.add(num);
+            } else if (num == pivot) {
+                equal.add(num);
+            } else {
+                greater.add(num);
+            }
+        }
+        
+        List<Integer> sorted = new ArrayList<>();
+        sorted.addAll(quickSort(less));
+        sorted.addAll(equal);
+        sorted.addAll(quickSort(greater));
+
+        return sorted;
     }
 }
