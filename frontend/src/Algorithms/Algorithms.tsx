@@ -88,6 +88,7 @@ export default function Algorithms() {
                 id="query_status"
                 data-testid="query_status"
                 disabled
+                multiline
                 value={
                     isPrimeError ? isPrimeError.message :
                         isPrimeLoading ? "loading..." : ""
