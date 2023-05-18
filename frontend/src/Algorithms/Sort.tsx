@@ -1,19 +1,18 @@
-import { useMutation } from "@apollo/client";
+import { DocumentNode, useMutation } from "@apollo/client";
 import { useState } from "react";
-import { BUBBLE_SORT } from "../Requests/gqlRequests";
 import { InputField, SubmitButton, StatusField, ResultField } from "./IOComponents";
 
 
-export default function BubbleSort() {
+export default function Sorting({ gql }: { gql: DocumentNode }) {
     const [input, setInput] = useState<string>("");
     const [inputError, setInputError] = useState<boolean>(false);
     const [result, setResult] = useState<string | null>(null);
 
     const [requestBubbleSort, {
-        error: bubbleSortError,
-        loading: bubbleSortLoading
+        error: sortingError,
+        loading: sortingLoading
     }] = useMutation(
-        BUBBLE_SORT,
+        gql,
         { onCompleted: (data) => { setResult(data.bubbleSort) } }
     );
 
@@ -34,7 +33,7 @@ export default function BubbleSort() {
             <br />
             <SubmitButton handleSubmitButton={handleSubmitButton} />
             <br /> <br />
-            <StatusField loading={bubbleSortLoading} error={bubbleSortError} />
+            <StatusField loading={sortingLoading} error={sortingError} />
             <br />
             <ResultField result={result} />
         </>
