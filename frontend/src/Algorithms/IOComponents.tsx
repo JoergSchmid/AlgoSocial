@@ -2,8 +2,9 @@ import { ApolloError } from "@apollo/client";
 import { Button, TextField } from "@mui/material";
 
 
-export function InputField({ multiple = false, setInput }: {
+export function InputField({ multiple = false, error, setInput }: {
     multiple?: boolean,
+    error: boolean,
     setInput: (input: string) => void
 }) {
     return (
@@ -11,6 +12,7 @@ export function InputField({ multiple = false, setInput }: {
             id="input_field"
             data-testid="input_field"
             variant="outlined"
+            error={error}
             label={multiple ? "Enter numbers" : "Enter number"}
             onChange={event => setInput(event.target.value === null ? "" : event.target.value)}
             margin="dense"

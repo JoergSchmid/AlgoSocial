@@ -5,7 +5,8 @@ import { InputField, ResultField, StatusField, SubmitButton } from "./IOComponen
 
 
 export default function IsPrime() {
-    const [input, setInput] = useState<string | null>(null);
+    const [input, setInput] = useState<string>("");
+    const [inputError, setInputError] = useState<boolean>(false);
     const [isPrime, setIsPrime] = useState<boolean | null>(null);
 
     const [requestIsPrime, {
@@ -17,12 +18,18 @@ export default function IsPrime() {
     );
 
     const handleSubmitButton = () => {
+        const regex = /[^0-9]/;
+        if (regex.test(input)) {
+            setInputError(true);
+            return;
+        }
+        setInputError(false);
         requestIsPrime({ variables: { number: input } });
     }
 
     return (
         <>
-            <InputField setInput={setInput} />
+            <InputField error={inputError} setInput={setInput} />
             <br />
             <SubmitButton handleSubmitButton={handleSubmitButton} text="Check if prime" />
             <br /> <br />

@@ -6,6 +6,7 @@ import { InputField, SubmitButton, StatusField, ResultField } from "./IOComponen
 
 export default function BubbleSort() {
     const [input, setInput] = useState<string>("");
+    const [inputError, setInputError] = useState<boolean>(false);
     const [result, setResult] = useState<string | null>(null);
 
     const [requestBubbleSort, {
@@ -19,15 +20,17 @@ export default function BubbleSort() {
     const handleSubmitButton = () => {
         const regex = /[^0-9,]|,,/;
         if (regex.test(input)) {
+            setInputError(true);
             return;
         }
+        setInputError(false);
         let numberArray = input.split(",").map((num) => Number(num.trim()));
         requestBubbleSort({ variables: { numbers: numberArray } });
     }
 
     return (
         <>
-            <InputField multiple={true} setInput={setInput} />
+            <InputField multiple={true} error={inputError} setInput={setInput} />
             <br />
             <SubmitButton handleSubmitButton={handleSubmitButton} />
             <br /> <br />
