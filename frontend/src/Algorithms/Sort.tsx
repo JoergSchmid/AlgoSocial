@@ -8,7 +8,7 @@ export default function Sorting({ method }: { method: DocumentNode }) {
     const [inputError, setInputError] = useState<boolean>(false);
     const [result, setResult] = useState<string>("");
 
-    const [requestBubbleSort, {
+    const [requestSort, {
         error: sortingError,
         loading: sortingLoading
     }] = useMutation(
@@ -24,7 +24,7 @@ export default function Sorting({ method }: { method: DocumentNode }) {
         }
         setInputError(false);
         let numberArray = input.split(",").map((num) => Number(num.trim()));
-        requestBubbleSort({ variables: { numbers: numberArray } });
+        requestSort({ variables: { numbers: numberArray } });
     }
 
     return (
