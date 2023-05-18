@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IS_PRIME } from "../Requests/gqlRequests";
 import { useMutation } from "@apollo/client";
-import { Button, TextField } from "@mui/material";
+import { InputField, ResultField, StatusField, SubmitButton } from "./IOComponents";
 
 
 export default function IsPrime() {
@@ -16,49 +16,22 @@ export default function IsPrime() {
         { onCompleted: (data) => { setIsPrime(data.isPrime) } }
     );
 
-    const handleStartButton = () => {
+    const handleSubmitButton = () => {
         requestIsPrime({ variables: { number: input } });
     }
 
     return (
         <>
-            <TextField
-                id="input_number"
-                data-testid="input_number"
-                variant="outlined"
-                label="Enter number"
-                onChange={event => setInput(+event.target.value)}
-                margin="dense"
-                sx={{ width: "40ch" }}
-            />
+            <InputField setInput={setInput} />
             <br />
-            <Button
-                id="submit_algorithm"
-                data-testid="submit_algorithm"
-                variant="contained"
-                onClick={handleStartButton}
-            >
-                Start
-            </Button>
+            <SubmitButton handleSubmitButton={handleSubmitButton} text="Check if prime" />
             <br /> <br />
-
-            <TextField
-                id="query_status"
-                data-testid="query_status"
-                disabled
-                multiline
-                value={
-                    isPrimeError ? isPrimeError.message :
-                        isPrimeLoading ? "loading..." : ""
-                }
-            />
+            <StatusField loading={isPrimeLoading} error={isPrimeError} />
             <br />
-            <TextField
-                id="isPrime_result"
-                data-testid="isPrime_result"
-                disabled
-                value={isPrime !== null ? isPrime : ""}
-            />
+            <ResultField result={
+                isPrime === null ? "" :
+                    isPrime ? "Prime" : "Not prime"
+            } />
         </>
     );
 }
