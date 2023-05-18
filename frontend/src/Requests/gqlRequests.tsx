@@ -79,6 +79,12 @@ export const BUBBLE_SORT = gql`
     }
 `;
 
+export const QUICK_SORT = gql`
+    mutation quickSort($numbers: [Int!]!) {
+        quickSort(numbers: $numbers)
+    }
+`;
+
 export function FetchPosts(): PostType[] {
     const { loading, error, data } = useQuery(GET_ALL_POSTS, {
         fetchPolicy: 'no-cache',
