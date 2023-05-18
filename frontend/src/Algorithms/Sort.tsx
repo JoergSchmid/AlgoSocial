@@ -3,7 +3,7 @@ import { useState } from "react";
 import { InputField, SubmitButton, StatusField, ResultField } from "./IOComponents";
 
 
-export default function Sorting({ gql }: { gql: DocumentNode }) {
+export default function Sorting({ method }: { method: DocumentNode }) {
     const [input, setInput] = useState<string>("");
     const [inputError, setInputError] = useState<boolean>(false);
     const [result, setResult] = useState<string>("");
@@ -12,7 +12,7 @@ export default function Sorting({ gql }: { gql: DocumentNode }) {
         error: sortingError,
         loading: sortingLoading
     }] = useMutation(
-        gql,
+        method,
         { onCompleted: (data) => { setResult(data.bubbleSort) } }
     );
 

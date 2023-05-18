@@ -38,8 +38,8 @@ export default function Algorithms() {
                 ))}
             </Select>
             <br />
-            {algorithm === "bubblesort" && <Sorting gql={BUBBLE_SORT} />}
-            {algorithm === "quicksort" && <Sorting gql={QUICK_SORT} />}
+            {algorithm === "bubblesort" && <Sorting method={BUBBLE_SORT} />}
+            {algorithm === "quicksort" && <Sorting method={QUICK_SORT} />}
             {algorithm === "isPrime" && <IsPrime />}
         </>
     )
