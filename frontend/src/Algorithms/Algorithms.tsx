@@ -1,5 +1,7 @@
 import { Button, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import { useState } from "react"
+import { IS_PRIME } from "../Requests/gqlRequests";
+import { useMutation } from "@apollo/client";
 
 
 const ALGORITHMS = [
@@ -10,10 +12,24 @@ const ALGORITHMS = [
 
 export default function Algorithms() {
     const [algorithm, setAlgorithm] = useState<string>(ALGORITHMS[0]);
-    const [input, setInput] = useState<number | null>(null)
+    const [input, setInput] = useState<number | null>(null);
+    const [isPrime, setIsPrime] = useState<boolean | null>(null);
+
+    const [requestIsPrime, {
+        error: isPrimeError,
+        loading: isPrimeLoading
+    }] = useMutation(
+        IS_PRIME,
+        { onCompleted: (data) => { setIsPrime(data.isPrime) } }
+    );
 
     const handleChange = (event: SelectChangeEvent) => {
         setAlgorithm(event.target.value);
+    }
+
+    const handleStartButton = () => {
+        requestIsPrime({ variables: { number: input } });
+
     }
 
     return (
@@ -44,7 +60,6 @@ export default function Algorithms() {
                 label="Enter number"
                 onChange={event => setInput(+event.target.value)}
                 margin="dense"
-                multiline
                 sx={{ width: "40ch" }}
             />
             <TextField
@@ -55,7 +70,6 @@ export default function Algorithms() {
                 label="Try '8,128,42,5,...'"
                 onChange={event => setInput(+event.target.value)}
                 margin="dense"
-                multiline
                 sx={{ width: "40ch" }}
             />
             <br />
@@ -63,6 +77,7 @@ export default function Algorithms() {
                 id="submit_algorithm"
                 data-testid="submit_algorithm"
                 variant="contained"
+                onClick={handleStartButton}
             >
                 Start
             </Button>
@@ -72,15 +87,18 @@ export default function Algorithms() {
             <TextField
                 id="query_status"
                 data-testid="query_status"
-                label="Status:NYI"
                 disabled
+                value={
+                    isPrimeError ? isPrimeError.message :
+                        isPrimeLoading ? "loading..." : ""
+                }
             />
             <br />
             <TextField
                 id="query_result"
                 data-testid="query_result"
-                label="ResultBox"
                 disabled
+                value={isPrime !== null ? isPrime : ""}
             />
         </>
     )

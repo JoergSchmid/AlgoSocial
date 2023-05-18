@@ -67,6 +67,12 @@ export const REMOVE_POST = gql`
     }
 `;
 
+export const IS_PRIME = gql`
+    mutation isPrime($number: Int!) {
+        isPrime(number: $number)
+    }
+`;
+
 export function FetchPosts(): PostType[] {
     const { loading, error, data } = useQuery(GET_ALL_POSTS, {
         fetchPolicy: 'no-cache',
