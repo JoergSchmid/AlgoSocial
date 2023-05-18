@@ -4,15 +4,15 @@ import { Button, TextField } from "@mui/material";
 
 export function InputField({ multiple = false, setInput }: {
     multiple?: boolean,
-    setInput: (num: number) => void
+    setInput: (input: string) => void
 }) {
     return (
         <TextField
             id="input_field"
             data-testid="input_field"
             variant="outlined"
-            label="Enter number"
-            onChange={event => setInput(+event.target.value)}
+            label={multiple ? "Enter numbers" : "Enter number"}
+            onChange={event => setInput(event.target.value === null ? "" : event.target.value)}
             margin="dense"
             sx={{ width: "40ch" }}
         />
@@ -54,7 +54,7 @@ export function StatusField({ loading, error }: {
 }
 
 export function ResultField({ result }: {
-    result: string
+    result: string | null
 }) {
     return (
         <TextField

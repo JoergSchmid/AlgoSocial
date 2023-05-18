@@ -1,6 +1,7 @@
-import { MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useState } from "react"
 import IsPrime from "./IsPrime";
+import BubbleSort from "./BubbleSort";
 
 
 const ALGORITHMS = [
@@ -36,20 +37,8 @@ export default function Algorithms() {
                 ))}
             </Select>
             <br />
-
+            {algorithm === "bubblesort" && <BubbleSort />}
             {algorithm === "isPrime" && <IsPrime />}
-
-            <TextField
-                id="input_multiple_numbers"
-                data-testid="input_multiple_numbers"
-                variant="outlined"
-                hidden={algorithm !== "bubblesort" && algorithm !== "quicksort"}
-                label="Try '8,128,42,5,...'"
-                /*onChange={event => setInput(+event.target.value)}*/
-                margin="dense"
-                sx={{ width: "40ch" }}
-            />
-
         </>
     )
 }

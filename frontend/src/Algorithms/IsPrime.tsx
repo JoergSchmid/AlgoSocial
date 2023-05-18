@@ -5,7 +5,7 @@ import { InputField, ResultField, StatusField, SubmitButton } from "./IOComponen
 
 
 export default function IsPrime() {
-    const [input, setInput] = useState<number | null>(null);
+    const [input, setInput] = useState<string | null>(null);
     const [isPrime, setIsPrime] = useState<boolean | null>(null);
 
     const [requestIsPrime, {
@@ -29,8 +29,7 @@ export default function IsPrime() {
             <StatusField loading={isPrimeLoading} error={isPrimeError} />
             <br />
             <ResultField result={
-                isPrime === null ? "" :
-                    isPrime ? "Prime" : "Not prime"
+                isPrime ? "Prime" : "Not prime"
             } />
         </>
     );

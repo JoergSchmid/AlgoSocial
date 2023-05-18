@@ -73,6 +73,12 @@ export const IS_PRIME = gql`
     }
 `;
 
+export const BUBBLE_SORT = gql`
+    mutation bubbleSort($numbers: [Int!]!) {
+        bubbleSort(numbers: $numbers)
+    }
+`;
+
 export function FetchPosts(): PostType[] {
     const { loading, error, data } = useQuery(GET_ALL_POSTS, {
         fetchPolicy: 'no-cache',
