@@ -20,7 +20,7 @@ export default function Algorithms() {
 
     return (
         <>
-            <h3>Algorithms Page - WIP</h3>
+            <h3>Algorithms</h3>
             <Select
                 id="algorithmSelection"
                 data-testid="algorithmSelection"
