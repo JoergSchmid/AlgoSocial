@@ -1,7 +1,7 @@
 package de.algosocial.backend.algorithms;
 
 import org.springframework.graphql.data.method.annotation.Argument;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Controller
 public class Algorithms {
-    @QueryMapping
+    @MutationMapping
     public boolean isPrime(@Argument int number) {
         if(number == 2 || number == 3)
             return true;
@@ -27,7 +27,7 @@ public class Algorithms {
         return true;
     }
 
-    @QueryMapping
+    @MutationMapping
     public List<Integer> bubbleSort(@Argument List<Integer> numbers) {
         for(int i = numbers.size(); i > 1; i--) {
             for(int n = 0; n < i-1; n++) {
@@ -39,7 +39,7 @@ public class Algorithms {
         return numbers;
     }
 
-    @QueryMapping
+    @MutationMapping
     public List<Integer> quickSort(@Argument List<Integer> numbers) {
         if (numbers.size() <= 1) {
             return numbers;
@@ -59,7 +59,7 @@ public class Algorithms {
                 greater.add(num);
             }
         }
-        
+
         List<Integer> sorted = new ArrayList<>();
         sorted.addAll(quickSort(less));
         sorted.addAll(equal);

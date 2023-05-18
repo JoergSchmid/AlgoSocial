@@ -6,15 +6,15 @@ type Query {
     userById(id: ID): User
     userByName(name: String): User
     allUsers: [User]
-
-    isPrime(number: Int!): Boolean!
-    bubbleSort(numbers: [Int!]!): [Int!]!
-    quickSort(numbers: [Int!]!): [Int!]!
 }
 
 type Mutation {
     addPost(userId: Int, title: String, message: String): Post
     removePost(id: ID): ID
+
+    isPrime(number: Int!): Boolean!
+    bubbleSort(numbers: [Int!]!): [Int!]!
+    quickSort(numbers: [Int!]!): [Int!]!
 }
 
 type User {
