@@ -6,8 +6,8 @@ import { BUBBLE_SORT, QUICK_SORT } from "../Requests/gqlRequests";
 
 
 const ALGORITHMS = [
-    "bubblesort",
-    "quicksort",
+    "bubbleSort",
+    "quickSort",
     "isPrime"
 ]
 
@@ -38,8 +38,8 @@ export default function Algorithms() {
                 ))}
             </Select>
             <br />
-            {algorithm === "bubblesort" && <Sorting method={BUBBLE_SORT} />}
-            {algorithm === "quicksort" && <Sorting method={QUICK_SORT} />}
+            {algorithm === "bubbleSort" && <Sorting name={algorithm} method={BUBBLE_SORT} />}
+            {algorithm === "quickSort" && <Sorting name={algorithm} method={QUICK_SORT} />}
             {algorithm === "isPrime" && <IsPrime />}
         </>
     )
