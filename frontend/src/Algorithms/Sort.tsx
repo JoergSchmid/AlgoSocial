@@ -6,7 +6,7 @@ import { InputField, SubmitButton, StatusField, ResultField } from "./IOComponen
 export default function Sorting({ gql }: { gql: DocumentNode }) {
     const [input, setInput] = useState<string>("");
     const [inputError, setInputError] = useState<boolean>(false);
-    const [result, setResult] = useState<string | null>(null);
+    const [result, setResult] = useState<string>("");
 
     const [requestBubbleSort, {
         error: sortingError,
