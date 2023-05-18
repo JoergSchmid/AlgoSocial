@@ -53,20 +53,20 @@ export default function Algorithms() {
             </Select>
             <br />
             <TextField
-                variant="outlined"
-                hidden={algorithm !== "isPrime"}
                 id="input_number"
                 data-testid="input_number"
+                variant="outlined"
+                hidden={algorithm !== "isPrime"}
                 label="Enter number"
                 onChange={event => setInput(+event.target.value)}
                 margin="dense"
                 sx={{ width: "40ch" }}
             />
             <TextField
-                variant="outlined"
-                hidden={algorithm !== "bubblesort" && algorithm !== "quicksort"}
                 id="input_multiple_numbers"
                 data-testid="input_multiple_numbers"
+                variant="outlined"
+                hidden={algorithm !== "bubblesort" && algorithm !== "quicksort"}
                 label="Try '8,128,42,5,...'"
                 onChange={event => setInput(+event.target.value)}
                 margin="dense"
