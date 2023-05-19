@@ -6,11 +6,17 @@ type Query {
     userById(id: ID): User
     userByName(name: String): User
     allUsers: [User]
+
+    taskById(id: ID): Task
+    allTasks: [Task]
 }
 
 type Mutation {
     addPost(userId: Int, title: String, message: String): Post
     removePost(id: ID): ID
+
+    addTask(algorithm: String!): Task
+    removeTask(id: ID!): ID!
 
     isPrime(number: Int!): Boolean!
     bubbleSort(numbers: [Int!]!): [Int!]!
@@ -28,4 +34,11 @@ type Post {
     user: User
     title: String
     message: String
+}
+
+type Task {
+    id: ID!
+    algorithm: String!
+    status: String!
+    result: String
 }

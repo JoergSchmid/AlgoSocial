@@ -19,6 +19,8 @@ public class BackendApplication {
 	PostRepository postRepository;
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	TaskRepository taskRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
