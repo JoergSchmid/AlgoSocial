@@ -15,7 +15,7 @@ type Mutation {
     addPost(userId: Int, title: String, message: String): Post
     removePost(id: ID): ID
 
-    addTask(algorithm: String!): Task
+    addTask(algorithm: String!, input: [Int!]): Task
     removeTask(id: ID!): ID!
 
     isPrime(number: Int!): Boolean!
@@ -39,6 +39,7 @@ type Post {
 type Task {
     id: ID!
     algorithm: String!
+    input: [Int!]
     status: String!
     result: String
 }

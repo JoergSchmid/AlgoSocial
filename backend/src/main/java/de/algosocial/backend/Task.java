@@ -4,6 +4,8 @@ import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 @Entity
 public class Task {
     @Id
@@ -16,13 +18,18 @@ public class Task {
 
     @Nonnull
     @Column
+    private List<Integer> input;
+
+    @Nonnull
+    @Column
     private String status;
 
     @Column
     private String result;
 
-    public Task(@NotNull String algorithm) {
+    public Task(@NotNull String algorithm, @NotNull List<Integer> input) {
         this.algorithm = algorithm;
+        this.input = input;
         this.status = "calculating";
     }
 

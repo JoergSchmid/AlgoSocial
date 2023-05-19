@@ -23,8 +23,8 @@ public class TaskController {
     }
 
     @MutationMapping
-    public Task addTask(@Argument String algorithm) {
-        Task task = new Task(algorithm);
+    public Task addTask(@Argument String algorithm, @Argument List<Integer> input) {
+        Task task = new Task(algorithm, input);
         taskRepository.save(task);
         return task;
     }
