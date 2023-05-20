@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @Controller
 public class Algorithms {
@@ -29,17 +28,15 @@ public class Algorithms {
     }
 
     @MutationMapping
-    public CompletableFuture<List<Integer>> bubbleSort(@Argument List<Integer> numbers) {
-        return CompletableFuture.supplyAsync(() -> {
-            for(int i = numbers.size(); i > 1; i--) {
-                for(int n = 0; n < i-1; n++) {
-                    if(numbers.get(n) > numbers.get(n + 1)) {
-                        Collections.swap(numbers, n, n+1);
-                    }
+    public static List<Integer> bubbleSort(@Argument List<Integer> numbers) {
+        for(int i = numbers.size(); i > 1; i--) {
+            for(int n = 0; n < i-1; n++) {
+                if(numbers.get(n) > numbers.get(n + 1)) {
+                    Collections.swap(numbers, n, n+1);
                 }
             }
-            return numbers;
-        });
+        }
+        return numbers;
     }
 
     @MutationMapping
