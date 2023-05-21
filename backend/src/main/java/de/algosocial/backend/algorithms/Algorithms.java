@@ -11,7 +11,7 @@ import java.util.List;
 @Controller
 public class Algorithms {
     @MutationMapping
-    public boolean isPrime(@Argument int number) {
+    public static boolean isPrime(@Argument int number) {
         if(number == 2 || number == 3)
             return true;
         if(number < 2 || number % 2 == 0)
@@ -40,7 +40,7 @@ public class Algorithms {
     }
 
     @MutationMapping
-    public List<Integer> quickSort(@Argument List<Integer> numbers) {
+    public static List<Integer> quickSort(@Argument List<Integer> numbers) {
         if (numbers.size() <= 1) {
             return numbers;
         }

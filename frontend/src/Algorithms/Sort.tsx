@@ -45,7 +45,6 @@ export default function Sorting({ algorithm }: { algorithm: string }) {
                 input: numberArray
             },
             onCompleted: (data) => {
-                console.log(data);
                 setStatus("calculating");
                 setTaskID(data.addTask.id);
             }
