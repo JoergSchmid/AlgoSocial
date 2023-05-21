@@ -1,21 +1,90 @@
 import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { useState } from "react"
-import IsPrime from "./IsPrime";
-import Sorting from "./Sort";
+import { useEffect, useState } from "react"
+import { SubmitButton, StatusField, ResultField, InputField } from "./IOComponents";
+import { ADD_TASK, GET_TASK_BY_ID } from "../Requests/gqlRequests";
+import { useMutation, useQuery } from "@apollo/client";
 
 
-const ALGORITHMS = [
-    "bubbleSort",
-    "quickSort",
-    "isPrime"
+type Algorithm = {
+    name: string,
+    displayName: string,
+    inputMultiple: boolean
+}
+
+const ALGORITHMS: Algorithm[] = [
+    {
+        name: "bubblesort",
+        displayName: "Bubble Sort",
+        inputMultiple: true
+    }, {
+        name: "quicksort",
+        displayName: "Quick Sort",
+        inputMultiple: true
+    }, {
+        name: "isprime",
+        displayName: "Check Prime",
+        inputMultiple: false
+    }
 ]
 
-export default function Algorithms() {
-    const [algorithm, setAlgorithm] = useState<string>(ALGORITHMS[0]);
+const REGEX_SINGLE = /[^0-9]/;
+const REGEX_MULTIPLE = /[^0-9,]|,,/;
 
-    const handleChange = (event: SelectChangeEvent) => {
-        setAlgorithm(event.target.value);
+export default function Algorithms() {
+    const [algorithm, setAlgorithm] = useState<Algorithm>(ALGORITHMS[0]);
+    const [input, setInput] = useState<string>("");
+    const [inputError, setInputError] = useState<boolean>(false);
+    const [taskID, setTaskID] = useState<number>(-1);
+    const [status, setStatus] = useState<string>("");
+    const [result, setResult] = useState<string>("");
+
+    const { data: fetchedData } = useQuery(GET_TASK_BY_ID, {
+        variables: { id: taskID },
+        fetchPolicy: 'no-cache',
+        pollInterval: status === "calculating" ? 500 : 0
+    })
+
+    const [requestNewTask, {
+        error: requestError
+    }] = useMutation(ADD_TASK);
+
+    useEffect(() => {
+        if (fetchedData && fetchedData.taskById) {
+            setStatus(fetchedData.taskById.status);
+            setResult(fetchedData.taskById.result);
+        }
+    }, [fetchedData])
+
+    const handleSelectionChange = (event: SelectChangeEvent) => {
+        let selectedAlgorithm = ALGORITHMS.find((alg) => alg.displayName === event.target.value);
+        if (selectedAlgorithm) {
+            setAlgorithm(selectedAlgorithm);
+        }
     }
+
+    const handleSubmitButton = () => {
+        let regex = algorithm.inputMultiple ? REGEX_MULTIPLE : REGEX_SINGLE;
+        if (regex.test(input)) {
+            setInputError(true);
+            return;
+        }
+        setInputError(false);
+        let requestInput = algorithm.inputMultiple ?
+            input.split(",").map((num) => Number(num.trim())) : input;
+        requestNewTask({
+            variables: {
+                algorithm: algorithm.name,
+                input: requestInput
+            },
+            onCompleted: (data) => {
+                setTaskID(data.addTask.id);
+                setStatus(data.addTask.status);
+            }
+        });
+    }
+
+    //Logging errors
+    if (requestError) { console.log(requestError); }
 
     return (
         <>
@@ -24,22 +93,26 @@ export default function Algorithms() {
                 id="algorithmSelection"
                 data-testid="algorithmSelection"
                 autoWidth
-                value={algorithm}
-                onChange={handleChange}
+                value={algorithm.displayName}
+                onChange={handleSelectionChange}
             >
                 {ALGORITHMS.map((alg) => (
                     <MenuItem
-                        key={alg}
-                        value={alg}
+                        key={alg.name}
+                        value={alg.displayName}
                     >
-                        {alg}
+                        {alg.displayName}
                     </MenuItem>
                 ))}
             </Select>
             <br />
-            {algorithm === "bubbleSort" && <Sorting algorithm={algorithm} />}
-            {algorithm === "quickSort" && <Sorting algorithm={algorithm} />}
-            {algorithm === "isPrime" && <IsPrime />}
+            <InputField multiple={algorithm.inputMultiple} error={inputError} setInput={setInput} />
+            <br />
+            <SubmitButton handleSubmitButton={handleSubmitButton} />
+            <br /> <br />
+            <StatusField status={status} />
+            <br />
+            <ResultField result={result} />
         </>
     )
 }

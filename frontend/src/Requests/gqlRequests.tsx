@@ -67,16 +67,12 @@ export const REMOVE_POST = gql`
     }
 `;
 
-export const IS_PRIME = gql`
-    mutation isPrime($number: Int!) {
-        isPrime(number: $number)
-    }
-`;
 
 export const ADD_TASK = gql`
     mutation addTask($algorithm: String!, $input: [Int!]!) {
         addTask(algorithm: $algorithm, input: $input) {
             id
+            status
         }
     }
 `;
@@ -87,12 +83,6 @@ export const GET_TASK_BY_ID = gql`
             status
             result
         }
-    }
-`;
-
-export const QUICK_SORT = gql`
-    mutation quickSort($numbers: [Int!]!) {
-        quickSort(numbers: $numbers)
     }
 `;
 
