@@ -101,8 +101,8 @@ export default function PostInput({ submitPost }: { submitPost: (post: PostType)
                         id="message"
                         label="Message"
                         onChange={event => setMessage(event.target.value)}
-                        error={message === ""}
-                        helperText={message === "" ? "Please enter a text." : ""}
+                        error={message === "" || inputError}
+                        helperText={message === "" || inputError ? "Invalid input" : ""}
                         margin="dense"
                         multiline
                         sx={{ width: "40ch" }}
