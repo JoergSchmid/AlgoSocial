@@ -5,13 +5,13 @@ import { ADD_TASK, GET_TASK_BY_ID } from "../Requests/gqlRequests";
 import { useMutation, useQuery } from "@apollo/client";
 
 
-type Algorithm = {
+export type Algorithm = {
     name: string,
     displayName: string,
     inputMultiple: boolean
 }
 
-const ALGORITHMS: Algorithm[] = [
+export const ALGORITHMS: Algorithm[] = [
     {
         name: "bubblesort",
         displayName: "Bubble Sort",
@@ -27,8 +27,8 @@ const ALGORITHMS: Algorithm[] = [
     }
 ]
 
-const REGEX_SINGLE = /[^0-9]/;
-const REGEX_MULTIPLE = /[^0-9,]|,,/;
+export const REGEX_SINGLE = /[^0-9]/;
+export const REGEX_MULTIPLE = /[^0-9,]|,,/;
 
 export default function Algorithms() {
     const [algorithm, setAlgorithm] = useState<Algorithm>(ALGORITHMS[0]);
