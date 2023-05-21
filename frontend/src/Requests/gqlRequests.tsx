@@ -73,9 +73,20 @@ export const IS_PRIME = gql`
     }
 `;
 
-export const BUBBLE_SORT = gql`
-    mutation bubbleSort($numbers: [Int!]!) {
-        bubbleSort(numbers: $numbers)
+export const ADD_TASK = gql`
+    mutation addTask($algorithm: String!, $input: [Int!]!) {
+        addTask(algorithm: $algorithm, input: $input) {
+            id
+        }
+    }
+`;
+
+export const GET_TASK_BY_ID = gql`
+    query taskById($id: ID!) {
+        taskById(id: $id) {
+            status
+            result
+        }
     }
 `;
 

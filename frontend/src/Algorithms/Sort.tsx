@@ -1,24 +1,36 @@
-import { DocumentNode, useMutation } from "@apollo/client";
-import { useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import { useEffect, useState } from "react";
 import { InputField, SubmitButton, StatusField, ResultField } from "./IOComponents";
+import { ADD_TASK, GET_TASK_BY_ID } from "../Requests/gqlRequests";
 
 
-export default function Sorting({ name, method }: { name: string, method: DocumentNode }) {
+export default function Sorting({ algorithm }: { algorithm: string }) {
     const [input, setInput] = useState<string>("");
     const [inputError, setInputError] = useState<boolean>(false);
+    const [taskID, setTaskID] = useState<number>(-1);
+    const [status, setStatus] = useState<string>("");
     const [result, setResult] = useState<string>("");
+
+    const { data: fetchedData } = useQuery(GET_TASK_BY_ID, {
+        variables: { id: taskID },
+        fetchPolicy: 'no-cache',
+        pollInterval: status === "calculating" ? 5000 : 0
+    })
 
     const [requestSort, {
         error: sortingError,
         loading: sortingLoading
-    }] = useMutation(
-        method,
-        {
-            onCompleted: (data) => {
-                setResult(name === "bubbleSort" ? data.bubbleSort : data.quickSort)
-            }
+    }] = useMutation(ADD_TASK);
+
+    useEffect(() => {
+        if (fetchedData && fetchedData.taskById) {
+            console.log("useEffect: " + fetchedData.taskById);
+            setStatus(fetchedData.taskById.status.toString());
+            setResult(fetchedData.taskById.result.toString());
         }
-    );
+    }, [fetchedData])
+
+
 
     const handleSubmitButton = () => {
         const regex = /[^0-9,]|,,/;
@@ -28,7 +40,17 @@ export default function Sorting({ name, method }: { name: string, method: Docume
         }
         setInputError(false);
         let numberArray = input.split(",").map((num) => Number(num.trim()));
-        requestSort({ variables: { numbers: numberArray } });
+        requestSort({
+            variables: {
+                algorithm: algorithm.toLowerCase(),
+                input: numberArray
+            },
+            onCompleted: (data) => {
+                console.log(data);
+                setStatus("calculating");
+                setTaskID(data.addTask.id);
+            }
+        });
     }
 
     return (

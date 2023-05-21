@@ -63,6 +63,7 @@ export function ResultField({ result }: {
             id="query_result"
             data-testid="query_result"
             disabled
+            multiline
             value={result}
         />
     );

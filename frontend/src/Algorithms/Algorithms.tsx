@@ -2,7 +2,6 @@ import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useState } from "react"
 import IsPrime from "./IsPrime";
 import Sorting from "./Sort";
-import { BUBBLE_SORT, QUICK_SORT } from "../Requests/gqlRequests";
 
 
 const ALGORITHMS = [
@@ -38,8 +37,8 @@ export default function Algorithms() {
                 ))}
             </Select>
             <br />
-            {algorithm === "bubbleSort" && <Sorting name={algorithm} method={BUBBLE_SORT} />}
-            {algorithm === "quickSort" && <Sorting name={algorithm} method={QUICK_SORT} />}
+            {algorithm === "bubbleSort" && <Sorting algorithm={algorithm} />}
+            {algorithm === "quickSort" && <Sorting algorithm={algorithm} />}
             {algorithm === "isPrime" && <IsPrime />}
         </>
     )
