@@ -42,9 +42,18 @@ public class TaskController {
     @Async
     public void startTask(Task task) {
         if (Objects.equals(task.getAlgorithm(), "bubblesort")) {
-            task.setResult(Algorithms.bubbleSort(task.getInput()));
-            task.setStatus("Done");
+            task.setResult(Algorithms.bubbleSort(task.getInput()).toString());
+        } else if (Objects.equals(task.getAlgorithm(), "quicksort")) {
+            task.setResult(Algorithms.quickSort(task.getInput()).toString());
+        } else if (Objects.equals(task.getAlgorithm(), "isprime")) {
+            boolean result = Algorithms.isPrime(task.getInput().get(0));
+            task.setResult(result ? "prime" : "not prime");
+        } else {
+            task.setStatus("error: method not found.");
             taskRepository.save(task);
+            return;
         }
+        task.setStatus("done");
+        taskRepository.save(task);
     }
 }

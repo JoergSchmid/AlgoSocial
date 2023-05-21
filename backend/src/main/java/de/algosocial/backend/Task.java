@@ -25,7 +25,7 @@ public class Task {
     private String status;
 
     @Column
-    private List<Integer> result;
+    private String result;
 
     public Task(@NotNull String algorithm, @NotNull List<Integer> input) {
         this.algorithm = algorithm;
@@ -54,7 +54,7 @@ public class Task {
         return status;
     }
 
-    public List<Integer> getResult() {
+    public String getResult() {
         return result;
     }
 
@@ -62,7 +62,7 @@ public class Task {
         this.status = status;
     }
 
-    public void setResult(List<Integer> result) {
+    public void setResult(String result) {
         this.result = result;
     }
 }
