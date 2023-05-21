@@ -33,7 +33,7 @@ export default function IsPrime() {
             <br />
             <SubmitButton handleSubmitButton={handleSubmitButton} text="Check if prime" />
             <br /> <br />
-            <StatusField loading={isPrimeLoading} error={isPrimeError} />
+            <StatusField status="toDo" />
             <br />
             <ResultField result={
                 isPrime ? "Prime" : "Not prime"

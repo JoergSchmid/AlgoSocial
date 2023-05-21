@@ -14,7 +14,7 @@ export default function Sorting({ algorithm }: { algorithm: string }) {
     const { data: fetchedData } = useQuery(GET_TASK_BY_ID, {
         variables: { id: taskID },
         fetchPolicy: 'no-cache',
-        pollInterval: status === "calculating" ? 5000 : 0
+        pollInterval: status === "calculating" ? 500 : 0
     })
 
     const [requestSort, {
@@ -59,7 +59,7 @@ export default function Sorting({ algorithm }: { algorithm: string }) {
             <br />
             <SubmitButton handleSubmitButton={handleSubmitButton} />
             <br /> <br />
-            <StatusField loading={sortingLoading} error={sortingError} />
+            <StatusField status={status} />
             <br />
             <ResultField result={result} />
         </>

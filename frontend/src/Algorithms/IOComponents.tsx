@@ -37,20 +37,14 @@ export function SubmitButton({ text = "Start", handleSubmitButton }: {
     );
 }
 
-export function StatusField({ loading, error }: {
-    loading: boolean,
-    error: ApolloError | undefined
-}) {
+export function StatusField({ status }: { status: string }) {
     return (
         <TextField
             id="query_status"
             data-testid="query_status"
             disabled
             multiline
-            value={
-                error ? error.message :
-                    loading ? "loading..." : ""
-            }
+            value={status}
         />
     );
 }
