@@ -10,8 +10,7 @@ export default function IsPrime() {
     const [isPrime, setIsPrime] = useState<boolean | null>(null);
 
     const [requestIsPrime, {
-        error: isPrimeError,
-        loading: isPrimeLoading
+        error: isPrimeError
     }] = useMutation(
         IS_PRIME,
         { onCompleted: (data) => { setIsPrime(data.isPrime) } }
@@ -26,6 +25,9 @@ export default function IsPrime() {
         setInputError(false);
         requestIsPrime({ variables: { number: input } });
     }
+
+    //Logging errors
+    if (isPrimeError) { console.log(isPrimeError); }
 
     return (
         <>

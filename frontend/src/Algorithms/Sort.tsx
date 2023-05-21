@@ -18,8 +18,7 @@ export default function Sorting({ algorithm }: { algorithm: string }) {
     })
 
     const [requestSort, {
-        error: sortingError,
-        loading: sortingLoading
+        error: sortingError
     }] = useMutation(ADD_TASK);
 
     useEffect(() => {
@@ -52,6 +51,9 @@ export default function Sorting({ algorithm }: { algorithm: string }) {
             }
         });
     }
+
+    //Logging errors
+    if (sortingError) { console.log(sortingError); }
 
     return (
         <>
