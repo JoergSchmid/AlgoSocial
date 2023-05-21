@@ -43,4 +43,9 @@ public class TaskController {
         return id;
     }
 
+    @MutationMapping
+    public boolean removeAllTasks() {
+        taskRepository.deleteAll();
+        return true;
+    }
 }

@@ -17,6 +17,7 @@ type Mutation {
 
     addTask(algorithm: String!, input: [Int!]): Task
     removeTask(id: ID!): ID!
+    removeAllTasks: Boolean
 
     isPrime(number: Int!): Boolean!
     bubbleSort(numbers: [Int!]!): [Int!]!
