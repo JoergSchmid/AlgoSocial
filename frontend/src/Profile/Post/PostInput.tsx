@@ -14,7 +14,6 @@ export default function PostInput({ submitPost }: { submitPost: (post: PostType)
     const [inputError, setInputError] = useState<boolean>(false);
     const [taskID, setTaskID] = useState<number>(-1);
     const [status, setStatus] = useState<string>("");
-    const [result, setResult] = useState<string>("");
 
     const { data: fetchedData } = useQuery(GET_TASK_BY_ID, {
         variables: { id: taskID },
@@ -28,8 +27,6 @@ export default function PostInput({ submitPost }: { submitPost: (post: PostType)
 
     useEffect(() => {
         if (fetchedData && fetchedData.taskById) {
-            // setStatus(fetchedData.taskById.status);
-            // setResult(fetchedData.taskById.result);
             submitPost({ title, message: fetchedData.taskById.result, id: -1 })
         }
     }, [fetchedData])
@@ -76,6 +73,9 @@ export default function PostInput({ submitPost }: { submitPost: (post: PostType)
             }
         });
     }
+
+    // Logging errors
+    if (requestError) { console.log(requestError) }
 
     return (
         <Card variant="outlined" style={{
