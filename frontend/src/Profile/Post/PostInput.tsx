@@ -18,7 +18,6 @@ export default function PostInput({ submitPost }: { submitPost: (post: PostType)
     const { data: fetchedData } = useQuery(GET_TASK_BY_ID, {
         variables: { id: taskID },
         fetchPolicy: 'no-cache',
-        pollInterval: status === "calculating" ? 500 : 0
     })
 
     const [requestNewTask, {
