@@ -7,8 +7,9 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { Fab } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { ADD_POST, GET_ALL_POSTS_BY_USER_ID, REMOVE_POST } from "../Requests/gqlRequests";
+import { ADD_ALGORITHM_POST, ADD_POST, ADD_TASK, GET_ALL_POSTS_BY_USER_ID, GET_TASK_BY_ID, REMOVE_POST } from "../Requests/gqlRequests";
 import { ApolloQueryResult, useMutation, useQuery } from "@apollo/client";
+import { ALGORITHMS, Algorithm } from '../Algorithms/Algorithms';
 
 export type PostType = {
     title: string,
@@ -20,17 +21,35 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
     const [posts, setPosts] = useState<PostType[]>([]);
     const [showPostInput, setShowPostInput] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [requestAddPost, { error: addPostError }] = useMutation(ADD_POST, {
+    const [algorithm, setAlgorithm] = useState<Algorithm>(ALGORITHMS[0]);
+    const [postID, setPostID] = useState<number>(-1);
+    const [taskID, setTaskID] = useState<number>(-1);
+    const [status, setStatus] = useState<string>("");
+
+    const [requestAddPost, {
+        error: addPostError
+    }] = useMutation(ADD_POST, {
         onCompleted: (): Promise<ApolloQueryResult<any>> => refetch()
     });
+
     const [requestDeletePost, { error: deletePostError }] = useMutation(REMOVE_POST, {
         onCompleted: (): Promise<ApolloQueryResult<any>> => refetch()
     });
+
     const { data: fetchedData, error: fetchedError, refetch } = useQuery(GET_ALL_POSTS_BY_USER_ID, {
         variables: { id: user.userId },
         fetchPolicy: 'no-cache',
         pollInterval: 10000
     });
+
+    const [requestNewTask, {
+        error: requestError
+    }] = useMutation(ADD_ALGORITHM_POST);
+
+    const { data: fetchedTask } = useQuery(GET_TASK_BY_ID, {
+        variables: { id: taskID },
+        fetchPolicy: 'no-cache',
+    })
 
     useEffect(() => {
         if (fetchedData) {
@@ -43,7 +62,36 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
         setPosts(posts => [...posts, { title, message, id: -posts.length }]);
         setShowPostInput(false);
         requestAddPost({
-            variables: { userId: user.userId, title, message }
+            variables: {
+                userId: user.userId,
+                title,
+                message
+            },
+            onCompleted: (data) => {
+                setPostID(data.addPost.id)
+            }
+        });
+    }
+    function submitTask({ title, message }: PostType): void {
+        setPosts(posts => [...posts, { title, message: "calculating", id: -posts.length }]);
+        setShowPostInput(false);
+
+        let requestInput = algorithm.inputMultiple ?
+            message.split(",").map((num) => Number(num.trim())) : message;
+
+        console.log(algorithm);
+
+        requestNewTask({
+            variables: {
+                userId: user.userId,
+                title: title,
+                algorithm: algorithm.name,
+                input: requestInput
+            },
+            onCompleted: (data) => {
+                setTaskID(data.addAlgorithmPost.id);
+                setStatus(data.addAlgorithmPost.message);
+            }
         });
     }
 
@@ -57,7 +105,8 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
     //Logging errors
     if (fetchedError) { console.log(fetchedError); }
     if (addPostError) { console.log(addPostError); }
-    if (deletePostError) { console.log(deletePostError) }
+    if (deletePostError) { console.log(deletePostError); }
+    if (requestError) { console.log(requestError); }
 
     return (
         <>
@@ -86,7 +135,12 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
                     </div>
                 </Grid>
                 <Grid>
-                    {showPostInput && <><PostInput submitPost={submitPost} /><br /></>}
+                    {showPostInput && <><PostInput
+                        algorithm={algorithm}
+                        setAlgorithm={setAlgorithm}
+                        submitPost={submitPost}
+                        submitTask={submitTask}
+                    /><br /></>}
                 </Grid>
                 <Grid>
                     {fetchedError && <><p className='error'>Error Fetching posts: {fetchedError.name}</p><br /></>}

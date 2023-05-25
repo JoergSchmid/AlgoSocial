@@ -12,6 +12,8 @@ import java.util.List;
 public class TaskController {
     @Autowired
     private TaskRepository taskRepository;
+    @Autowired
+    private PostRepository postRepository;
     private final TaskService taskService;
 
     @Autowired

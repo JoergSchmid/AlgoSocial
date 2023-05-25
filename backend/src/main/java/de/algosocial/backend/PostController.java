@@ -1,5 +1,6 @@
 package de.algosocial.backend;
 
+import de.algosocial.backend.algorithms.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -14,6 +15,15 @@ public class PostController {
     PostRepository postRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    private TaskRepository taskRepository;
+    private final TaskService taskService;
+
+    @Autowired
+    public PostController(TaskService taskService) {
+        this.taskService = taskService;
+    }
+
 
     @QueryMapping
     public Post postById(@Argument int id) {
@@ -36,6 +46,21 @@ public class PostController {
         postRepository.save(post);
         return post;
     }
+
+    @MutationMapping
+    public Post addAlgorithmPost(@Argument int userId, @Argument String title,
+                                  @Argument String algorithm, @Argument List<Integer> input) throws InterruptedException {
+        System.out.println("Mapping: " + algorithm);
+        Task task = new Task(algorithm, input);
+        taskRepository.save(task);
+
+        Post post = new Post(userId, title, task.getStatus(), task.getId());
+        postRepository.save(post);
+
+        taskService.startTask(task);
+        return post;
+    }
+
 
     @MutationMapping
     public int removePost(@Argument int id) {

@@ -3,7 +3,6 @@ package de.algosocial.backend;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 
 @Entity
@@ -11,6 +10,9 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    @Column
+    private int userId;
 
     @Nonnull
     @Column
@@ -58,6 +60,10 @@ public class Task {
         return result;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
     public void setStatus(String status) {
         this.status = status;
     }
@@ -65,4 +71,5 @@ public class Task {
     public void setResult(String result) {
         this.result = result;
     }
+
 }

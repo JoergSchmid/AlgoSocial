@@ -25,7 +25,11 @@ export default function Post({ post, deletePost }: { post: PostType, deletePost:
             onMouseLeave={() => setShowDeleteButton(false)}
         >
             <Typography variant="h4" style={{ wordWrap: "break-word" }}>{post.title}</Typography>
-            <Typography variant="body1" style={{ wordWrap: "break-word", marginBottom: "20px" }}>{post.message}</Typography>
+            <Typography
+                variant="body1"
+                style={{ wordWrap: "break-word", marginBottom: "20px" }}
+                dangerouslySetInnerHTML={{ __html: post.message }}
+            />
             {showDeleteButton && <Button
                 variant='text'
                 data-testid="btn_delete"

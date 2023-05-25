@@ -1,34 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useState } from "react";
 import { PostType } from "../Profile";
 import { Card, Button, TextField, CardContent, MenuItem, Select, SelectChangeEvent, Checkbox } from "@mui/material";
 import { ALGORITHMS, Algorithm, REGEX_MULTIPLE, REGEX_SINGLE } from '../../Algorithms/Algorithms';
-import { useMutation, useQuery } from '@apollo/client';
-import { ADD_TASK, GET_TASK_BY_ID } from '../../Requests/gqlRequests';
 
-export default function PostInput({ submitPost }: { submitPost: (post: PostType) => void }) {
+export default function PostInput({ algorithm, setAlgorithm, submitPost, submitTask }: {
+    algorithm: Algorithm,
+    setAlgorithm: (algorithm: Algorithm) => void,
+    submitPost: (post: PostType) => void,
+    submitTask: (post: PostType) => void
+}) {
     const [title, setTitle] = useState<string>(" "); // Contains a space so it doesn´t start with an error message. Space is not really in text field.
     const [message, setMessage] = useState<string>(" ");
     const [postAlgorithm, setPostAlgorithm] = useState<boolean>(false);
-    const [algorithm, setAlgorithm] = useState<Algorithm>(ALGORITHMS[0]);
     const [inputError, setInputError] = useState<boolean>(false);
-    const [taskID, setTaskID] = useState<number>(-1);
-    const [status, setStatus] = useState<string>("");
-
-    const { data: fetchedData } = useQuery(GET_TASK_BY_ID, {
-        variables: { id: taskID },
-        fetchPolicy: 'no-cache',
-    })
-
-    const [requestNewTask, {
-        error: requestError
-    }] = useMutation(ADD_TASK);
-
-    useEffect(() => {
-        if (fetchedData && fetchedData.taskById) {
-            submitPost({ title, message: fetchedData.taskById.result, id: -1 })
-        }
-    }, [fetchedData])
 
     function isEmpty(text: string): boolean {
         return text === "" || text === " ";
@@ -59,22 +44,10 @@ export default function PostInput({ submitPost }: { submitPost: (post: PostType)
             return;
         }
         setInputError(false);
-        let requestInput = algorithm.inputMultiple ?
-            message.split(",").map((num) => Number(num.trim())) : message;
-        requestNewTask({
-            variables: {
-                algorithm: algorithm.name,
-                input: requestInput
-            },
-            onCompleted: (data) => {
-                setTaskID(data.addTask.id);
-                setStatus(data.addTask.status);
-            }
-        });
+        submitTask({ title, message, id: -1 })
     }
 
-    // Logging errors
-    if (requestError) { console.log(requestError) }
+
 
     return (
         <Card variant="outlined" style={{
