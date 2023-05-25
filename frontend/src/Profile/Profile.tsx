@@ -33,7 +33,7 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
         onCompleted: (): Promise<ApolloQueryResult<any>> => refetch()
     });
 
-    const { data: fetchedData, error: fetchedError, refetch } = useQuery(GET_ALL_POSTS_BY_USER_ID, {
+    const { data: fetchedPosts, error: fetchedError, refetch } = useQuery(GET_ALL_POSTS_BY_USER_ID, {
         variables: { id: user.userId },
         fetchPolicy: 'no-cache',
         pollInterval: 10000
@@ -44,11 +44,11 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
     }] = useMutation(ADD_ALGORITHM_POST);
 
     useEffect(() => {
-        if (fetchedData) {
-            setPosts(fetchedData.postsByUserId);
+        if (fetchedPosts) {
+            setPosts(fetchedPosts.postsByUserId);
             setIsLoading(false);
         }
-    }, [fetchedData])
+    }, [fetchedPosts])
 
     function submitPost({ title, message }: PostType): void {
         setPosts(posts => [...posts, { title, message, id: -posts.length }]);
