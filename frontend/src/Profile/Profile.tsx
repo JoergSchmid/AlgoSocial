@@ -22,9 +22,6 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
     const [showPostInput, setShowPostInput] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [algorithm, setAlgorithm] = useState<Algorithm>(ALGORITHMS[0]);
-    const [postID, setPostID] = useState<number>(-1);
-    const [taskID, setTaskID] = useState<number>(-1);
-    const [status, setStatus] = useState<string>("");
 
     const [requestAddPost, {
         error: addPostError
@@ -61,9 +58,6 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
                 userId: user.userId,
                 title,
                 message
-            },
-            onCompleted: (data) => {
-                setPostID(data.addPost.id)
             }
         });
     }
@@ -82,10 +76,6 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
                 title: title,
                 algorithm: algorithm.name,
                 input: requestInput
-            },
-            onCompleted: (data) => {
-                setTaskID(data.addAlgorithmPost.id);
-                setStatus(data.addAlgorithmPost.message);
             }
         });
     }
