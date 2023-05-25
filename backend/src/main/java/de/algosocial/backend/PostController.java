@@ -50,7 +50,6 @@ public class PostController {
     @MutationMapping
     public Post addAlgorithmPost(@Argument int userId, @Argument String title,
                                   @Argument String algorithm, @Argument List<Integer> input) throws InterruptedException {
-        System.out.println("Mapping: " + algorithm);
         Task task = new Task(algorithm, input);
         taskRepository.save(task);
 

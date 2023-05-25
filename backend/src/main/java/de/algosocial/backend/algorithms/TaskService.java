@@ -26,14 +26,12 @@ public class TaskService {
     public void startTask(Task task) throws InterruptedException {
         String input = task.getInput().toString();
         String result;
-        System.out.println(task.getAlgorithm());
         if (Objects.equals(task.getAlgorithm(), "bubblesort")) {
             result = Algorithms.bubbleSort(task.getInput()).toString();
         } else if (Objects.equals(task.getAlgorithm(), "quicksort")) {
             result = Algorithms.quickSort(task.getInput()).toString();
         } else if (Objects.equals(task.getAlgorithm(), "isprime")) {
             result = Algorithms.isPrime(task.getInput().get(0)) ? "prime" : "not prime";
-            System.out.println("isprime: " + result);
         } else {
             task.setStatus("error: method not found.");
             taskRepository.save(task);
