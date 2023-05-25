@@ -7,7 +7,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { Fab } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { ADD_ALGORITHM_POST, ADD_POST, ADD_TASK, GET_ALL_POSTS_BY_USER_ID, GET_TASK_BY_ID, REMOVE_POST } from "../Requests/gqlRequests";
+import { ADD_ALGORITHM_POST, ADD_POST, GET_ALL_POSTS_BY_USER_ID, REMOVE_POST } from "../Requests/gqlRequests";
 import { ApolloQueryResult, useMutation, useQuery } from "@apollo/client";
 import { ALGORITHMS, Algorithm } from '../Algorithms/Algorithms';
 
@@ -45,11 +45,6 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
     const [requestNewTask, {
         error: requestError
     }] = useMutation(ADD_ALGORITHM_POST);
-
-    const { data: fetchedTask } = useQuery(GET_TASK_BY_ID, {
-        variables: { id: taskID },
-        fetchPolicy: 'no-cache',
-    })
 
     useEffect(() => {
         if (fetchedData) {
