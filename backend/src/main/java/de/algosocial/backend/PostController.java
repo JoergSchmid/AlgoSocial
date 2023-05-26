@@ -71,4 +71,9 @@ public class PostController {
     public User user(Post post) {
         return userRepository.findById(post.getUserId());
     }
+
+    @SchemaMapping
+    public Task task(Post post) {
+        return taskRepository.findById((post.getTaskId()));
+    }
 }

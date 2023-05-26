@@ -35,6 +35,7 @@ type Post {
     id: ID!
     userId: Int
     taskId: Int
+    task: Task
     title: String
     message: String
 }

@@ -6,6 +6,12 @@ export const GET_ALL_POSTS_BY_USER_ID = gql`
             id
             title
             message
+            task {
+                algorithm
+                status
+                input
+                result
+            }
         }
     }
 `;

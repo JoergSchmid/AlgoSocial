@@ -14,7 +14,11 @@ import { ALGORITHMS, Algorithm } from '../Algorithms/Algorithms';
 export type PostType = {
     title: string,
     message: string,
-    id: number
+    id: number,
+    taskId?: number,
+    status?: string,
+    input?: string,
+    result?: string
 }
 
 export default function Profile({ user, avatar, changeUser }: { user: User, avatar: string, changeUser: (id?: number) => void }) {

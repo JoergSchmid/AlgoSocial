@@ -34,6 +34,10 @@ public class Post {
         return userId;
     }
 
+    public int getTaskId() {
+        return taskId;
+    }
+
     public String getTitle() {
         return title;
     }
