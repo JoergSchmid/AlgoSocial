@@ -1,9 +1,10 @@
-package de.algosocial.backend.algorithms;
+package de.algosocial.backend;
 
 import de.algosocial.backend.Post;
 import de.algosocial.backend.PostRepository;
 import de.algosocial.backend.Task;
 import de.algosocial.backend.TaskRepository;
+import de.algosocial.backend.algorithms.Algorithms;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
