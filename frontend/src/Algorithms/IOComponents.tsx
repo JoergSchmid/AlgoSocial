@@ -1,4 +1,5 @@
 import { Button, TextField } from "@mui/material";
+import { Status } from "../Profile/Profile";
 
 
 export function InputField({ multiple = false, error, setInput }: {
@@ -36,7 +37,7 @@ export function SubmitButton({ text = "Start", handleSubmitButton }: {
     );
 }
 
-export function StatusField({ status }: { status: string }) {
+export function StatusField({ status }: { status: Status }) {
     return (
         <TextField
             id="query_status"

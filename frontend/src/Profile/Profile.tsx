@@ -37,7 +37,7 @@ export type TaskType = {
     result: string
 }
 
-const defaultAlgorithm: AlgorithmType[] = [{
+export const defaultAlgorithm: AlgorithmType[] = [{
     name: "bubblesort",
     displayName: "Bubble Sort",
     inputMultiple: true

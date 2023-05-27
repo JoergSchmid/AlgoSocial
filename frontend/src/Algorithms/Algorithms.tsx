@@ -1,41 +1,28 @@
 import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useEffect, useState } from "react"
 import { SubmitButton, StatusField, ResultField, InputField } from "./IOComponents";
-import { ADD_TASK, GET_TASK_BY_ID } from "../Requests/gqlRequests";
+import { ADD_TASK, GET_ALL_ALGORITHMS, GET_TASK_BY_ID } from "../Requests/gqlRequests";
 import { useMutation, useQuery } from "@apollo/client";
-import { AlgorithmType } from "../Profile/Profile";
-
-const ALGORITHMS: AlgorithmType[] = [
-    {
-        name: "bubblesort",
-        displayName: "Bubble Sort",
-        inputMultiple: true
-    }, {
-        name: "quicksort",
-        displayName: "Quick Sort",
-        inputMultiple: true
-    }, {
-        name: "isprime",
-        displayName: "Check Prime",
-        inputMultiple: false
-    }
-]
+import { AlgorithmType, Status, defaultAlgorithm } from "../Profile/Profile";
 
 export const REGEX_SINGLE = /[^0-9]/;
 export const REGEX_MULTIPLE = /[^0-9,]|,,/;
 
 export default function Algorithms() {
-    const [algorithm, setAlgorithm] = useState<AlgorithmType>(ALGORITHMS[0]);
+    const [availableAlgorithms, setAvailableAlgorithms] = useState<AlgorithmType[]>(defaultAlgorithm)
+    const [algorithm, setAlgorithm] = useState<AlgorithmType>(defaultAlgorithm[0]);
     const [input, setInput] = useState<string>("");
     const [inputError, setInputError] = useState<boolean>(false);
     const [taskID, setTaskID] = useState<number>(-1);
-    const [status, setStatus] = useState<string>("");
+    const [status, setStatus] = useState<Status>(Status.DONE);
     const [result, setResult] = useState<string>("");
 
-    const { data: fetchedData } = useQuery(GET_TASK_BY_ID, {
+    const { data: fetchedAlgorithms, error: fetchedAlgorithmsError } = useQuery(GET_ALL_ALGORITHMS);
+
+    const { data: fetchedTask } = useQuery(GET_TASK_BY_ID, {
         variables: { id: taskID },
         fetchPolicy: 'no-cache',
-        pollInterval: status === "calculating" ? 500 : 0
+        pollInterval: status === Status.CALCULATING ? 500 : 0
     })
 
     const [requestNewTask, {
@@ -43,14 +30,20 @@ export default function Algorithms() {
     }] = useMutation(ADD_TASK);
 
     useEffect(() => {
-        if (fetchedData && fetchedData.taskById) {
-            setStatus(fetchedData.taskById.status);
-            setResult(fetchedData.taskById.result);
+        if (fetchedTask && fetchedTask.taskById) {
+            setStatus(fetchedTask.taskById.status);
+            setResult(fetchedTask.taskById.result);
         }
-    }, [fetchedData])
+    }, [fetchedTask])
+
+    useEffect(() => {
+        if (fetchedAlgorithms) {
+            setAvailableAlgorithms(fetchedAlgorithms.allAlgorithms);
+        }
+    }, [fetchedAlgorithms])
 
     const handleSelectionChange = (event: SelectChangeEvent) => {
-        let selectedAlgorithm = ALGORITHMS.find((alg) => alg.displayName === event.target.value);
+        let selectedAlgorithm = availableAlgorithms.find((alg) => alg.displayName === event.target.value);
         if (selectedAlgorithm) {
             setAlgorithm(selectedAlgorithm);
         }
@@ -79,6 +72,7 @@ export default function Algorithms() {
 
     //Logging errors
     if (requestNewTaskError) { console.log(requestNewTaskError); }
+    if (fetchedAlgorithmsError) { console.log(fetchedAlgorithmsError); }
 
     return (
         <>
@@ -90,7 +84,7 @@ export default function Algorithms() {
                 value={algorithm.displayName}
                 onChange={handleSelectionChange}
             >
-                {ALGORITHMS.map((alg) => (
+                {availableAlgorithms.map((alg) => (
                     <MenuItem
                         key={alg.name}
                         value={alg.displayName}
