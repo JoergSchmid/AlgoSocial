@@ -53,7 +53,7 @@ public class PostController {
         Task task = new Task(algorithm, input);
         taskRepository.save(task);
 
-        Post post = new Post(userId, title, task.getStatus(), task.getId());
+        Post post = new Post(userId, title, input.toString(), task.getId());
         postRepository.save(post);
 
         taskService.startTask(task);
