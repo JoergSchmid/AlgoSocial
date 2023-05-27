@@ -14,24 +14,22 @@ import java.util.Objects;
 @Service
 public class TaskService {
     private final TaskRepository taskRepository;
-    private final PostRepository postRepository;
 
     @Autowired
-    public TaskService(TaskRepository taskRepository, PostRepository postRepository) {
+    public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
-        this.postRepository = postRepository;
     }
 
     @Async
     public void startTask(Task task) throws InterruptedException {
-        String input = task.getInput().toString();
+        List<Integer> input = task.getInput();
         String result;
         if (Objects.equals(task.getAlgorithm(), "bubblesort")) {
-            result = Algorithms.bubbleSort(task.getInput()).toString();
+            result = Algorithms.bubbleSort(input).toString();
         } else if (Objects.equals(task.getAlgorithm(), "quicksort")) {
-            result = Algorithms.quickSort(task.getInput()).toString();
+            result = Algorithms.quickSort(input).toString();
         } else if (Objects.equals(task.getAlgorithm(), "isprime")) {
-            result = Algorithms.isPrime(task.getInput().get(0)) ? "prime" : "not prime";
+            result = Algorithms.isPrime(input.get(0)) ? "prime" : "not prime";
         } else {
             task.setStatus("error: method not found.");
             taskRepository.save(task);
@@ -40,10 +38,5 @@ public class TaskService {
         task.setStatus("done");
         task.setResult(result);
         taskRepository.save(task);
-
-        String postMessage = input + "<br>" + result;
-        Post post = postRepository.findByTaskId(task.getId());
-        post.setMessage(postMessage);
-        postRepository.save(post);
     }
 }
