@@ -10,7 +10,7 @@ export default function PostTimeline({ posts, deletePost }: { posts: PostType[],
         posts.map(post => {
             return (
                 <Grid key={post.title}>
-                    {post.taskId && post.taskId > 0 ?
+                    {post.task ?
                         <AlgorithmPost post={post} deletePost={deletePost} /> :
                         <Post post={post} deletePost={deletePost} />}
                 </Grid>

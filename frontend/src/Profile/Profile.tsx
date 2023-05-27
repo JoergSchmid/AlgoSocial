@@ -15,10 +15,18 @@ export type PostType = {
     title: string,
     message: string,
     id: number,
-    taskId?: number,
+    task?: TaskType,
     status?: string,
     input?: string,
     result?: string
+}
+
+export type TaskType = {
+    id: number,
+    algorithm: string,
+    input: number[],
+    status: string,
+    result: string
 }
 
 export default function Profile({ user, avatar, changeUser }: { user: User, avatar: string, changeUser: (id?: number) => void }) {
@@ -66,13 +74,19 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
         });
     }
     function submitTask({ title, message }: PostType): void {
-        setPosts(posts => [...posts, { title, message: "calculating", id: -posts.length }]);
-        setShowPostInput(false);
-
         let requestInput = algorithm.inputMultiple ?
-            message.split(",").map((num) => Number(num.trim())) : message;
+            message.split(",").map((num) => Number(num.trim())) : [Number(message)];
 
-        console.log(algorithm);
+        setPosts(posts => [...posts, {
+            title, message, id: -posts.length, task: {
+                id: -1,
+                algorithm: "",
+                input: requestInput,
+                result: "",
+                status: "calculating"
+            }
+        }]);
+        setShowPostInput(false);
 
         requestNewTask({
             variables: {

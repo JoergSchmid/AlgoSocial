@@ -7,6 +7,7 @@ export const GET_ALL_POSTS_BY_USER_ID = gql`
             title
             message
             task {
+                id
                 algorithm
                 status
                 input
