@@ -58,7 +58,7 @@ export const ADD_POST = gql`
 `;
 
 export const ADD_ALGORITHM_POST = gql`
-    mutation addAlgorithmPost($userId: Int!, $title: String!, $algorithm: String!, $input: [Int!]) {
+    mutation addAlgorithmPost($userId: Int!, $title: String!, $algorithm: String!, $input: [Int!]!) {
         addAlgorithmPost(userId: $userId, title: $title, algorithm: $algorithm, input: $input) {
             id
             title

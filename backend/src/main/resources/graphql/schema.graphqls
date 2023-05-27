@@ -1,27 +1,27 @@
 type Query {
-    postById(id: ID): Post
-    allPosts: [Post]
-    postsByUserId(id: ID): [Post]
+    postById(id: ID!): Post
+    allPosts: [Post!]
+    postsByUserId(id: ID!): [Post!]
 
-    userById(id: ID): User
-    userByName(name: String): User
-    allUsers: [User]
+    userById(id: ID!): User
+    userByName(name: String!): User
+    allUsers: [User!]
 
-    allAlgorithms: [Algorithm!]
+    allAlgorithms: [Algorithm!]!
 
 
-    taskById(id: ID): Task
-    allTasks: [Task]
+    taskById(id: ID!): Task
+    allTasks: [Task!]
 }
 
 type Mutation {
-    addPost(userId: Int, title: String, message: String): Post
-    addAlgorithmPost(userId: Int, title: String, algorithm: String, input: [Int]): Post
-    removePost(id: ID): ID
+    addPost(userId: Int!, title: String!, message: String!): Post
+    addAlgorithmPost(userId: Int!, title: String!, algorithm: String!, input: [Int!]!): Post
+    removePost(id: ID!): ID
 
-    addTask(algorithm: String!, input: [Int!]): Task
+    addTask(algorithm: String!, input: [Int!]!): Task
     removeTask(id: ID!): ID!
-    removeAllTasks: Boolean
+    removeAllTasks: Boolean!
 
     isPrime(number: Int!): Boolean!
     bubbleSort(numbers: [Int!]!): [Int!]!
@@ -30,17 +30,17 @@ type Mutation {
 
 type User {
     id: ID!
-    name: String
-    posts: [Post]
+    name: String!
+    posts: [Post!]
 }
 
 type Post {
     id: ID!
-    userId: Int
+    userId: Int!
     taskId: Int
     task: Task
-    title: String
-    message: String
+    title: String!
+    message: String!
 }
 
 type Task {
