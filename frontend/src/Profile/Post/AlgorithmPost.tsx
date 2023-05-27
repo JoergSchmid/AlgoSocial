@@ -27,15 +27,21 @@ export default function AlgorithmPost({ availableAlgorithms, post, deletePost }:
         return algorithm ? algorithm.displayName : name;
     }
 
+    const removeBrackets = (text: string): string => {
+        return text.replace(/[[\]]/g, "");
+    }
+
+    const getStatusBackgroundColor = (): string => {
+        return post.task?.status ===
+            Status.ERROR ? "rgba(255,0,0,0.7)" : post.task?.status ===
+                Status.CALCULATING ? "rgba(255,255,0,0.5)" :
+            "rgba(0,255,0,0.2)"
+    }
+
     return (
         <>
             {post.task && <Item
-                style={{
-                    backgroundColor: post.task.status ===
-                        Status.ERROR ? "rgba(255,0,0,0.7)" : post.task.status ===
-                            Status.CALCULATING ? "rgba(255,255,0,0.5)" :
-                        "rgba(0,255,0,0.2)"
-                }}
+                style={{ backgroundColor: getStatusBackgroundColor() }}
                 data-testid="postContainer"
                 onMouseEnter={() => { if (post.id > 0) setShowDeleteButton(true) }}
                 onMouseLeave={() => setShowDeleteButton(false)}
@@ -48,11 +54,11 @@ export default function AlgorithmPost({ availableAlgorithms, post, deletePost }:
                 <Typography
                     variant="body1"
                     style={{ wordWrap: "break-word" }}
-                >{post.message.replace(/[[\]]/g, "")}</Typography>
+                >{removeBrackets(post.message)}</Typography>
                 <Typography
                     variant="body1"
                     style={{ wordWrap: "break-word", marginBottom: "20px" }}
-                >{post.task.result.replace(/[[\]]/g, "")}</Typography>
+                >{removeBrackets(post.task.result)}</Typography>
                 {showDeleteButton && <Button
                     variant='text'
                     data-testid="btn_delete"
