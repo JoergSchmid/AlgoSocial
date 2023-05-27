@@ -45,7 +45,7 @@ export default function Algorithms() {
     })
 
     const [requestNewTask, {
-        error: requestError
+        error: requestNewTaskError
     }] = useMutation(ADD_TASK);
 
     useEffect(() => {
@@ -84,7 +84,7 @@ export default function Algorithms() {
     }
 
     //Logging errors
-    if (requestError) { console.log(requestError); }
+    if (requestNewTaskError) { console.log(requestNewTaskError); }
 
     return (
         <>
