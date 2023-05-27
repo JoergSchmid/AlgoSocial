@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Controller
-public class Algorithms {
+public class AlgorithmCalculations {
     @MutationMapping
     public static boolean isPrime(@Argument int number) {
         if(number == 2 || number == 3)
