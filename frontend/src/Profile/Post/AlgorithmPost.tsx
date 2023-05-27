@@ -22,38 +22,42 @@ export default function AlgorithmPost({ post, deletePost }: {
     const [showDeleteButton, setShowDeleteButton] = useState<boolean>(false);
 
     return (
-        <Item
-            data-testid="postContainer"
-            onMouseEnter={() => { if (post.id > 0) setShowDeleteButton(true) }}
-            onMouseLeave={() => setShowDeleteButton(false)}
-        >
-            <Typography variant="h4" style={{ wordWrap: "break-word" }}>{post.title}</Typography>
-            <Typography
-                variant="body1"
-                style={{ wordWrap: "break-word", marginBottom: "20px" }}
-            >{post.input}</Typography>
-            <Typography
-                variant="body1"
-                style={{ wordWrap: "break-word", marginBottom: "20px" }}
-            >{post.result}</Typography>
-            <Typography
-                variant="body1"
-                style={{ wordWrap: "break-word", marginBottom: "20px" }}
-            >{post.status}</Typography>
-            {showDeleteButton && <Button
-                variant='text'
-                data-testid="btn_delete"
+        <>
+            {post.task && <Item
                 style={{
-                    color: "darkred",
-                    position: "absolute",
-                    right: "5px",
-                    bottom: "5px",
-                    width: "fit-content"
+                    backgroundColor: post.task.status ===
+                        "error" ? "rgba(255,0,0,0.7)" : post.task.status ===
+                            "calculating" ? "rgba(255,255,0,0.5)" :
+                        "rgba(0,255,0,0.2)"
                 }}
-                onClick={() => deletePost(post.id)}
+                data-testid="postContainer"
+                onMouseEnter={() => { if (post.id > 0) setShowDeleteButton(true) }}
+                onMouseLeave={() => setShowDeleteButton(false)}
             >
-                <DeleteSweepIcon />
-            </Button>}
-        </Item>
+                <Typography variant="h4" style={{ wordWrap: "break-word" }}>{post.title}</Typography>
+                <Typography
+                    variant="body1"
+                    style={{ wordWrap: "break-word" }}
+                >{post.task.input}</Typography>
+                <Typography
+                    variant="body1"
+                    style={{ wordWrap: "break-word", marginBottom: "20px" }}
+                >{post.task.result}</Typography>
+                {showDeleteButton && <Button
+                    variant='text'
+                    data-testid="btn_delete"
+                    style={{
+                        color: "darkred",
+                        position: "absolute",
+                        right: "5px",
+                        bottom: "5px",
+                        width: "fit-content"
+                    }}
+                    onClick={() => deletePost(post.id)}
+                >
+                    <DeleteSweepIcon />
+                </Button>}
+            </Item>}
+        </>
     );
 }
