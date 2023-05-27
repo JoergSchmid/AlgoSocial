@@ -8,16 +8,11 @@ public class Algorithm {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
     @Nonnull
-    @Column
-    private String name;
-
+    private final String name;
     @Nonnull
-    @Column
-    private String displayName;
-
-    @Column boolean inputMultiple;
+    private final String displayName;
+    boolean inputMultiple;
 
     public Algorithm(@Nonnull String name, @Nonnull String displayName, boolean inputMultiple) {
         this.name = name;

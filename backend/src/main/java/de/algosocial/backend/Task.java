@@ -2,6 +2,7 @@ package de.algosocial.backend;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -10,28 +11,23 @@ public class Task {
         DONE,
         CALCULATING,
         ERROR
-        }
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column
     private int userId;
 
     @Nonnull
-    @Column
-    private String algorithm;
+    private final String algorithm;
 
     @Nonnull
-    @Column
-    private List<Integer> input;
+    private final List<Integer> input;
 
     @Nonnull
-    @Column
     private Status status;
 
-    @Column
     private String result;
 
     public Task(@Nonnull String algorithm, @Nonnull List<Integer> input) {
@@ -43,6 +39,7 @@ public class Task {
     protected Task() {
         this.algorithm = "__invalid__: default constructor used.";
         this.status = Status.ERROR;
+        input = new ArrayList<Integer>();
     }
 
     public int getId() {
@@ -69,7 +66,7 @@ public class Task {
         return userId;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(@Nonnull Status status) {
         this.status = status;
     }
 
