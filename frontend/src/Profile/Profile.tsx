@@ -7,14 +7,19 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { Fab } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { ADD_ALGORITHM_POST, ADD_POST, GET_ALL_POSTS_BY_USER_ID, REMOVE_POST } from "../Requests/gqlRequests";
+import { ADD_ALGORITHM_POST, ADD_POST, GET_ALL_ALGORITHMS, GET_ALL_POSTS_BY_USER_ID, REMOVE_POST } from "../Requests/gqlRequests";
 import { ApolloQueryResult, useMutation, useQuery } from "@apollo/client";
-import { ALGORITHMS, Algorithm } from '../Algorithms/Algorithms';
 
 export enum Status {
     DONE,
     CALCULATING,
     ERROR
+}
+
+export type AlgorithmType = {
+    name: string,
+    displayName: string,
+    inputMultiple: boolean
 }
 
 export type PostType = {
@@ -32,11 +37,18 @@ export type TaskType = {
     result: string
 }
 
+const defaultAlgorithm: AlgorithmType[] = [{
+    name: "bubblesort",
+    displayName: "Bubble Sort",
+    inputMultiple: true
+}]
+
 export default function Profile({ user, avatar, changeUser }: { user: User, avatar: string, changeUser: (id?: number) => void }) {
+    const [availableAlgorithms, setAvailableAlgorithms] = useState<AlgorithmType[]>(defaultAlgorithm)
     const [posts, setPosts] = useState<PostType[]>([]);
     const [showPostInput, setShowPostInput] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [algorithm, setAlgorithm] = useState<Algorithm>(ALGORITHMS[0]);
+    const [algorithm, setAlgorithm] = useState<AlgorithmType>(defaultAlgorithm[0]);
 
     const [requestAddPost, {
         error: addPostError
@@ -48,7 +60,9 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
         onCompleted: (): Promise<ApolloQueryResult<any>> => refetch()
     });
 
-    const { data: fetchedPosts, error: fetchedError, refetch } = useQuery(GET_ALL_POSTS_BY_USER_ID, {
+    const { data: fetchedAlgorithms, error: fetchedAlgorithmsError } = useQuery(GET_ALL_ALGORITHMS);
+
+    const { data: fetchedPosts, error: fetchedPostsError, refetch } = useQuery(GET_ALL_POSTS_BY_USER_ID, {
         variables: { id: user.userId },
         fetchPolicy: 'no-cache',
         pollInterval: 10000
@@ -64,6 +78,12 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
             setIsLoading(false);
         }
     }, [fetchedPosts])
+
+    useEffect(() => {
+        if (fetchedAlgorithms) {
+            setAvailableAlgorithms(fetchedAlgorithms.allAlgorithms);
+        }
+    }, [fetchedAlgorithms])
 
     function submitPost({ title, message }: PostType): void {
         setPosts(posts => [...posts, { title, message, id: -posts.length }]);
@@ -109,7 +129,8 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
     }
 
     //Logging errors
-    if (fetchedError) { console.log(fetchedError); }
+    if (fetchedPostsError) { console.log(fetchedPostsError); }
+    if (fetchedAlgorithmsError) { console.log(fetchedAlgorithmsError); }
     if (addPostError) { console.log(addPostError); }
     if (deletePostError) { console.log(deletePostError); }
     if (requestError) { console.log(requestError); }
@@ -142,6 +163,7 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
                 </Grid>
                 <Grid>
                     {showPostInput && <><PostInput
+                        availableAlgorithms={availableAlgorithms}
                         algorithm={algorithm}
                         setAlgorithm={setAlgorithm}
                         submitPost={submitPost}
@@ -149,12 +171,13 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
                     /><br /></>}
                 </Grid>
                 <Grid>
-                    {fetchedError && <><p className='error'>Error Fetching posts: {fetchedError.name}</p><br /></>}
+                    {fetchedPostsError && <><p className='error'>Error Fetching posts: {fetchedPostsError.name}</p><br /></>}
+                    {fetchedAlgorithmsError && <><p className='error'>Error Fetching posts: {fetchedAlgorithmsError.name}</p><br /></>}
                     {addPostError && <><p className='error'>Error sending post to server: {addPostError.name}</p><br /></>}
                     {deletePostError && <p className='error'>Error occured when trying to delete post: {deletePostError.name}</p>}
                 </Grid>
             </Grid>
-            <PostTimeline posts={posts} deletePost={deletePost} />
+            <PostTimeline availableAlgorithms={availableAlgorithms} posts={posts} deletePost={deletePost} />
         </>
     );
 }

@@ -7,6 +7,9 @@ type Query {
     userByName(name: String): User
     allUsers: [User]
 
+    allAlgorithms: [Algorithm!]
+
+
     taskById(id: ID): Task
     allTasks: [Task]
 }
@@ -46,6 +49,13 @@ type Task {
     input: [Int!]
     status: Status!
     result: String
+}
+
+type Algorithm {
+    id: ID!
+    name: String!
+    displayName: String!
+    inputMultiple: Boolean!
 }
 
 enum Status {

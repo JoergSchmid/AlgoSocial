@@ -1,5 +1,16 @@
 import { gql } from "@apollo/client";
 
+export const GET_ALL_ALGORITHMS = gql`
+    query allAlgorithms {
+        allAlgorithms {
+            id
+            name
+            displayName
+            inputMultiple
+        }
+    }
+`;
+
 export const GET_ALL_POSTS_BY_USER_ID = gql`
     query postsByUserId($id: ID!) {
         postsByUserId(id: $id) {

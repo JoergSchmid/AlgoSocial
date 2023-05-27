@@ -3,15 +3,9 @@ import { useEffect, useState } from "react"
 import { SubmitButton, StatusField, ResultField, InputField } from "./IOComponents";
 import { ADD_TASK, GET_TASK_BY_ID } from "../Requests/gqlRequests";
 import { useMutation, useQuery } from "@apollo/client";
+import { AlgorithmType } from "../Profile/Profile";
 
-
-export type Algorithm = {
-    name: string,
-    displayName: string,
-    inputMultiple: boolean
-}
-
-export const ALGORITHMS: Algorithm[] = [
+const ALGORITHMS: AlgorithmType[] = [
     {
         name: "bubblesort",
         displayName: "Bubble Sort",
@@ -31,7 +25,7 @@ export const REGEX_SINGLE = /[^0-9]/;
 export const REGEX_MULTIPLE = /[^0-9,]|,,/;
 
 export default function Algorithms() {
-    const [algorithm, setAlgorithm] = useState<Algorithm>(ALGORITHMS[0]);
+    const [algorithm, setAlgorithm] = useState<AlgorithmType>(ALGORITHMS[0]);
     const [input, setInput] = useState<string>("");
     const [inputError, setInputError] = useState<boolean>(false);
     const [taskID, setTaskID] = useState<number>(-1);

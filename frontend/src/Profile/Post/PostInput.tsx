@@ -1,12 +1,13 @@
 import React from 'react';
 import { useState } from "react";
-import { PostType } from "../Profile";
+import { AlgorithmType, PostType } from "../Profile";
 import { Card, Button, TextField, CardContent, MenuItem, Select, SelectChangeEvent, Checkbox } from "@mui/material";
-import { ALGORITHMS, Algorithm, REGEX_MULTIPLE, REGEX_SINGLE } from '../../Algorithms/Algorithms';
+import { REGEX_MULTIPLE, REGEX_SINGLE } from '../../Algorithms/Algorithms';
 
-export default function PostInput({ algorithm, setAlgorithm, submitPost, submitTask }: {
-    algorithm: Algorithm,
-    setAlgorithm: (algorithm: Algorithm) => void,
+export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm, submitPost, submitTask }: {
+    availableAlgorithms: AlgorithmType[],
+    algorithm: AlgorithmType,
+    setAlgorithm: (algorithm: AlgorithmType) => void,
     submitPost: (post: PostType) => void,
     submitTask: (post: PostType) => void
 }) {
@@ -20,7 +21,7 @@ export default function PostInput({ algorithm, setAlgorithm, submitPost, submitT
     }
 
     const handleSelectionChange = (event: SelectChangeEvent) => {
-        let selectedAlgorithm = ALGORITHMS.find((alg) => alg.displayName === event.target.value);
+        let selectedAlgorithm = availableAlgorithms.find((alg) => alg.displayName === event.target.value);
         if (selectedAlgorithm) {
             setAlgorithm(selectedAlgorithm);
         }
@@ -94,7 +95,7 @@ export default function PostInput({ algorithm, setAlgorithm, submitPost, submitT
                         style={{ float: "left", borderRadius: "8px", marginTop: "5px", height: "48px" }}
                         onChange={handleSelectionChange}
                     >
-                        {ALGORITHMS.map((alg) => (
+                        {availableAlgorithms.map((alg) => (
                             <MenuItem
                                 key={alg.name}
                                 value={alg.displayName}

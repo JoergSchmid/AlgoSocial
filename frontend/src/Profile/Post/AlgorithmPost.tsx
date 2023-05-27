@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Paper, Typography, styled } from "@mui/material";
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
-import { PostType, Status } from "../Profile";
-import { ALGORITHMS } from '../../Algorithms/Algorithms';
+import { AlgorithmType, PostType, Status } from "../Profile";
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#eee',
@@ -16,14 +15,15 @@ const Item = styled(Paper)(({ theme }) => ({
     position: "relative"
 }));
 
-export default function AlgorithmPost({ post, deletePost }: {
+export default function AlgorithmPost({ availableAlgorithms, post, deletePost }: {
+    availableAlgorithms: AlgorithmType[],
     post: PostType,
     deletePost: (id: number) => void,
 }) {
     const [showDeleteButton, setShowDeleteButton] = useState<boolean>(false);
 
     const getAlgorithmDisplayName = (name: string): string => {
-        const algorithm = ALGORITHMS.find(alg => alg.name === name);
+        const algorithm = availableAlgorithms.find(alg => alg.name === name);
         return algorithm ? algorithm.displayName : name;
     }
 
