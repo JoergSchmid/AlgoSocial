@@ -43,7 +43,11 @@ export const defaultAlgorithm: AlgorithmType[] = [{
     inputMultiple: true
 }]
 
-export default function Profile({ user, avatar, changeUser }: { user: User, avatar: string, changeUser: (id?: number) => void }) {
+export default function Profile({ user, avatar, changeUser }: {
+    user: User,
+    avatar: string,
+    changeUser: (id?: number) => void
+}) {
     const [availableAlgorithms, setAvailableAlgorithms] = useState<AlgorithmType[]>(defaultAlgorithm)
     const [posts, setPosts] = useState<PostType[]>([]);
     const [showPostInput, setShowPostInput] = useState<boolean>(false);
@@ -55,6 +59,10 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
     }] = useMutation(ADD_POST, {
         onCompleted: (): Promise<ApolloQueryResult<any>> => refetch()
     });
+
+    const [requestNewTask, {
+        error: requestError
+    }] = useMutation(ADD_ALGORITHM_POST);
 
     const [requestDeletePost, { error: deletePostError }] = useMutation(REMOVE_POST, {
         onCompleted: (): Promise<ApolloQueryResult<any>> => refetch()
@@ -68,9 +76,11 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
         pollInterval: 10000
     });
 
-    const [requestNewTask, {
-        error: requestError
-    }] = useMutation(ADD_ALGORITHM_POST);
+    useEffect(() => {
+        if (fetchedAlgorithms) {
+            setAvailableAlgorithms(fetchedAlgorithms.allAlgorithms);
+        }
+    }, [fetchedAlgorithms])
 
     useEffect(() => {
         if (fetchedPosts) {
@@ -78,12 +88,6 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
             setIsLoading(false);
         }
     }, [fetchedPosts])
-
-    useEffect(() => {
-        if (fetchedAlgorithms) {
-            setAvailableAlgorithms(fetchedAlgorithms.allAlgorithms);
-        }
-    }, [fetchedAlgorithms])
 
     function submitPost({ title, message }: PostType): void {
         setPosts(posts => [...posts, { title, message, id: -posts.length }]);
