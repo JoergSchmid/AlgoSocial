@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Paper, Typography, styled } from "@mui/material";
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import { PostType, Status } from "../Profile";
+import { ALGORITHMS } from '../../Algorithms/Algorithms';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#eee',
@@ -21,6 +22,11 @@ export default function AlgorithmPost({ post, deletePost }: {
 }) {
     const [showDeleteButton, setShowDeleteButton] = useState<boolean>(false);
 
+    const getAlgorithmDisplayName = (name: string): string => {
+        const algorithm = ALGORITHMS.find(alg => alg.name === name);
+        return algorithm ? algorithm.displayName : "";
+    }
+
     return (
         <>
             {post.task && <Item
@@ -36,9 +42,13 @@ export default function AlgorithmPost({ post, deletePost }: {
             >
                 <Typography variant="h4" style={{ wordWrap: "break-word" }}>{post.title}</Typography>
                 <Typography
+                    variant="h6"
+                    style={{ wordWrap: "break-word" }}
+                >{getAlgorithmDisplayName(post.task.algorithm)}</Typography>
+                <Typography
                     variant="body1"
                     style={{ wordWrap: "break-word" }}
-                >{post.task.input.join(", ")}</Typography>
+                >{post.message.replace(/[[\]]/g, "")}</Typography>
                 <Typography
                     variant="body1"
                     style={{ wordWrap: "break-word", marginBottom: "20px" }}
