@@ -38,11 +38,11 @@ export default function AlgorithmPost({ post, deletePost }: {
                 <Typography
                     variant="body1"
                     style={{ wordWrap: "break-word" }}
-                >{post.task.input}</Typography>
+                >{post.task.input.join(", ")}</Typography>
                 <Typography
                     variant="body1"
                     style={{ wordWrap: "break-word", marginBottom: "20px" }}
-                >{post.task.result}</Typography>
+                >{post.task.result.replace(/[[\]]/g, "")}</Typography>
                 {showDeleteButton && <Button
                     variant='text'
                     data-testid="btn_delete"
