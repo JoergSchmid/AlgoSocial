@@ -2,7 +2,6 @@ package de.algosocial.backend;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
-import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 @Entity
@@ -35,7 +34,7 @@ public class Task {
     @Column
     private String result;
 
-    public Task(@NotNull String algorithm, @NotNull List<Integer> input) {
+    public Task(@Nonnull String algorithm, @Nonnull List<Integer> input) {
         this.algorithm = algorithm;
         this.input = input;
         this.status = Status.CALCULATING;
