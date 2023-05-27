@@ -44,6 +44,12 @@ type Task {
     id: ID!
     algorithm: String!
     input: [Int!]
-    status: String!
+    status: Status!
     result: String
+}
+
+enum Status {
+    DONE
+    CALCULATING
+    ERROR
 }

@@ -7,6 +7,12 @@ import java.util.List;
 
 @Entity
 public class Task {
+    public enum Status {
+        DONE,
+        CALCULATING,
+        ERROR
+        }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -24,7 +30,7 @@ public class Task {
 
     @Nonnull
     @Column
-    private String status;
+    private Status status;
 
     @Column
     private String result;
@@ -32,12 +38,12 @@ public class Task {
     public Task(@NotNull String algorithm, @NotNull List<Integer> input) {
         this.algorithm = algorithm;
         this.input = input;
-        this.status = "calculating";
+        this.status = Status.CALCULATING;
     }
 
     protected Task() {
         this.algorithm = "__invalid__: default constructor used.";
-        this.status = "__invalid__";
+        this.status = Status.ERROR;
     }
 
     public int getId() {
@@ -52,7 +58,7 @@ public class Task {
         return input;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
@@ -64,7 +70,7 @@ public class Task {
         return userId;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

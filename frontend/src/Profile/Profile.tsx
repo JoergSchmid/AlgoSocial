@@ -11,6 +11,12 @@ import { ADD_ALGORITHM_POST, ADD_POST, GET_ALL_POSTS_BY_USER_ID, REMOVE_POST } f
 import { ApolloQueryResult, useMutation, useQuery } from "@apollo/client";
 import { ALGORITHMS, Algorithm } from '../Algorithms/Algorithms';
 
+export enum Status {
+    DONE,
+    CALCULATING,
+    ERROR
+}
+
 export type PostType = {
     title: string,
     message: string,
@@ -22,7 +28,7 @@ export type TaskType = {
     id: number,
     algorithm: string,
     input: number[],
-    status: string,
+    status: Status,
     result: string
 }
 
@@ -80,7 +86,7 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
                 algorithm: "",
                 input: requestInput,
                 result: "",
-                status: "calculating"
+                status: Status.CALCULATING
             }
         }]);
         setShowPostInput(false);

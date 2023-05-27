@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Paper, Typography, styled } from "@mui/material";
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
-import { PostType } from "../Profile";
+import { PostType, Status } from "../Profile";
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#eee',
@@ -26,8 +26,8 @@ export default function AlgorithmPost({ post, deletePost }: {
             {post.task && <Item
                 style={{
                     backgroundColor: post.task.status ===
-                        "error" ? "rgba(255,0,0,0.7)" : post.task.status ===
-                            "calculating" ? "rgba(255,255,0,0.5)" :
+                        Status.ERROR ? "rgba(255,0,0,0.7)" : post.task.status ===
+                            Status.CALCULATING ? "rgba(255,255,0,0.5)" :
                         "rgba(0,255,0,0.2)"
                 }}
                 data-testid="postContainer"

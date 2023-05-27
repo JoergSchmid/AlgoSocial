@@ -31,11 +31,11 @@ public class TaskService {
         } else if (Objects.equals(task.getAlgorithm(), "isprime")) {
             result = Algorithms.isPrime(input.get(0)) ? "prime" : "not prime";
         } else {
-            task.setStatus("error: method not found.");
+            task.setStatus(Task.Status.ERROR);
             taskRepository.save(task);
             return;
         }
-        task.setStatus("done");
+        task.setStatus(Task.Status.DONE);
         task.setResult(result);
         taskRepository.save(task);
     }
