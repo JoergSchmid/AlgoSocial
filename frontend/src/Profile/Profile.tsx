@@ -16,9 +16,6 @@ export type PostType = {
     message: string,
     id: number,
     task?: TaskType,
-    status?: string,
-    input?: string,
-    result?: string
 }
 
 export type TaskType = {
