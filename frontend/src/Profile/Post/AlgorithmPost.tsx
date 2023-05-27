@@ -24,7 +24,7 @@ export default function AlgorithmPost({ post, deletePost }: {
 
     const getAlgorithmDisplayName = (name: string): string => {
         const algorithm = ALGORITHMS.find(alg => alg.name === name);
-        return algorithm ? algorithm.displayName : "";
+        return algorithm ? algorithm.displayName : name;
     }
 
     return (
