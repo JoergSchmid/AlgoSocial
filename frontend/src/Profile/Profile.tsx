@@ -43,6 +43,8 @@ export const defaultAlgorithm: AlgorithmType[] = [{
     inputMultiple: true
 }]
 
+const LARGEST_INT = 2147483647;
+
 export default function Profile({ user, avatar, changeUser }: {
     user: User,
     avatar: string,
@@ -101,8 +103,18 @@ export default function Profile({ user, avatar, changeUser }: {
         });
     }
     function submitTask({ title, message }: PostType): void {
+        let err = false;
+        const checkNumber = (n: number): number => {
+            if (n > LARGEST_INT) {
+                err = true;
+                return 0;
+            }
+            return n;
+        }
         let requestInput = algorithm.inputMultiple ?
-            message.split(",").map((num) => Number(num.trim())) : [Number(message)];
+            message.split(",").map((num) => {
+                return checkNumber(Number(num.trim()));
+            }) : [checkNumber(Number(message))];
 
         setPosts(posts => [...posts, {
             title, message, id: -posts.length, task: {
@@ -110,7 +122,7 @@ export default function Profile({ user, avatar, changeUser }: {
                 algorithm: "",
                 input: requestInput,
                 result: "",
-                status: Status.CALCULATING
+                status: err ? Status.ERROR : Status.CALCULATING
             }
         }]);
         setShowPostInput(false);
@@ -120,7 +132,8 @@ export default function Profile({ user, avatar, changeUser }: {
                 userId: user.userId,
                 title: title,
                 algorithm: algorithm.name,
-                input: requestInput
+                input: requestInput,
+                error: err ? "Error: Number too big" : null
             }
         });
     }

@@ -32,9 +32,10 @@ export default function AlgorithmPost({ availableAlgorithms, post, deletePost }:
     }
 
     const getStatusBackgroundColor = (): string => {
-        return post.task?.status ===
-            Status.ERROR ? "rgba(255,0,0,0.7)" : post.task?.status ===
-                Status.CALCULATING ? "rgba(255,255,0,0.5)" :
+        let postStatus = post.task?.status.toString();
+        return postStatus ===
+            Status[Status.ERROR] ? "rgba(255,0,0,0.7)" : postStatus ===
+                Status[Status.CALCULATING] ? "rgba(255,255,0,0.5)" :
             "rgba(0,255,0,0.2)"
     }
 
