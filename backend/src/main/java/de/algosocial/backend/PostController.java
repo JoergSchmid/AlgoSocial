@@ -48,14 +48,18 @@ public class PostController {
 
     @MutationMapping
     public Post addAlgorithmPost(@Argument int userId, @Argument String title,
-                                  @Argument String algorithm, @Argument List<Integer> input) throws InterruptedException {
+                                  @Argument String algorithm, @Argument List<Integer> input,
+                                 @Argument String error) throws InterruptedException {
         Task task = new Task(algorithm, input);
+        if(error != null)
+            task.setError(error);
         taskRepository.save(task);
 
         Post post = new Post(userId, title, input.toString(), task.getId());
         postRepository.save(post);
 
-        taskService.startTask(task);
+        if(error == null)
+            taskService.startTask(task);
         return post;
     }
 

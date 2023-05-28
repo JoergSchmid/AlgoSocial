@@ -30,6 +30,8 @@ public class Task {
 
     private String result;
 
+    private String error;
+
     public Task(@Nonnull String algorithm, @Nonnull List<Integer> input) {
         this.algorithm = algorithm;
         this.input = input;
@@ -74,4 +76,11 @@ public class Task {
         this.result = result;
     }
 
+    public void setError(String error) {
+        this.error = error;
+        if(error != null) {
+            this.status = Status.ERROR;
+            this.result = error;
+        }
+    }
 }
