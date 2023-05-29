@@ -28,6 +28,7 @@ export default function AlgorithmPost({ availableAlgorithms, post, deletePost }:
     }
 
     const removeBrackets = (text: string): string => {
+        if (text === null) { return text; }
         return text.replace(/[[\]]/g, "");
     }
 
