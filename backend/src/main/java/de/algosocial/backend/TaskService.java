@@ -10,12 +10,8 @@ import java.util.Objects;
 
 @Service
 public class TaskService {
-    private final TaskRepository taskRepository;
-
     @Autowired
-    public TaskService(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
+    private TaskRepository taskRepository;
 
     @Async
     public void startTask(Task task) throws InterruptedException {
