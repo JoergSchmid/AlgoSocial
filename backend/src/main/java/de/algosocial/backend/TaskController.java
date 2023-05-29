@@ -13,12 +13,8 @@ public class TaskController {
     private TaskRepository taskRepository;
     @Autowired
     private PostRepository postRepository;
-    private final TaskService taskService;
-
     @Autowired
-    public TaskController(TaskService taskService) {
-        this.taskService = taskService;
-    }
+    private TaskService taskService;
 
     @QueryMapping
     public Task taskById(@Argument int id) {
