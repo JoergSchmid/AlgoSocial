@@ -7,43 +7,125 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { Fab } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { ADD_POST, GET_ALL_POSTS_BY_USER_ID, REMOVE_POST } from "./Post/gqlRequests";
+import { ADD_ALGORITHM_POST, ADD_POST, GET_ALL_ALGORITHMS, GET_ALL_POSTS_BY_USER_ID, REMOVE_POST } from "../Requests/gqlRequests";
 import { ApolloQueryResult, useMutation, useQuery } from "@apollo/client";
+
+export enum Status {
+    // GraphQL sends enums as strings
+    DONE = "DONE",
+    CALCULATING = "CALCULATING",
+    ERROR = "ERROR"
+}
+
+export type AlgorithmType = {
+    name: string,
+    displayName: string,
+    inputMultiple: boolean
+}
 
 export type PostType = {
     title: string,
     message: string,
-    id: number
+    id: number,
+    task?: TaskType,
 }
 
-export default function Profile({ user, avatar, changeUser }: { user: User, avatar: string, changeUser: (id?: number) => void }) {
+export type TaskType = {
+    id: number,
+    algorithm: string,
+    input: number[],
+    status: Status,
+    result: string
+}
+
+export const defaultAlgorithm: AlgorithmType[] = [{
+    name: "bubblesort",
+    displayName: "Bubble Sort",
+    inputMultiple: true
+}]
+
+export default function Profile({ user, avatar, changeUser }: {
+    user: User,
+    avatar: string,
+    changeUser: (id?: number) => void
+}) {
+    const [availableAlgorithms, setAvailableAlgorithms] = useState<AlgorithmType[]>(defaultAlgorithm)
     const [posts, setPosts] = useState<PostType[]>([]);
     const [showPostInput, setShowPostInput] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [requestAddPost, { error: addPostError }] = useMutation(ADD_POST, {
+    const [algorithm, setAlgorithm] = useState<AlgorithmType>(defaultAlgorithm[0]);
+
+    const [requestAddPost, {
+        error: addPostError
+    }] = useMutation(ADD_POST, {
         onCompleted: (): Promise<ApolloQueryResult<any>> => refetch()
     });
+
+    const [requestNewTask, {
+        error: requestNewTaskError
+    }] = useMutation(ADD_ALGORITHM_POST);
+
     const [requestDeletePost, { error: deletePostError }] = useMutation(REMOVE_POST, {
         onCompleted: (): Promise<ApolloQueryResult<any>> => refetch()
     });
-    const { data: fetchedData, error: fetchedError, refetch } = useQuery(GET_ALL_POSTS_BY_USER_ID, {
+
+    const { data: fetchedAlgorithms, error: fetchedAlgorithmsError } = useQuery(GET_ALL_ALGORITHMS);
+
+    const { data: fetchedPosts, error: fetchedPostsError, refetch } = useQuery(GET_ALL_POSTS_BY_USER_ID, {
         variables: { id: user.userId },
         fetchPolicy: 'no-cache',
         pollInterval: 10000
     });
 
     useEffect(() => {
-        if (fetchedData) {
-            setPosts(fetchedData.postsByUserId);
+        if (fetchedAlgorithms) {
+            setAvailableAlgorithms(fetchedAlgorithms.allAlgorithms);
+        }
+    }, [fetchedAlgorithms])
+
+    useEffect(() => {
+        if (fetchedPosts) {
+            setPosts(fetchedPosts.postsByUserId);
             setIsLoading(false);
         }
-    }, [fetchedData])
+    }, [fetchedPosts])
 
     function submitPost({ title, message }: PostType): void {
         setPosts(posts => [...posts, { title, message, id: -posts.length }]);
         setShowPostInput(false);
         requestAddPost({
-            variables: { userId: user.userId, title, message }
+            variables: {
+                userId: user.userId,
+                title,
+                message
+            }
+        });
+    }
+    function submitTask({ title, message }: PostType): void {
+
+        const requestInput = algorithm.inputMultiple ?
+            message.split(",").map((num) => {
+                return Number(num.trim());
+            }) : [Number(message)];
+
+        setPosts(posts => [...posts, {
+            title, message, id: -posts.length, task: {
+                id: -1,
+                algorithm: algorithm.name,
+                input: requestInput,
+                result: "",
+                status: Status.CALCULATING
+            }
+        }]);
+        setShowPostInput(false);
+
+        requestNewTask({
+            variables: {
+                userId: user.userId,
+                title: title,
+                algorithm: algorithm.name,
+                input: requestInput
+            }
         });
     }
 
@@ -55,9 +137,11 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
     }
 
     //Logging errors
-    if (fetchedError) { console.log(fetchedError); }
+    if (fetchedPostsError) { console.log(fetchedPostsError); }
+    if (fetchedAlgorithmsError) { console.log(fetchedAlgorithmsError); }
     if (addPostError) { console.log(addPostError); }
-    if (deletePostError) { console.log(deletePostError) }
+    if (deletePostError) { console.log(deletePostError); }
+    if (requestNewTaskError) { console.log(requestNewTaskError); }
 
     return (
         <>
@@ -86,15 +170,23 @@ export default function Profile({ user, avatar, changeUser }: { user: User, avat
                     </div>
                 </Grid>
                 <Grid>
-                    {showPostInput && <><PostInput submitPost={submitPost} /><br /></>}
+                    {showPostInput && <><PostInput
+                        availableAlgorithms={availableAlgorithms}
+                        algorithm={algorithm}
+                        setAlgorithm={setAlgorithm}
+                        submitPost={submitPost}
+                        submitTask={submitTask}
+                    /><br /></>}
                 </Grid>
                 <Grid>
-                    {fetchedError && <><p className='error'>Error Fetching posts: {fetchedError.name}</p><br /></>}
+                    {fetchedPostsError && <><p className='error'>Error Fetching posts: {fetchedPostsError.name}</p><br /></>}
+                    {fetchedAlgorithmsError && <><p className='error'>Error Fetching posts: {fetchedAlgorithmsError.name}</p><br /></>}
                     {addPostError && <><p className='error'>Error sending post to server: {addPostError.name}</p><br /></>}
                     {deletePostError && <p className='error'>Error occured when trying to delete post: {deletePostError.name}</p>}
+                    {requestNewTaskError && <p className='error'> Error occured sending an algorithmic post: {requestNewTaskError.name}</p>}
                 </Grid>
             </Grid>
-            <PostTimeline posts={posts} deletePost={deletePost} />
+            <PostTimeline availableAlgorithms={availableAlgorithms} posts={posts} deletePost={deletePost} />
         </>
     );
 }

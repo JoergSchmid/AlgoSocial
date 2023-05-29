@@ -15,10 +15,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication
 @RestController
 public class BackendApplication {
-	@Autowired
-	PostRepository postRepository;
-	@Autowired
-	UserRepository userRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);

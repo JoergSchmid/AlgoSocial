@@ -10,5 +10,7 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
 
     Post findById(int id);
 
+    Post findByTaskId(int id);
+
     List<Post> findByUserId(int userId);
 }

@@ -14,6 +14,15 @@ public class PostController {
     PostRepository postRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    private TaskRepository taskRepository;
+    private final TaskService taskService;
+
+    @Autowired
+    public PostController(TaskService taskService) {
+        this.taskService = taskService;
+    }
+
 
     @QueryMapping
     public Post postById(@Argument int id) {
@@ -38,13 +47,36 @@ public class PostController {
     }
 
     @MutationMapping
+    public Post addAlgorithmPost(@Argument int userId, @Argument String title,
+                                  @Argument String algorithm, @Argument List<Integer> input) throws InterruptedException {
+        Task task = new Task(algorithm, input);
+        taskRepository.save(task);
+
+        Post post = new Post(userId, title, input.toString(), task.getId());
+        postRepository.save(post);
+
+        taskService.startTask(task);
+        return post;
+    }
+
+
+    @MutationMapping
     public int removePost(@Argument int id) {
-        postRepository.delete(postRepository.findById(id));
+        Post post = postRepository.findById(id);
+        if(post == null)
+            return -1;
+        taskRepository.delete(taskRepository.findById(post.getTaskId()));
+        postRepository.delete(post);
         return id;
     }
 
     @SchemaMapping
     public User user(Post post) {
         return userRepository.findById(post.getUserId());
+    }
+
+    @SchemaMapping
+    public Task task(Post post) {
+        return taskRepository.findById((post.getTaskId()));
     }
 }
