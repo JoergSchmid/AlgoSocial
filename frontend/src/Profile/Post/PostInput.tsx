@@ -39,11 +39,27 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
             return;
         }
 
-        let regex = algorithm.inputMultiple ? REGEX_MULTIPLE : REGEX_SINGLE;
+        const regex = algorithm.inputMultiple ? REGEX_MULTIPLE : REGEX_SINGLE;
         if (regex.test(message)) {
             setInputError(true);
             return;
         }
+
+        const LARGEST_INT = 2147483647;
+        if (algorithm.inputMultiple) {
+            for (const num of message) {
+                if (parseInt(num.trim()) > LARGEST_INT) {
+                    setInputError(true);
+                    return;
+                }
+
+            }
+        } else if (Number(message) > LARGEST_INT) {
+            setInputError(true);
+            return;
+        }
+
+
         setInputError(false);
         submitTask({ title, message, id: -1 })
     }

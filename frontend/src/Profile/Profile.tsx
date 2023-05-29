@@ -44,8 +44,6 @@ export const defaultAlgorithm: AlgorithmType[] = [{
     inputMultiple: true
 }]
 
-const LARGEST_INT = 2147483647;
-
 export default function Profile({ user, avatar, changeUser }: {
     user: User,
     avatar: string,
@@ -64,7 +62,7 @@ export default function Profile({ user, avatar, changeUser }: {
     });
 
     const [requestNewTask, {
-        error: requestError
+        error: requestNewTaskError
     }] = useMutation(ADD_ALGORITHM_POST);
 
     const [requestDeletePost, { error: deletePostError }] = useMutation(REMOVE_POST, {
@@ -104,18 +102,11 @@ export default function Profile({ user, avatar, changeUser }: {
         });
     }
     function submitTask({ title, message }: PostType): void {
-        let err = false;
-        const checkNumber = (n: number): number => {
-            if (n > LARGEST_INT) {
-                err = true;
-                return 0;
-            }
-            return n;
-        }
-        let requestInput = algorithm.inputMultiple ?
+
+        const requestInput = algorithm.inputMultiple ?
             message.split(",").map((num) => {
-                return checkNumber(Number(num.trim()));
-            }) : [checkNumber(Number(message))];
+                return Number(num.trim());
+            }) : [Number(message)];
 
         setPosts(posts => [...posts, {
             title, message, id: -posts.length, task: {
@@ -133,8 +124,7 @@ export default function Profile({ user, avatar, changeUser }: {
                 userId: user.userId,
                 title: title,
                 algorithm: algorithm.name,
-                input: requestInput,
-                error: err ? "Error: Number too big" : null
+                input: requestInput
             }
         });
     }
@@ -151,7 +141,7 @@ export default function Profile({ user, avatar, changeUser }: {
     if (fetchedAlgorithmsError) { console.log(fetchedAlgorithmsError); }
     if (addPostError) { console.log(addPostError); }
     if (deletePostError) { console.log(deletePostError); }
-    if (requestError) { console.log(requestError); }
+    if (requestNewTaskError) { console.log(requestNewTaskError); }
 
     return (
         <>
@@ -193,6 +183,7 @@ export default function Profile({ user, avatar, changeUser }: {
                     {fetchedAlgorithmsError && <><p className='error'>Error Fetching posts: {fetchedAlgorithmsError.name}</p><br /></>}
                     {addPostError && <><p className='error'>Error sending post to server: {addPostError.name}</p><br /></>}
                     {deletePostError && <p className='error'>Error occured when trying to delete post: {deletePostError.name}</p>}
+                    {requestNewTaskError && <p className='error'> Error occured sending an algorithmic post: {requestNewTaskError.name}</p>}
                 </Grid>
             </Grid>
             <PostTimeline availableAlgorithms={availableAlgorithms} posts={posts} deletePost={deletePost} />
