@@ -111,10 +111,10 @@ export default function Profile({ user, avatar, changeUser }: {
         setPosts(posts => [...posts, {
             title, message, id: -posts.length, task: {
                 id: -1,
-                algorithm: "",
+                algorithm: algorithm.name,
                 input: requestInput,
                 result: "",
-                status: err ? Status.ERROR : Status.CALCULATING
+                status: Status.CALCULATING
             }
         }]);
         setShowPostInput(false);
