@@ -11,9 +11,10 @@ import { ADD_ALGORITHM_POST, ADD_POST, GET_ALL_ALGORITHMS, GET_ALL_POSTS_BY_USER
 import { ApolloQueryResult, useMutation, useQuery } from "@apollo/client";
 
 export enum Status {
-    DONE,
-    CALCULATING,
-    ERROR
+    // GraphQL sends enums as strings
+    DONE = "DONE",
+    CALCULATING = "CALCULATING",
+    ERROR = "ERROR"
 }
 
 export type AlgorithmType = {
