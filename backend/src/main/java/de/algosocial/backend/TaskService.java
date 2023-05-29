@@ -24,7 +24,7 @@ public class TaskService {
         } else if (Objects.equals(task.getAlgorithm(), "isprime")) {
             result = AlgorithmCalculations.isPrime(input.get(0)) ? "prime" : "not prime";
         } else {
-            task.setStatus(Task.Status.ERROR);
+            task.setError("Error: Requested algorithm not found.");
             taskRepository.save(task);
             return;
         }
