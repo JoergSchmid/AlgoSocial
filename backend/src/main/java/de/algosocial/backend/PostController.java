@@ -16,6 +16,13 @@ public class PostController {
     UserRepository userRepository;
     @Autowired
     private TaskRepository taskRepository;
+    private final TaskService taskService;
+
+    @Autowired
+    public PostController(TaskService taskService) {
+        this.taskService = taskService;
+    }
+
 
     @QueryMapping
     public Post postById(@Argument int id) {
@@ -52,7 +59,7 @@ public class PostController {
         postRepository.save(post);
 
         if(error == null)
-            TaskService.startTask(task);
+            taskService.startTask(task);
         return post;
     }
 

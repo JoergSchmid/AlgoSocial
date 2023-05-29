@@ -11,10 +11,10 @@ import java.util.Objects;
 @Service
 public class TaskService {
     @Autowired
-    private static TaskRepository taskRepository;
+    private TaskRepository taskRepository;
 
     @Async
-    public static void startTask(Task task) throws InterruptedException {
+    public void startTask(Task task) throws InterruptedException {
         List<Integer> input = task.getInput();
         String result;
         if (Objects.equals(task.getAlgorithm(), "bubblesort")) {

@@ -13,6 +13,12 @@ public class TaskController {
     private TaskRepository taskRepository;
     @Autowired
     private PostRepository postRepository;
+    private final TaskService taskService;
+
+    @Autowired
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     @QueryMapping
     public Task taskById(@Argument int id) {
@@ -28,7 +34,7 @@ public class TaskController {
     public Task addTask(@Argument String algorithm, @Argument List<Integer> input) throws InterruptedException {
         Task task = new Task(algorithm, input);
         taskRepository.save(task);
-        TaskService.startTask(task);
+        taskService.startTask(task);
         return task;
     }
 
