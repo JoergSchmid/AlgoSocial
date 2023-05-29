@@ -66,7 +66,11 @@ public class PostController {
 
     @MutationMapping
     public int removePost(@Argument int id) {
-        postRepository.delete(postRepository.findById(id));
+        Post post = postRepository.findById(id);
+        if(post == null)
+            return -1;
+        taskRepository.delete(taskRepository.findById(post.getTaskId()));
+        postRepository.delete(post);
         return id;
     }
 
