@@ -1,0 +1,7 @@
+query postById($id: ID!) {
+    postById(id: $id) {
+        id
+        title
+        message
+    }
+}
