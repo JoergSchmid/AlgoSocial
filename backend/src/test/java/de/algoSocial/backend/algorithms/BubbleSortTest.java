@@ -8,7 +8,7 @@ import java.util.List;
 public class BubbleSortTest {
 
     @Test
-    void testBubbleSort_standard() {
+    void input_standard() {
         List<Integer> input = Arrays.asList(5,2,3,1,4);
         List<Integer> expected = Arrays.asList(1,2,3,4,5);
         List<Integer> result = AlgorithmCalculations.bubbleSort(input);
@@ -24,7 +24,7 @@ public class BubbleSortTest {
     }
 
     @Test
-    void testBubbleSort_multipleOfSameNumber() {
+    void input_multipleOfSameNumber() {
         List<Integer> input = Arrays.asList(0,3,0,3,3,0);
         List<Integer> expected = Arrays.asList(0,0,0,3,3,3);
         List<Integer> result = AlgorithmCalculations.bubbleSort(input);
@@ -33,7 +33,7 @@ public class BubbleSortTest {
     }
 
     @Test
-    void testBubbleSort_sortedInput() {
+    void input_alreadySorted() {
         List<Integer> input = Arrays.asList(-1,0,1,2,3,4,5);
         List<Integer> expected = Arrays.asList(-1,0,1,2,3,4,5);
         List<Integer> result = AlgorithmCalculations.bubbleSort(input);
@@ -42,7 +42,7 @@ public class BubbleSortTest {
     }
 
     @Test
-    void testBubbleSort_singleNumberInput() {
+    void input_singleNumber() {
         List<Integer> input = List.of(1);
         List<Integer> expected = List.of(1);
         List<Integer> result = AlgorithmCalculations.bubbleSort(input);
@@ -51,7 +51,7 @@ public class BubbleSortTest {
     }
 
     @Test
-    void testBubbleSort_emptyListInput() {
+    void input_emptyList() {
         List<Integer> input = List.of();
         List<Integer> expected = List.of();
         List<Integer> result = AlgorithmCalculations.bubbleSort(input);

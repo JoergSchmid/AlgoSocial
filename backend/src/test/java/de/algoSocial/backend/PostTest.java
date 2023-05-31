@@ -17,7 +17,6 @@ import org.springframework.graphql.test.tester.GraphQlTester;
 public class PostTest {
     @Autowired
     private GraphQlTester graphQlTester;
-
     @Autowired
     private PostController postController;
     @Autowired
@@ -36,7 +35,7 @@ public class PostTest {
     }
 
     @Test
-    void getAllTest() {
+    void getAll() {
         this.graphQlTester.documentName("allPosts")
                 .execute()
                 .path("allPosts[*].title")
