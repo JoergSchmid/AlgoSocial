@@ -24,6 +24,11 @@ public class PostTest {
     @Autowired
     private TaskService taskService;
 
+    private int postId;
+    private final int userId = 1;
+    private final String postTitle = "Test_Title";
+    private final String postMessage = "Test_Message";
+
     @Test
     void postControllerGetsLoaded() {
         // When first starting to write a test, first check that the correct application context is loaded and some sample @AutoWired fields could be populated
@@ -35,7 +40,21 @@ public class PostTest {
     }
 
     @Test
-    void getAll() {
+    void addPost() {
+        GraphQlTester.Response response =
+                this.graphQlTester.documentName("addPost")
+                        .variable("userId", userId)
+                        .variable("title", postTitle)
+                        .variable("message", postMessage)
+                        .execute();
+
+        this.postId = response.path("addPost.id").entity(Integer.class).get();
+        Assertions.assertEquals(response.path("addPost.title").entity(String.class).get(), postTitle);
+        Assertions.assertEquals(response.path("addPost.message").entity(String.class).get(), postMessage);
+        System.out.println(postId);
+    }
+    @Test
+    void getAllPosts() {
         this.graphQlTester.documentName("allPosts")
                 .execute()
                 .path("allPosts[*].title")
