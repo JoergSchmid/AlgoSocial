@@ -1,4 +1,4 @@
-package de.algoSocial.backend.algorithms;
+package de.algoSocial.backend.algorithms.unittests;
 import de.algosocial.backend.algorithms.AlgorithmCalculations;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
