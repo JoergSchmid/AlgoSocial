@@ -1,5 +1,6 @@
 package de.algoSocial.backend;
 
+import de.algosocial.backend.Post;
 import de.algosocial.backend.PostController;
 import de.algosocial.backend.PostRepository;
 import de.algosocial.backend.TaskService;
@@ -24,7 +25,6 @@ public class PostTest {
     @Autowired
     private TaskService taskService;
 
-    private int postId;
     private final int userId = 1;
     private final String postTitle = "Test_Title";
     private final String postMessage = "Test_Message";
@@ -53,14 +53,22 @@ public class PostTest {
 
         Assertions.assertEquals(post.getTitle(), postTitle);
         Assertions.assertEquals(post.getMessage(), postMessage);
-        System.out.println(postId);
     }
 
-        this.postId = response.path("addPost.id").entity(Integer.class).get();
-        Assertions.assertEquals(response.path("addPost.title").entity(String.class).get(), postTitle);
-        Assertions.assertEquals(response.path("addPost.message").entity(String.class).get(), postMessage);
-        System.out.println(postId);
+    @Test
+    void postById() {
+        Post post =
+                this.graphQlTester.documentName("postById")
+                        .variable("id", 1)
+                        .execute()
+                        .path("postById")
+                        .entity(Post.class)
+                        .get();
+
+        Assertions.assertNotNull(post.getTitle());
+        Assertions.assertNotNull(post.getMessage());
     }
+
     @Test
     void getAllPosts() {
         this.graphQlTester.documentName("allPosts")
