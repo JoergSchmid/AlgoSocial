@@ -30,6 +30,10 @@ public class Post {
 
     protected Post() {}
 
+    public int getId() {
+        return userId;
+    }
+
     public int getUserId() {
         return userId;
     }
