@@ -25,10 +25,6 @@ public class PostTest {
     @Autowired
     private TaskService taskService;
 
-    private final int userId = 1;
-    private final String postTitle = "Test_Title";
-    private final String postMessage = "Test_Message";
-
     @Test
     void postControllerGetsLoaded() {
         // When first starting to write a test, first check that the correct application context is loaded and some sample @AutoWired fields could be populated
@@ -41,6 +37,10 @@ public class PostTest {
 
     @Test
     void addPost_removePost() {
+        int userId = 1;
+        String postTitle = "Test_Title";
+        String postMessage = "Test_Message";
+        
         Post post =
                 this.graphQlTester.documentName("addPost")
                         .variable("userId", userId)
