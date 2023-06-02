@@ -41,12 +41,20 @@ public class PostTest {
 
     @Test
     void addPost() {
-        GraphQlTester.Response response =
+        Post post =
                 this.graphQlTester.documentName("addPost")
                         .variable("userId", userId)
                         .variable("title", postTitle)
                         .variable("message", postMessage)
-                        .execute();
+                        .execute()
+                        .path("addPost")
+                        .entity(Post.class)
+                        .get();
+
+        Assertions.assertEquals(post.getTitle(), postTitle);
+        Assertions.assertEquals(post.getMessage(), postMessage);
+        System.out.println(postId);
+    }
 
         this.postId = response.path("addPost.id").entity(Integer.class).get();
         Assertions.assertEquals(response.path("addPost.title").entity(String.class).get(), postTitle);
