@@ -40,7 +40,7 @@ public class PostTest {
     }
 
     @Test
-    void addPost() {
+    void addPost_removePost() {
         Post post =
                 this.graphQlTester.documentName("addPost")
                         .variable("userId", userId)
@@ -51,8 +51,19 @@ public class PostTest {
                         .entity(Post.class)
                         .get();
 
+        int postId = post.getId();
         Assertions.assertEquals(post.getTitle(), postTitle);
         Assertions.assertEquals(post.getMessage(), postMessage);
+
+        this.graphQlTester.documentName("removePost")
+                .variable("id", postId)
+                .execute();
+
+        this.graphQlTester.documentName("postById")
+                .variable("id", postId)
+                .execute()
+                .path("postById")
+                .valueIsNull();
     }
 
     @Test
