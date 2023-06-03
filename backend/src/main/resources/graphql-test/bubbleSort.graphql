@@ -1,0 +1,3 @@
+mutation bubbleSort($numbers: [Int!]!) {
+    bubbleSort(numbers: $numbers)
+}
