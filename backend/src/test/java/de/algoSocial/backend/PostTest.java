@@ -15,6 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest
 @AutoConfigureGraphQl
 @AutoConfigureGraphQlTester
+// This test needs to be executed in order, as it simulates a complete workflow.
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ActiveProfiles("test")
 class PostTest {

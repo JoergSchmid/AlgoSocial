@@ -14,6 +14,7 @@ import java.util.List;
 @SpringBootTest
 @AutoConfigureGraphQl
 @AutoConfigureGraphQlTester
+// This test needs to be executed in order, as it simulates a complete workflow.
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ActiveProfiles("test")
 class TaskTest {
