@@ -65,7 +65,9 @@ public class PostController {
         Post post = postRepository.findById(id);
         if(post == null)
             return -1;
-        taskRepository.delete(taskRepository.findById(post.getTaskId()));
+        Task task = taskRepository.findById(post.getTaskId());
+        if(task != null)
+            taskRepository.delete(task);
         postRepository.delete(post);
         return id;
     }

@@ -1,0 +1,8 @@
+mutation addPost($userId: Int!, $title: String!, $message: String!) {
+    addPost(userId: $userId, title: $title, message: $message) {
+        id
+        title
+        message
+        userId
+    }
+}

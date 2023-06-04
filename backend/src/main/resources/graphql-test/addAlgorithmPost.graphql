@@ -1,0 +1,5 @@
+mutation addAlgorithmPost($userId: Int!, $title: String!, $algorithm: String!, $input: [Int!]!) {
+    addAlgorithmPost(userId: $userId, title: $title, algorithm: $algorithm, input: $input) {
+        id
+    }
+}
