@@ -43,7 +43,7 @@ class PostTest {
     @Test
     @Order(2)
     void getAllPosts_zeroEntries() {
-        this.graphQlTester.documentName("allPosts")
+        graphQlTester.documentName("allPosts")
                 .execute()
                 .path("allPosts[*].title")
                 .entityList(String.class)
@@ -54,7 +54,7 @@ class PostTest {
     @Order(3)
     void addPost() {
         Post resultPost =
-                this.graphQlTester.documentName("addPost")
+                graphQlTester.documentName("addPost")
                         .variable("userId", testPost.getUserId())
                         .variable("title", testPost.getTitle())
                         .variable("message", testPost.getMessage())
@@ -72,7 +72,7 @@ class PostTest {
     @Order(4)
     void postById() {
         Post resultPost =
-                this.graphQlTester.documentName("postById")
+                graphQlTester.documentName("postById")
                         .variable("id", 1)
                         .execute()
                         .path("postById")
@@ -87,7 +87,7 @@ class PostTest {
     @Test
     @Order(5)
     void getAllPosts_oneEntry() {
-        this.graphQlTester.documentName("allPosts")
+        graphQlTester.documentName("allPosts")
                 .execute()
                 .path("allPosts[*].title")
                 .entityList(String.class)
@@ -97,7 +97,7 @@ class PostTest {
     @Test
     @Order(6)
     void removePost() {
-        this.graphQlTester.documentName("removePost")
+        graphQlTester.documentName("removePost")
                 .variable("id", "1")
                 .execute();
     }
@@ -105,7 +105,7 @@ class PostTest {
     @Test
     @Order(7)
     void getAllPosts_checkIfEntriesGotRemoved() {
-        this.graphQlTester.documentName("allPosts")
+        graphQlTester.documentName("allPosts")
                 .execute()
                 .path("allPosts[*].title")
                 .entityList(String.class)
