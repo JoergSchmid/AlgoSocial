@@ -4,18 +4,20 @@ import de.algosocial.backend.Post;
 import de.algosocial.backend.PostController;
 import de.algosocial.backend.PostRepository;
 import de.algosocial.backend.TaskService;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.graphql.AutoConfigureGraphQl;
 import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureGraphQlTester;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.graphql.test.tester.GraphQlTester;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @AutoConfigureGraphQl
 @AutoConfigureGraphQlTester
-public class PostTest {
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@ActiveProfiles("test")
+class PostTest {
     @Autowired
     private GraphQlTester graphQlTester;
     @Autowired
@@ -25,7 +27,10 @@ public class PostTest {
     @Autowired
     private TaskService taskService;
 
+    private final Post testPost = new Post(0, "Test_Title", "Test_Message");
+
     @Test
+    @Order(1)
     void postControllerGetsLoaded() {
         // When first starting to write a test, first check that the correct application context is loaded and some sample @AutoWired fields could be populated
         // This checks that the SpringBootApplication is initialized normally with all components we need.
@@ -36,39 +41,37 @@ public class PostTest {
     }
 
     @Test
-    void addPost_removePost() {
-        int userId = 1;
-        String postTitle = "Test_Title";
-        String postMessage = "Test_Message";
-        
-        Post post =
+    @Order(2)
+    void getAllPosts_zeroEntries() {
+        this.graphQlTester.documentName("allPosts")
+                .execute()
+                .path("allPosts[*].title")
+                .entityList(String.class)
+                .hasSize(0);
+    }
+
+    @Test
+    @Order(3)
+    void addPost() {
+        Post resultPost =
                 this.graphQlTester.documentName("addPost")
-                        .variable("userId", userId)
-                        .variable("title", postTitle)
-                        .variable("message", postMessage)
+                        .variable("userId", testPost.getUserId())
+                        .variable("title", testPost.getTitle())
+                        .variable("message", testPost.getMessage())
                         .execute()
                         .path("addPost")
                         .entity(Post.class)
                         .get();
 
-        int postId = post.getId();
-        Assertions.assertEquals(post.getTitle(), postTitle);
-        Assertions.assertEquals(post.getMessage(), postMessage);
-
-        this.graphQlTester.documentName("removePost")
-                .variable("id", postId)
-                .execute();
-
-        this.graphQlTester.documentName("postById")
-                .variable("id", postId)
-                .execute()
-                .path("postById")
-                .valueIsNull();
+        Assertions.assertEquals(resultPost.getUserId(), testPost.getUserId());
+        Assertions.assertEquals(resultPost.getTitle(), testPost.getTitle());
+        Assertions.assertEquals(resultPost.getMessage(), testPost.getMessage());
     }
 
     @Test
+    @Order(4)
     void postById() {
-        Post post =
+        Post resultPost =
                 this.graphQlTester.documentName("postById")
                         .variable("id", 1)
                         .execute()
@@ -76,16 +79,37 @@ public class PostTest {
                         .entity(Post.class)
                         .get();
 
-        Assertions.assertNotNull(post.getTitle());
-        Assertions.assertNotNull(post.getMessage());
+        Assertions.assertEquals(resultPost.getUserId(), testPost.getUserId());
+        Assertions.assertEquals(resultPost.getTitle(), testPost.getTitle());
+        Assertions.assertEquals(resultPost.getMessage(), testPost.getMessage());
     }
 
     @Test
-    void getAllPosts() {
+    @Order(5)
+    void getAllPosts_oneEntry() {
         this.graphQlTester.documentName("allPosts")
                 .execute()
                 .path("allPosts[*].title")
                 .entityList(String.class)
-                .hasSizeGreaterThan(0);
+                .hasSize(1);
     }
+
+    @Test
+    @Order(6)
+    void removePost() {
+        this.graphQlTester.documentName("removePost")
+                .variable("id", "1")
+                .execute();
+    }
+
+    @Test
+    @Order(7)
+    void getAllPosts_checkIfEntriesGotRemoved() {
+        this.graphQlTester.documentName("allPosts")
+                .execute()
+                .path("allPosts[*].title")
+                .entityList(String.class)
+                .hasSize(0);
+    }
+
 }

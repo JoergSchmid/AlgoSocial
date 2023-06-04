@@ -3,5 +3,6 @@ mutation addPost($userId: Int!, $title: String!, $message: String!) {
         id
         title
         message
+        userId
     }
 }
