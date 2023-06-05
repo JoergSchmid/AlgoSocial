@@ -20,4 +20,19 @@ public class BinarySearchTreeTest {
 
         Assertions.assertEquals(expected, result);
     }
+
+    @Test
+    void noDuplicateEntriesInTree() {
+        // If the same number gets inserted multiple times, we expect only one number remaining in the tree.
+        List<Integer> input = Arrays.asList(2,4,3,3,1,5,3);
+        List<Integer> expected = Arrays.asList(1,2,3,4,5);
+
+        BinarySearchTree binarySearchTree = new BinarySearchTree();
+        for (int i : input)
+            binarySearchTree.insert(i);
+
+        List<Integer> result = binarySearchTree.getAll();
+
+        Assertions.assertEquals(expected, result);
+    }
 }
