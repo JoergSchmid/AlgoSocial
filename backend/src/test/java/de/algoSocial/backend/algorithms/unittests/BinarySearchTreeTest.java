@@ -35,4 +35,32 @@ public class BinarySearchTreeTest {
 
         Assertions.assertEquals(expected, result);
     }
+
+    @Test
+    void findMaximum() {
+        List<Integer> input = Arrays.asList(1,-3,2,-1,-2,3,0);
+        int expected_maximum = 3;
+
+        BinarySearchTree binarySearchTree = new BinarySearchTree();
+        for (int i : input)
+            binarySearchTree.insert(i);
+
+        int result = binarySearchTree.getMax();
+
+        Assertions.assertEquals(expected_maximum, result);
+    }
+
+    @Test
+    void findMinimum() {
+        List<Integer> input = Arrays.asList(5,1,3,2,4);
+        int expected_minimum = 1;
+
+        BinarySearchTree binarySearchTree = new BinarySearchTree();
+        for (int i : input)
+            binarySearchTree.insert(i);
+
+        int result = binarySearchTree.getMin();
+
+        Assertions.assertEquals(expected_minimum, result);
+    }
 }
