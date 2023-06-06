@@ -1,4 +1,5 @@
 package de.algoSocial.backend.algorithms.unittests;
+import de.algosocial.backend.algorithms.BinarySearchTree;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
