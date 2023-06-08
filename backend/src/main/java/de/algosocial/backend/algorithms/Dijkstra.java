@@ -22,6 +22,7 @@ public class Dijkstra {
 
         while (activePaths.size() > 0){
             expandPath(getLowestWeightPath());
+            deletePathsWithTooMuchWeight();
         }
 
         if (winningPath == null)
@@ -61,5 +62,12 @@ public class Dijkstra {
 
         // Now that all copies of given path are saved in paths, we can delete this path
         activePaths.remove(path);
+    }
+
+    private void deletePathsWithTooMuchWeight() {
+        if (winningPath == null)
+            return;
+
+        activePaths.removeIf(p -> p.weight >= winningPath.weight);
     }
 }
