@@ -1,9 +1,13 @@
 package de.algoSocial.backend.algorithms.unittests;
 
+import de.algosocial.backend.algorithms.Dijkstra;
+import de.algosocial.backend.algorithms.DijkstraNode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
+
 
 public class DijkstraTest {
 
