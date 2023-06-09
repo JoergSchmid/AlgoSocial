@@ -38,6 +38,14 @@ public class DijkstraTest {
         nodes.add(c);
         nodes.add(d);
 
+        // Establish tree. First element is initial node.
+        Dijkstra dijkstra = new Dijkstra(nodes);
+
+        // Test distances
+        Assertions.assertEquals(dijkstra.getDistanceTo(b), 5);
+        Assertions.assertEquals(dijkstra.getDistanceTo(c), 2);
+        Assertions.assertEquals(dijkstra.getDistanceTo(d), 6);
+    }
         // Establish tree
         Dijkstra dijkstra = new Dijkstra(nodes);
 
