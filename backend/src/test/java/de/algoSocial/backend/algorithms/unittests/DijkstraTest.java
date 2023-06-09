@@ -16,10 +16,10 @@ public class DijkstraTest {
         List<DijkstraNode> nodes = new ArrayList<DijkstraNode>();
 
         // Create 4 nodes
-        DijkstraNode a = new DijkstraNode();
-        DijkstraNode b = new DijkstraNode();
-        DijkstraNode c = new DijkstraNode();
-        DijkstraNode d = new DijkstraNode();
+        DijkstraNode a = new DijkstraNode("a");
+        DijkstraNode b = new DijkstraNode("b");
+        DijkstraNode c = new DijkstraNode("c");
+        DijkstraNode d = new DijkstraNode("d");
 
         // Establish connections
         /*
