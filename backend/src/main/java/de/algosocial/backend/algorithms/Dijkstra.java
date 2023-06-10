@@ -4,10 +4,8 @@ import java.util.List;
 
 public class Dijkstra {
     private final List<DijkstraNode> nodes;
-    private boolean calculated;
 
     public Dijkstra(List<DijkstraNode> nodes) {
-        this.calculated = false;
         this.nodes = nodes;
         calculatePaths();
     }
@@ -28,6 +26,5 @@ public class Dijkstra {
             currentNode.setVisited(true);
         }
 
-        this.calculated = true;
     }
 }
