@@ -66,9 +66,10 @@ public class DijkstraNode {
         if (this.visited)
             return;
 
-        if (this.distanceToInitialNode == null || fromNode.distanceToInitialNode + this.getDistanceTo(fromNode) < this.distanceToInitialNode) {
+        int fromNodeDistance = fromNode.distanceToInitialNode == null ? 0: fromNode.distanceToInitialNode;
 
-            int fromNodeDistance = fromNode.distanceToInitialNode == null ? 0: fromNode.distanceToInitialNode;
+        if (this.distanceToInitialNode == null || fromNodeDistance + this.getDistanceTo(fromNode) < this.distanceToInitialNode) {
+
             this.distanceToInitialNode = fromNodeDistance + getDistanceTo(fromNode);
             this.previousNode = fromNode;
         }
