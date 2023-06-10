@@ -43,6 +43,11 @@ public class DijkstraNode {
         return this.distances.get(this.connectedNodes.indexOf(node));
     }
 
+    public String getPath() {
+        if(previousNode == null)
+            return name;
+        return previousNode.getPath() + "," + name;
+    }
 
     public Integer getDistanceToInitialNode() {
         return distanceToInitialNode;
