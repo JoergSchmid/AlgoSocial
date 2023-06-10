@@ -42,9 +42,9 @@ public class DijkstraTest {
         Dijkstra dijkstra = new Dijkstra(nodes);
 
         // Test distances
-        Assertions.assertEquals(b.getDistanceToInitialNode(), 5);
-        Assertions.assertEquals(c.getDistanceToInitialNode(), 2);
-        Assertions.assertEquals(d.getDistanceToInitialNode(), 6);
+        Assertions.assertEquals(5, b.getDistanceToInitialNode());
+        Assertions.assertEquals(2, c.getDistanceToInitialNode());
+        Assertions.assertEquals(6, d.getDistanceToInitialNode());
 
         // Test path
         Assertions.assertEquals(d.getPath(), "a,c,d");
