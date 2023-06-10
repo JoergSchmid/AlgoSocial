@@ -45,6 +45,9 @@ public class DijkstraTest {
         Assertions.assertEquals(b.getDistanceToInitialNode(), 5);
         Assertions.assertEquals(c.getDistanceToInitialNode(), 2);
         Assertions.assertEquals(d.getDistanceToInitialNode(), 6);
+
+        // Test path
+        Assertions.assertEquals(d.getPath(), "a,c,d");
     }
         // Establish tree
         Dijkstra dijkstra = new Dijkstra(nodes);
