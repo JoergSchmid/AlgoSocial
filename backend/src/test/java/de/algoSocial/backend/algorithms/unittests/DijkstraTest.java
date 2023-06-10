@@ -80,7 +80,7 @@ public class DijkstraTest {
 
         d.connectWith(f, 7);
         d.connectWith(g, 1);
-        d.connectWith(h, 5);
+        d.connectWith(h, 15);
         d.connectWith(j, 6);
 
         e.connectWith(g, 11);
