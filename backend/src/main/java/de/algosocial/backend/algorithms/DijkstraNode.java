@@ -4,28 +4,73 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DijkstraNode {
-    List<DijkstraNode> connectedNodes;
-    List<Integer> pathWeights;
+    private final List<DijkstraNode> connectedNodes;
+    private final List<Integer> distances;
+    private  Integer distanceToInitialNode;
+    private final String name;
+    private boolean visited;
+    private  DijkstraNode previousNode;
 
-    public DijkstraNode() {
+    public DijkstraNode(String name) {
         this.connectedNodes = new ArrayList<DijkstraNode>();
-        this.pathWeights = new ArrayList<Integer>();
+        this.distances = new ArrayList<Integer>();
+        this.name = name;
+        this.visited = false;
+        this.previousNode = null;
     }
 
-    public int getWeightToNode(DijkstraNode node) {
-        return pathWeights.get(connectedNodes.indexOf(node));
-    }
-
-    public void connectWith(DijkstraNode node, int pathWeight) {
+    public void connectWith(DijkstraNode node, int distance) {
         connectedNodes.add(node);
-        pathWeights.add(pathWeight);
+        distances.add(distance);
 
         // Register this connection on targetNode
-        node.connectBack(node, pathWeight);
+        node.connectBack(this, distance);
     }
 
-    private void connectBack(DijkstraNode node, int pathWeight) {
+    private void connectBack(DijkstraNode node, int distance) {
         connectedNodes.add(node);
-        pathWeights.add(pathWeight);
+        distances.add(distance);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<DijkstraNode> getConnectedNodes() {
+        return connectedNodes;
+    }
+    public Integer getDistanceTo(DijkstraNode node) {
+        return this.distances.get(this.connectedNodes.indexOf(node));
+    }
+
+
+    public Integer getDistanceToInitialNode() {
+        return distanceToInitialNode;
+    }
+
+    public DijkstraNode getPreviousNode() {
+        return previousNode;
+    }
+
+    public void setVisited(boolean visited) {
+        this.visited = visited;
+    }
+
+    public void updateDistanceToInitialNode(DijkstraNode fromNode) {
+        // Visited node don´t need to be checked again
+        if (this.visited)
+            return;
+
+        if (this.distanceToInitialNode == null || fromNode.distanceToInitialNode + this.getDistanceTo(fromNode) < this.distanceToInitialNode) {
+
+            int fromNodeDistance = fromNode.distanceToInitialNode == null ? 0: fromNode.distanceToInitialNode;
+            this.distanceToInitialNode = fromNodeDistance + getDistanceTo(fromNode);
+            this.previousNode = fromNode;
+        }
+    }
+
+    public void resetNode() {
+        visited = false;
+        distanceToInitialNode = null;
     }
 }
