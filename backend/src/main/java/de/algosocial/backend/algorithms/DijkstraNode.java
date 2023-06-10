@@ -57,6 +57,10 @@ public class DijkstraNode {
         return previousNode;
     }
 
+    public boolean getVisited() {
+        return visited;
+    }
+
     public void setVisited(boolean visited) {
         this.visited = visited;
     }
