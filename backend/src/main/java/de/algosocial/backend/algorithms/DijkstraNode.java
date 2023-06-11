@@ -5,21 +5,21 @@ import java.util.List;
 
 public class DijkstraNode {
     private final List<DijkstraNode> connectedNodes;
-    private final List<Integer> distances;
-    private  Integer distanceToInitialNode;
+    private final List<Double> distances;
+    private  Double distanceToInitialNode;
     private final String name;
     private boolean visited;
     private  DijkstraNode previousNode;
 
     public DijkstraNode(String name) {
         this.connectedNodes = new ArrayList<DijkstraNode>();
-        this.distances = new ArrayList<Integer>();
+        this.distances = new ArrayList<Double>();
         this.name = name;
         this.visited = false;
         this.previousNode = null;
     }
 
-    public void connectWith(DijkstraNode node, int distance) {
+    public void connectWith(DijkstraNode node, double distance) {
         connectedNodes.add(node);
         distances.add(distance);
 
@@ -27,7 +27,7 @@ public class DijkstraNode {
         node.connectBack(this, distance);
     }
 
-    private void connectBack(DijkstraNode node, int distance) {
+    private void connectBack(DijkstraNode node, double distance) {
         connectedNodes.add(node);
         distances.add(distance);
     }
@@ -36,7 +36,7 @@ public class DijkstraNode {
         return connectedNodes;
     }
 
-    public Integer getDistanceTo(DijkstraNode node) {
+    public Double getDistanceTo(DijkstraNode node) {
         return this.distances.get(this.connectedNodes.indexOf(node));
     }
 
@@ -49,7 +49,7 @@ public class DijkstraNode {
         return previousNode.getPath() + "," + name;
     }
 
-    public Integer getDistanceToInitialNode() {
+    public Double getDistanceToInitialNode() {
         return distanceToInitialNode;
     }
 
@@ -62,7 +62,7 @@ public class DijkstraNode {
         this.visited = visited;
     }
 
-    public void setDistanceToInitialNode(Integer distanceToInitialNode) {
+    public void setDistanceToInitialNode(Double distanceToInitialNode) {
         this.distanceToInitialNode = distanceToInitialNode;
     }
 
@@ -71,9 +71,9 @@ public class DijkstraNode {
         if (this.visited)
             return;
 
-        int fromNodeDistance = fromNode.distanceToInitialNode == null ? 0: fromNode.distanceToInitialNode;
+        double fromNodeDistance = fromNode.distanceToInitialNode == Double.POSITIVE_INFINITY ? 0: fromNode.distanceToInitialNode;
 
-        if (this.distanceToInitialNode == null || fromNodeDistance + this.getDistanceTo(fromNode) < this.distanceToInitialNode) {
+        if (this.distanceToInitialNode == Double.POSITIVE_INFINITY || fromNodeDistance + this.getDistanceTo(fromNode) < this.distanceToInitialNode) {
 
             this.distanceToInitialNode = fromNodeDistance + getDistanceTo(fromNode);
             this.previousNode = fromNode;
@@ -82,6 +82,6 @@ public class DijkstraNode {
 
     public void resetNode() {
         visited = false;
-        distanceToInitialNode = null;
+        distanceToInitialNode = Double.POSITIVE_INFINITY;
     }
 }

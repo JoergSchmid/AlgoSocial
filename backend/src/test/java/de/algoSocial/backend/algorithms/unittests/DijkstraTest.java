@@ -146,7 +146,7 @@ public class DijkstraTest {
 
         // Test distances
         Assertions.assertEquals(1, b.getDistanceToInitialNode());
-        Assertions.assertNull(c.getDistanceToInitialNode());
+        Assertions.assertEquals(Double.POSITIVE_INFINITY, c.getDistanceToInitialNode());
 
         // Test paths
         Assertions.assertEquals("a,b", b.getPath());

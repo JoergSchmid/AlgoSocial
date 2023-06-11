@@ -10,7 +10,7 @@ public class Dijkstra {
             node.resetNode();
 
         DijkstraNode currentNode = nodes.get(0);
-        currentNode.setDistanceToInitialNode(0);
+        currentNode.setDistanceToInitialNode(0d);
 
         while(currentNode != null) {
 
@@ -31,7 +31,7 @@ public class Dijkstra {
     private static Integer getLowestUnvisitedNodeIndex(List<DijkstraNode> nodes) {
         Integer index = null;
         for(DijkstraNode node : nodes) {
-            if (!node.getVisited() && node.getDistanceToInitialNode() != null) {
+            if (!node.getVisited() && node.getDistanceToInitialNode() != Double.POSITIVE_INFINITY) {
                 if(index == null || node.getDistanceToInitialNode() < nodes.get(index).getDistanceToInitialNode())
                     index = nodes.indexOf(node);
             }
