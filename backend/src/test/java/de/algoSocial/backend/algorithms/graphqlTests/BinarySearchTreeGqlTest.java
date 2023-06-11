@@ -32,4 +32,29 @@ public class BinarySearchTreeGqlTest {
 
         Assertions.assertEquals(expected, result);
     }
+
+    @Test
+    void findNumber() {
+        List<Integer> input = Arrays.asList(6,5,2,9,1,4,0,3,7);
+
+        boolean result = graphQlTester.documentName("binarySearchTreeFindNumber")
+                .variable("numbers", input)
+                .variable("findNumber", 4)
+                .execute()
+                .path("binarySearchTreeFindNumber")
+                .entity(Boolean.class)
+                .get();
+
+        Assertions.assertTrue(result);
+
+        result = graphQlTester.documentName("binarySearchTreeFindNumber")
+                .variable("numbers", input)
+                .variable("findNumber", 8)
+                .execute()
+                .path("binarySearchTreeFindNumber")
+                .entity(Boolean.class)
+                .get();
+
+        Assertions.assertFalse(result);
+    }
 }
