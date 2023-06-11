@@ -32,13 +32,10 @@ public class DijkstraNode {
         distances.add(distance);
     }
 
-    public String getName() {
-        return name;
-    }
-
     public List<DijkstraNode> getConnectedNodes() {
         return connectedNodes;
     }
+
     public Integer getDistanceTo(DijkstraNode node) {
         return this.distances.get(this.connectedNodes.indexOf(node));
     }
@@ -53,9 +50,6 @@ public class DijkstraNode {
         return distanceToInitialNode;
     }
 
-    public DijkstraNode getPreviousNode() {
-        return previousNode;
-    }
 
     public boolean getVisited() {
         return visited;
