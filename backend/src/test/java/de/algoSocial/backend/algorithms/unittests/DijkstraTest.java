@@ -47,7 +47,7 @@ public class DijkstraTest {
         Assertions.assertEquals(6, d.getDistanceToInitialNode());
 
         // Test path
-        Assertions.assertEquals(d.getPath(), "a,c,d");
+        Assertions.assertEquals("a,c,d", d.getPath());
     }
 
     @Test
@@ -107,9 +107,13 @@ public class DijkstraTest {
         // Shortest path a to j is a -3- c -2- f -7- d -1- g -4- j = 17
         Assertions.assertEquals(17, j.getDistanceToInitialNode());
         Assertions.assertEquals(13, g.getDistanceToInitialNode()); // w/o last node
+        Assertions.assertEquals(14, e.getDistanceToInitialNode());
+        Assertions.assertEquals(1, h.getDistanceToInitialNode());
 
         // Test paths
-        Assertions.assertEquals(j.getPath(), "a,c,f,d,g,j");
-        Assertions.assertEquals(g.getPath(), "a,c,f,d,g");
+        Assertions.assertEquals("a,c,f,d,g,j", j.getPath());
+        Assertions.assertEquals("a,c,f,d,g", g.getPath());
+        Assertions.assertEquals("a,i,e", e.getPath());
+        Assertions.assertEquals("a,h", h.getPath());
     }
 }
