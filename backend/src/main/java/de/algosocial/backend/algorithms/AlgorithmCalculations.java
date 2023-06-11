@@ -67,4 +67,12 @@ public class AlgorithmCalculations {
 
         return sorted;
     }
+
+    @MutationMapping
+    public static List<Integer> binarySearchTree(@Argument List<Integer> numbers) {
+        BinarySearchTree bst = new BinarySearchTree();
+        for (int i : numbers)
+            bst.insert(i);
+        return bst.getAll();
+    }
 }
