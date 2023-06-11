@@ -127,4 +127,29 @@ public class DijkstraTest {
         Assertions.assertEquals(0, node.getDistanceToInitialNode());
         Assertions.assertEquals("a", node.getPath());
     }
+
+    @Test
+    void createTreeWithIncompleteConnections() {
+        List<DijkstraNode> nodes = new ArrayList<DijkstraNode>();
+        DijkstraNode a = new DijkstraNode("a");
+        DijkstraNode b = new DijkstraNode("b");
+        DijkstraNode c = new DijkstraNode("c");
+
+        // Connect a and b, but not c.
+        a.connectWith(b, 1);
+
+        nodes.add(a);
+        nodes.add(b);
+        nodes.add(c);
+
+        Dijkstra.calculate(nodes);
+
+        // Test distances
+        Assertions.assertEquals(1, b.getDistanceToInitialNode());
+        Assertions.assertNull(c.getDistanceToInitialNode());
+
+        // Test paths
+        Assertions.assertEquals("a,b", b.getPath());
+        Assertions.assertNull(c.getPath());
+    }
 }
