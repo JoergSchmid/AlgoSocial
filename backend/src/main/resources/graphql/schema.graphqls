@@ -27,7 +27,7 @@ type Mutation {
     bubbleSort(numbers: [Int!]!): [Int!]!
     quickSort(numbers: [Int!]!): [Int!]!
     binarySearchTree(numbers: [Int!]!): [Int!]!
-    binarySearchTreeFindNumber(numbers: [Int!]!, findNumber: Int!): [Int!]!
+    binarySearchTreeFindNumber(numbers: [Int!]!, findNumber: Int!): Boolean!
     dijkstra(nodes: [String!]!, edges: [String!]!): Boolean!
 }
 
