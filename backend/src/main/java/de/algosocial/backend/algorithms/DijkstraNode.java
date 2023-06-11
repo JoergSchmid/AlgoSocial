@@ -41,8 +41,11 @@ public class DijkstraNode {
     }
 
     public String getPath() {
-        if(previousNode == null)
-            return name;
+        if(previousNode == null) {
+            if (visited)
+                return name;
+            return null;
+        }
         return previousNode.getPath() + "," + name;
     }
 
