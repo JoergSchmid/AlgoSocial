@@ -75,4 +75,13 @@ public class AlgorithmCalculations {
             bst.insert(i);
         return bst.getAll();
     }
+
+    @MutationMapping
+    public static boolean binarySearchTreeFindNumber(
+            @Argument List<Integer> numbers, @Argument int findNumber) {
+        BinarySearchTree bst = new BinarySearchTree();
+        for (int i : numbers)
+            bst.insert(i);
+        return bst.findNumber(findNumber);
+    }
 }
