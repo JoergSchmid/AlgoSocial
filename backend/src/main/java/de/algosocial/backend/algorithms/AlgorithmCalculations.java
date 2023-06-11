@@ -5,6 +5,7 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -83,5 +84,48 @@ public class AlgorithmCalculations {
         for (int i : numbers)
             bst.insert(i);
         return bst.findNumber(findNumber);
+    }
+
+    @MutationMapping
+    public String dijkstra(
+            @Argument String nodes, @Argument String edges, @Argument String pathTo) {
+
+        List<DijkstraNode> nodeList = new ArrayList<DijkstraNode>();
+
+        String[] names = nodes.split(",");
+        for (String name : names)
+            nodeList.add(new DijkstraNode(name));
+
+        // Edges is in format "(a,b,1),(b,c,2), ..."
+        String paths = edges.substring(1, edges.length() - 1); // Leading parentheses not needed.
+        String[] connectionGroups = paths.split("\\),\\(");
+
+        // Each group is now like "a,b,2"
+        for (String group : connectionGroups) {
+            String[] elements = group.split(",");
+
+            // Create the edges (=connecting the nodes)
+            dijkstra_getNodeWithName(nodeList, names, elements[0])
+                    .connectWith(dijkstra_getNodeWithName(nodeList, names, elements[1]),
+                            Integer.parseInt(elements[2]));
+        }
+
+        // Start calculating
+        Dijkstra.calculate(nodeList);
+
+        DijkstraNode node = dijkstra_getNodeWithName(nodeList, names, pathTo);
+        return node.getPath() + "," + node.getDistanceToInitialNode().toString();
+    }
+
+    private static DijkstraNode dijkstra_getNodeWithName(
+            List<DijkstraNode> nodes, String[] names, String name) {
+        int index = -1;
+        for (int i = 0; i < names.length; i++) {
+            if (names[i].equals(name)) {
+                index = i;
+                break;
+            }
+        }
+        return nodes.get(index);
     }
 }
