@@ -64,4 +64,18 @@ public class BinarySearchTreeTest {
 
         Assertions.assertEquals(expected_minimum, result);
     }
+
+    @Test
+    void findNumber() {
+        List<Integer> input = Arrays.asList(5,7,1,3,9,8,0,2,4);
+
+        BinarySearchTree binarySearchTree = new BinarySearchTree();
+        for (int i : input)
+            binarySearchTree.insert(i);
+
+        int result = binarySearchTree.getMin();
+
+        Assertions.assertTrue(binarySearchTree.findNumber(7));
+        Assertions.assertFalse(binarySearchTree.findNumber(12));
+    }
 }
