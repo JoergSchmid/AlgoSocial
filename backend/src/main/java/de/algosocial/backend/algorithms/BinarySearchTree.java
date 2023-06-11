@@ -57,4 +57,16 @@ public class BinarySearchTree {
             return node.data;
         return getMinFromNode(node.left);
     }
+
+    public boolean findNumber(int number) {
+        return findNumberFromNode(root, number);
+    }
+
+    private boolean findNumberFromNode(BST_Node node, int number) {
+        if (node == null)
+            return false;
+        if (node.data == number)
+            return true;
+        return findNumberFromNode(number < node.data ? node.left : node.right, number);
+    }
 }
