@@ -117,7 +117,14 @@ public class DijkstraTest {
     }
 
     @Test
-    void createTreeWithoutNodes() {
+    void createTreeWithOneNode() {
+        List<DijkstraNode> nodes = new ArrayList<DijkstraNode>();
+        DijkstraNode node = new DijkstraNode("a");
+        nodes.add(node);
 
+        Dijkstra.calculate(nodes);
+
+        Assertions.assertEquals(0, node.getDistanceToInitialNode());
+        Assertions.assertEquals("a", node.getPath());
     }
 }
