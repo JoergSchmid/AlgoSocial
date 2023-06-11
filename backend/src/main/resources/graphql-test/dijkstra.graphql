@@ -1,0 +1,3 @@
+mutation dijkstra($nodes: [String!]!, $edges: [String!]!, $pathTo: String!) {
+    dijkstra(nodes: $nodes, edges: $edges, pathTo: $pathTo)
+}
