@@ -10,6 +10,8 @@ public class Dijkstra {
             node.resetNode();
 
         DijkstraNode currentNode = nodes.get(0);
+        currentNode.setDistanceToInitialNode(0);
+
         while(currentNode != null) {
 
             // Calculate distances from current node

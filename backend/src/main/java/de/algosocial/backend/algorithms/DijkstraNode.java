@@ -65,6 +65,10 @@ public class DijkstraNode {
         this.visited = visited;
     }
 
+    public void setDistanceToInitialNode(Integer distanceToInitialNode) {
+        this.distanceToInitialNode = distanceToInitialNode;
+    }
+
     public void updateDistanceToInitialNode(DijkstraNode fromNode) {
         // Visited node don´t need to be checked again
         if (this.visited)
