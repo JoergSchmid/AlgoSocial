@@ -38,8 +38,8 @@ public class DijkstraTest {
         nodes.add(c);
         nodes.add(d);
 
-        // Establish tree. First element is initial node.
-        Dijkstra dijkstra = new Dijkstra(nodes);
+        // Calculate the distances and paths
+        Dijkstra.calculate(nodes);
 
         // Test distances
         Assertions.assertEquals(5, b.getDistanceToInitialNode());
@@ -100,8 +100,7 @@ public class DijkstraTest {
         nodes.add(i);
         nodes.add(j);
 
-        // Establish tree
-        Dijkstra dijkstra = new Dijkstra(nodes);
+        Dijkstra.calculate(nodes);
 
         // Test distances
         // Shortest path a to j is a -3- c -2- f -7- d -1- g -4- j = 17
@@ -115,5 +114,10 @@ public class DijkstraTest {
         Assertions.assertEquals("a,c,f,d,g", g.getPath());
         Assertions.assertEquals("a,i,e", e.getPath());
         Assertions.assertEquals("a,h", h.getPath());
+    }
+
+    @Test
+    void createTreeWithoutNodes() {
+
     }
 }

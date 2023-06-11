@@ -3,14 +3,8 @@ package de.algosocial.backend.algorithms;
 import java.util.List;
 
 public class Dijkstra {
-    private final List<DijkstraNode> nodes;
 
-    public Dijkstra(List<DijkstraNode> nodes) {
-        this.nodes = nodes;
-        calculatePaths();
-    }
-
-    public void calculatePaths() {
+    public static void calculate(List<DijkstraNode> nodes) {
         // Set all nodes to unvisited and infinite (=null) distance.
         for(DijkstraNode node : nodes)
             node.resetNode();
@@ -27,12 +21,12 @@ public class Dijkstra {
             currentNode.setVisited(true);
 
             // Change currentNode
-            Integer index = getLowestUnvisitedNodeIndex();
+            Integer index = getLowestUnvisitedNodeIndex(nodes);
             currentNode = index == null ? null : nodes.get(index);
         }
     }
 
-    private Integer getLowestUnvisitedNodeIndex() {
+    private static Integer getLowestUnvisitedNodeIndex(List<DijkstraNode> nodes) {
         Integer index = null;
         for(DijkstraNode node : nodes) {
             if (!node.getVisited() && node.getDistanceToInitialNode() != null) {
