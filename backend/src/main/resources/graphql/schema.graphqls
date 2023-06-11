@@ -26,6 +26,7 @@ type Mutation {
     isPrime(number: Int!): Boolean!
     bubbleSort(numbers: [Int!]!): [Int!]!
     quickSort(numbers: [Int!]!): [Int!]!
+    binarySearchTree(numbers: [Int!]!): [Int!]!
 }
 
 type User {
