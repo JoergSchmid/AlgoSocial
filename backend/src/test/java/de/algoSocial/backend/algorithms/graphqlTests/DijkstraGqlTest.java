@@ -17,15 +17,13 @@ public class DijkstraGqlTest {
 
     @Test
     void createSimpleTree() {
-        String nodes = "a,b,c";
+        String nodes = "a,c,b";
         String edges = "(a,b,5),(a,c,1),(b,c,2)";
-        String pathTo = "b";
         String expected = "a,c,b,3.0";
 
         String result = graphQlTester.documentName("dijkstra")
                 .variable("nodes", nodes)
                 .variable("edges", edges)
-                .variable("pathTo", pathTo)
                 .execute()
                 .path("dijkstra")
                 .entity(String.class)

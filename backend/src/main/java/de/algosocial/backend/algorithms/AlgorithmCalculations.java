@@ -87,8 +87,7 @@ public class AlgorithmCalculations {
     }
 
     @MutationMapping
-    public String dijkstra(
-            @Argument String nodes, @Argument String edges, @Argument String pathTo) {
+    public String dijkstra(@Argument String nodes, @Argument String edges) {
 
         List<DijkstraNode> nodeList = new ArrayList<DijkstraNode>();
 
@@ -113,7 +112,10 @@ public class AlgorithmCalculations {
         // Start calculating
         Dijkstra.calculate(nodeList);
 
-        DijkstraNode node = dijkstra_getNodeWithName(nodeList, names, pathTo);
+        // Get last node, which we want to get the path to
+        DijkstraNode node = dijkstra_getNodeWithName(nodeList, names, names[names.length-1]);
+
+        // Return the path and the distance from first to last node
         return node.getPath() + "," + node.getDistanceToInitialNode().toString();
     }
 
