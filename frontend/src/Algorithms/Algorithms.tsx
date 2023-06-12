@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { SubmitButton, StatusField, ResultField, InputField } from "./IOComponents";
 import { ADD_TASK, GET_ALL_ALGORITHMS, GET_TASK_BY_ID } from "../Requests/gqlRequests";
 import { useMutation, useQuery } from "@apollo/client";
-import { AlgorithmType, Status, defaultAlgorithm } from "../Profile/Profile";
+import { AlgorithmType, InputType, Status, defaultAlgorithm } from "../Profile/Profile";
 
 export const REGEX_SINGLE = /[^0-9]/;
 export const REGEX_MULTIPLE = /[^0-9,]|,,/;
@@ -50,18 +50,29 @@ export default function Algorithms() {
     }
 
     const handleSubmitButton = () => {
-        let regex = algorithm.inputMultiple ? REGEX_MULTIPLE : REGEX_SINGLE;
+        const INPUT_TYPE_REGEX_MAPPING = {
+            [InputType.SINGLE_NUMBER]: REGEX_SINGLE,
+            [InputType.NUMBER_ARRAY]: REGEX_MULTIPLE,
+            [InputType.TWO_STRINGS]: / /
+        }
+
+        let regex = INPUT_TYPE_REGEX_MAPPING[algorithm.inputType];
         if (regex.test(input)) {
             setInputError(true);
             return;
         }
         setInputError(false);
-        let requestInput = algorithm.inputMultiple ?
-            input.split(",").map((num) => Number(num.trim())) : input;
+
+        const INPUT_MAPPING = {
+            [InputType.SINGLE_NUMBER]: input,
+            [InputType.NUMBER_ARRAY]: input.split(",").map((num) => Number(num.trim())),
+            [InputType.TWO_STRINGS]: input // ToDo, this is just a placeholder
+        }
+
         requestNewTask({
             variables: {
                 algorithm: algorithm.name,
-                input: requestInput
+                input: INPUT_MAPPING[algorithm.inputType]
             },
             onCompleted: (data) => {
                 setTaskID(data.addTask.id);
@@ -94,7 +105,7 @@ export default function Algorithms() {
                 ))}
             </Select>
             <br />
-            <InputField multiple={algorithm.inputMultiple} error={inputError} setInput={setInput} />
+            <InputField inputType={algorithm.inputType} error={inputError} setInput={setInput} />
             <br />
             <SubmitButton handleSubmitButton={handleSubmitButton} />
             <br /> <br />

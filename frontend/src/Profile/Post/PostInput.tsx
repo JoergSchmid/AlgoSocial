@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from "react";
-import { AlgorithmType, PostType } from "../Profile";
+import { AlgorithmType, InputType, PostType } from "../Profile";
 import { Card, Button, TextField, CardContent, MenuItem, Select, SelectChangeEvent, Checkbox } from "@mui/material";
 import { REGEX_MULTIPLE, REGEX_SINGLE } from '../../Algorithms/Algorithms';
 
@@ -39,14 +39,14 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
             return;
         }
 
-        const regex = algorithm.inputMultiple ? REGEX_MULTIPLE : REGEX_SINGLE;
+        const regex = algorithm.inputType === InputType.NUMBER_ARRAY ? REGEX_MULTIPLE : REGEX_SINGLE; // ToDo: two strings
         if (regex.test(message)) {
             setInputError(true);
             return;
         }
 
         const LARGEST_INT = 2147483647;
-        if (algorithm.inputMultiple) {
+        if (algorithm.inputType === InputType.NUMBER_ARRAY) { // ToDo: two strings
             for (const num of message) {
                 if (parseInt(num.trim()) > LARGEST_INT) {
                     setInputError(true);

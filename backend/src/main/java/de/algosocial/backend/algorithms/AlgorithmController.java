@@ -15,17 +15,18 @@ public class AlgorithmController {
         algorithmRepository.save(new Algorithm(
                 "bubblesort",
                 "Bubble Sort",
-                true
+                Algorithm.InputType.NUMBER_ARRAY
         ));
         algorithmRepository.save(new Algorithm(
                 "quicksort",
                 "Quick Sort",
-                true
+                Algorithm.InputType.NUMBER_ARRAY
         ));
         algorithmRepository.save(new Algorithm(
                 "isprime",
                 "Check Prime",
-                false
+                Algorithm.InputType.SINGLE_NUMBER
+        ));
         ));
     }
 

@@ -6,7 +6,7 @@ export const GET_ALL_ALGORITHMS = gql`
             id
             name
             displayName
-            inputMultiple
+            inputType
         }
     }
 `;
@@ -73,10 +73,30 @@ export const REMOVE_POST = gql`
     }
 `;
 
-
 export const ADD_TASK = gql`
     mutation addTask($algorithm: String!, $input: [Int!]!) {
         addTask(algorithm: $algorithm, input: $input) {
+            id
+            status
+        }
+    }
+`;
+
+export const DIJKSTRA = gql`
+    mutation dijkstra($nodes: String!, $edges: String!) {
+        dijkstra(nodes: $nodes, edges: $edges)
+    }
+`;
+
+export const BINARY_SEARCH_TREE = gql`
+    mutation binarySearchTree($numbers: [Int!]!) {
+        binarySearchTree(numbers: $numbers)
+    }
+`;
+
+export const BINARY_SEARCH_TREE_FIND_NUMBER = gql`
+    mutation binarySearchTreeFindNumber($numbers: [Int!]!, $findNumber: Int!) {
+        binarySearchTreeFindNumber(numbers: $numbers, findNumber: $findNumber) {
             id
             status
         }

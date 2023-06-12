@@ -17,10 +17,16 @@ export enum Status {
     ERROR = "ERROR"
 }
 
+export enum InputType {
+    SINGLE_NUMBER = "SINGLE_NUMBER",
+    NUMBER_ARRAY = "NUMBER_ARRAY",
+    TWO_STRINGS = "TWO_STRINGS"
+}
+
 export type AlgorithmType = {
     name: string,
     displayName: string,
-    inputMultiple: boolean
+    inputType: InputType
 }
 
 export type PostType = {
@@ -33,7 +39,8 @@ export type PostType = {
 export type TaskType = {
     id: number,
     algorithm: string,
-    input: number[],
+    input: number[] | string,
+    input2?: number | string,
     status: Status,
     result: string
 }
@@ -41,7 +48,7 @@ export type TaskType = {
 export const defaultAlgorithm: AlgorithmType[] = [{
     name: "bubblesort",
     displayName: "Bubble Sort",
-    inputMultiple: true
+    inputType: InputType.NUMBER_ARRAY
 }]
 
 export default function Profile({ user, avatar, changeUser }: {
@@ -102,11 +109,12 @@ export default function Profile({ user, avatar, changeUser }: {
         });
     }
     function submitTask({ title, message }: PostType): void {
-
-        const requestInput = algorithm.inputMultiple ?
-            message.split(",").map((num) => {
-                return Number(num.trim());
-            }) : [Number(message)];
+        const INPUT_MAPPING = {
+            [InputType.SINGLE_NUMBER]: [Number(message)],
+            [InputType.NUMBER_ARRAY]: message.split(",").map((num) => { return Number(num.trim()); }),
+            [InputType.TWO_STRINGS]: message // ToDo, this is just a placeholder
+        }
+        const requestInput = INPUT_MAPPING[algorithm.inputType];
 
         setPosts(posts => [...posts, {
             title, message, id: -posts.length, task: {

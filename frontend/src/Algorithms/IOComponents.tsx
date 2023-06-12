@@ -1,9 +1,9 @@
 import { Button, TextField } from "@mui/material";
-import { Status } from "../Profile/Profile";
+import { InputType, Status } from "../Profile/Profile";
 
 
-export function InputField({ multiple = false, error, setInput }: {
-    multiple?: boolean,
+export function InputField({ inputType = InputType.SINGLE_NUMBER, error, setInput }: {
+    inputType?: InputType,
     error: boolean,
     setInput: (input: string) => void
 }) {
@@ -13,7 +13,7 @@ export function InputField({ multiple = false, error, setInput }: {
             data-testid="input_field"
             variant="outlined"
             error={error}
-            label={multiple ? "Enter numbers" : "Enter number"}
+            label={"Enter algorithm input"}
             onChange={event => setInput(event.target.value === null ? "" : event.target.value)}
             margin="dense"
             sx={{ width: "40ch" }}

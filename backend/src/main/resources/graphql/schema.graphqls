@@ -58,11 +58,17 @@ type Algorithm {
     id: ID!
     name: String!
     displayName: String!
-    inputMultiple: Boolean!
+    inputType: InputType!
 }
 
 enum Status {
     DONE
     CALCULATING
     ERROR
+}
+
+enum InputType {
+    SINGLE_NUMBER
+    NUMBER_ARRAY
+    TWO_STRINGS
 }
