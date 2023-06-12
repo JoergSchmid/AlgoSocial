@@ -27,6 +27,20 @@ public class AlgorithmController {
                 "Check Prime",
                 Algorithm.InputType.SINGLE_NUMBER
         ));
+        algorithmRepository.save(new Algorithm(
+                "binarySearchTree",
+                "Binary Search Tree - Sort",
+                Algorithm.InputType.NUMBER_ARRAY
+        ));
+        algorithmRepository.save(new Algorithm(
+                "binarySearchTreeFindNumber",
+                "Binary Search Tree - Find number",
+                Algorithm.InputType.TWO_STRINGS
+        ));
+        algorithmRepository.save(new Algorithm(
+                "dijkstra",
+                "Dijkstra",
+                Algorithm.InputType.TWO_STRINGS
         ));
     }
 
