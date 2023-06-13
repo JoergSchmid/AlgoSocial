@@ -31,7 +31,7 @@ public class Post {
     protected Post() {}
 
     public int getId() {
-        return userId;
+        return id;
     }
 
     public int getUserId() {
