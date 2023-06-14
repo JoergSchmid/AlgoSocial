@@ -87,7 +87,7 @@ public class AlgorithmCalculations {
     }
 
     @MutationMapping
-    public String dijkstra(@Argument String nodes, @Argument String edges) {
+    public static String dijkstra(@Argument String nodes, @Argument String edges) {
 
         List<DijkstraNode> nodeList = new ArrayList<DijkstraNode>();
 

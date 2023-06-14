@@ -27,8 +27,8 @@ public class TaskController {
     }
 
     @MutationMapping
-    public Task addTask(@Argument String algorithm, @Argument List<Integer> input) throws InterruptedException {
-        Task task = new Task(algorithm, input);
+    public Task addTask(@Argument String algorithm, @Argument List<Integer> numberListInput, @Argument List<String> stringListInput) throws InterruptedException {
+        Task task = new Task(algorithm, numberListInput, stringListInput);
         taskRepository.save(task);
         taskService.startTask(task);
         return task;

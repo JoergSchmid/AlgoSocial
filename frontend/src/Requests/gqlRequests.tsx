@@ -21,7 +21,8 @@ export const GET_ALL_POSTS_BY_USER_ID = gql`
                 id
                 algorithm
                 status
-                input
+                numberListInput
+                stringListInput
                 result
             }
         }
@@ -58,8 +59,8 @@ export const ADD_POST = gql`
 `;
 
 export const ADD_ALGORITHM_POST = gql`
-    mutation addAlgorithmPost($userId: Int!, $title: String!, $algorithm: String!, $input: [Int!]!) {
-        addAlgorithmPost(userId: $userId, title: $title, algorithm: $algorithm, input: $input) {
+    mutation addAlgorithmPost($userId: Int!, $title: String!, $algorithm: String!, $numberListInput: [Int!], $stringListInput: [String!]) {
+        addAlgorithmPost(userId: $userId, title: $title, algorithm: $algorithm, numberListInput: $numberListInput, stringListInput: $stringListInput) {
             id
             title
             message

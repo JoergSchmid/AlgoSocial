@@ -58,13 +58,13 @@ class TaskTest {
                 .variable("userId", 0)
                 .variable("title", testTask_BubbleSort.getAlgorithm())
                 .variable("algorithm", testTask_BubbleSort.getAlgorithm())
-                .variable("input", testTask_BubbleSort.getInput())
+                .variable("numberListInput", testTask_BubbleSort.getNumberInput())
                 .execute();
         graphQlTester.documentName("addAlgorithmPost")
                 .variable("userId", 0)
                 .variable("title", testTask_IsPrime.getAlgorithm())
                 .variable("algorithm", testTask_IsPrime.getAlgorithm())
-                .variable("input", testTask_IsPrime.getInput())
+                .variable("numberListInput", testTask_IsPrime.getNumberInput())
                 .execute();
     }
 

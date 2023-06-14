@@ -109,18 +109,19 @@ export default function Profile({ user, avatar, changeUser }: {
         });
     }
     function submitTask({ title, message }: PostType): void {
-        const INPUT_MAPPING = {
+        const NUMBER_INPUT_MAPPING = {
             [InputType.SINGLE_NUMBER]: [Number(message)],
             [InputType.NUMBER_ARRAY]: message.split(",").map((num) => { return Number(num.trim()); }),
-            [InputType.TWO_STRINGS]: message // ToDo, this is just a placeholder
+            [InputType.TWO_STRINGS]: []
         }
-        const requestInput = INPUT_MAPPING[algorithm.inputType];
+        const numberListInput = NUMBER_INPUT_MAPPING[algorithm.inputType];
+        const stringListInput = algorithm.inputType === InputType.TWO_STRINGS ? message : null;
 
         setPosts(posts => [...posts, {
             title, message, id: -posts.length, task: {
                 id: -1,
                 algorithm: algorithm.name,
-                input: requestInput,
+                input: numberListInput,
                 result: "",
                 status: Status.CALCULATING
             }
@@ -132,7 +133,8 @@ export default function Profile({ user, avatar, changeUser }: {
                 userId: user.userId,
                 title: title,
                 algorithm: algorithm.name,
-                input: requestInput
+                numberListInput: numberListInput,
+                stringListInput: stringListInput
             }
         });
     }

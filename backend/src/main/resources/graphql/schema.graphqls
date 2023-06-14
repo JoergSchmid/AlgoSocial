@@ -16,10 +16,10 @@ type Query {
 
 type Mutation {
     addPost(userId: Int!, title: String!, message: String!): Post
-    addAlgorithmPost(userId: Int!, title: String!, algorithm: String!, input: [Int!]!): Post
+    addAlgorithmPost(userId: Int!, title: String!, algorithm: String!, numberListInput: [Int!], stringListInput: [String!]): Post
     removePost(id: ID!): ID
 
-    addTask(algorithm: String!, input: [Int!]!): Task
+    addTask(algorithm: String!, numberListInput: [Int!], stringListInput: [String!]): Task
     removeTask(id: ID!): ID!
     removeAllTasks: Boolean!
 
@@ -49,7 +49,8 @@ type Post {
 type Task {
     id: ID!
     algorithm: String!
-    input: [Int!]
+    numberListInput: [Int!]
+    stringListInput: [String!]
     status: Status!
     result: String
 }
