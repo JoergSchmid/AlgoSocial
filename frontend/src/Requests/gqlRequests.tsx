@@ -75,8 +75,8 @@ export const REMOVE_POST = gql`
 `;
 
 export const ADD_TASK = gql`
-    mutation addTask($algorithm: String!, $input: [Int!]!) {
-        addTask(algorithm: $algorithm, input: $input) {
+    mutation addTask($algorithm: String!, $numberListInput: [Int!], $stringListInput: [String!]) {
+        addTask(algorithm: $algorithm, numberListInput: $numberListInput, stringListInput: $stringListInput) {
             id
             status
         }

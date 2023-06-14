@@ -63,16 +63,20 @@ export default function Algorithms() {
         }
         setInputError(false);
 
-        const INPUT_MAPPING = {
+        const NUMBER_INPUT_MAPPING = {
             [InputType.SINGLE_NUMBER]: input,
             [InputType.NUMBER_ARRAY]: input.split(",").map((num) => Number(num.trim())),
-            [InputType.TWO_STRINGS]: input // ToDo, this is just a placeholder
+            [InputType.TWO_STRINGS]: []
         }
+
+        const numberListInput = NUMBER_INPUT_MAPPING[algorithm.inputType];
+        const stringListInput = algorithm.inputType === InputType.TWO_STRINGS ? input : null;
 
         requestNewTask({
             variables: {
                 algorithm: algorithm.name,
-                input: INPUT_MAPPING[algorithm.inputType]
+                numberListInput: numberListInput,
+                stringListInput: stringListInput
             },
             onCompleted: (data) => {
                 setTaskID(data.addTask.id);
