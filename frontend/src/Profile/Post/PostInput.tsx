@@ -12,7 +12,7 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
     submitTask: (post: PostType) => void
 }) {
     const [title, setTitle] = useState<string>(" "); // Contains a space so it doesn´t start with an error message. Space is not really in text field.
-    const [message, setMessage] = useState<string>(" ");
+    const [message, setMessage] = useState<string>(" "); // ToDo: Add second input like on alg page
     const [postAlgorithm, setPostAlgorithm] = useState<boolean>(false);
     const [inputError, setInputError] = useState<boolean>(false);
 

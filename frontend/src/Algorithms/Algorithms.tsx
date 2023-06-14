@@ -12,6 +12,8 @@ export default function Algorithms() {
     const [availableAlgorithms, setAvailableAlgorithms] = useState<AlgorithmType[]>(defaultAlgorithm)
     const [algorithm, setAlgorithm] = useState<AlgorithmType>(defaultAlgorithm[0]);
     const [input, setInput] = useState<string>("");
+    const [secondInput, setSecondInput] = useState<string>("");
+    const [showSecondInput, setShowSecondInput] = useState<boolean>(false);
     const [inputError, setInputError] = useState<boolean>(false);
     const [taskID, setTaskID] = useState<number>(-1);
     const [status, setStatus] = useState<Status>(Status.DONE);
@@ -47,6 +49,10 @@ export default function Algorithms() {
         if (selectedAlgorithm) {
             setAlgorithm(selectedAlgorithm);
         }
+        if (selectedAlgorithm?.inputType === InputType.TWO_STRINGS)
+            setShowSecondInput(true);
+        else
+            setShowSecondInput(false);
     }
 
     const handleSubmitButton = () => {
@@ -64,13 +70,13 @@ export default function Algorithms() {
         setInputError(false);
 
         const NUMBER_INPUT_MAPPING = {
-            [InputType.SINGLE_NUMBER]: input,
+            [InputType.SINGLE_NUMBER]: [Number(input)],
             [InputType.NUMBER_ARRAY]: input.split(",").map((num) => Number(num.trim())),
-            [InputType.TWO_STRINGS]: []
-        }
+            [InputType.TWO_STRINGS]: input.split(",").map((num) => Number(num.trim()))
+        } // ToDo: This is not really 2 strings. 2 str is meant for dijkstra, this is [num][str].
 
         const numberListInput = NUMBER_INPUT_MAPPING[algorithm.inputType];
-        const stringListInput = algorithm.inputType === InputType.TWO_STRINGS ? input : null;
+        const stringListInput = algorithm.inputType === InputType.TWO_STRINGS ? [secondInput] : null;
 
         requestNewTask({
             variables: {
@@ -109,7 +115,7 @@ export default function Algorithms() {
                 ))}
             </Select>
             <br />
-            <InputField inputType={algorithm.inputType} error={inputError} setInput={setInput} />
+            <InputField inputType={algorithm.inputType} error={inputError} setInput={setInput} setSecondInput={setSecondInput} showSecondInput={showSecondInput} />
             <br />
             <SubmitButton handleSubmitButton={handleSubmitButton} />
             <br /> <br />
