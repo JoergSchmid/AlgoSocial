@@ -82,24 +82,3 @@ export const ADD_TASK = gql`
         }
     }
 `;
-
-export const DIJKSTRA = gql`
-    mutation dijkstra($nodes: String!, $edges: String!) {
-        dijkstra(nodes: $nodes, edges: $edges)
-    }
-`;
-
-export const BINARY_SEARCH_TREE = gql`
-    mutation binarySearchTree($numbers: [Int!]!) {
-        binarySearchTree(numbers: $numbers)
-    }
-`;
-
-export const BINARY_SEARCH_TREE_FIND_NUMBER = gql`
-    mutation binarySearchTreeFindNumber($numbers: [Int!]!, $findNumber: Int!) {
-        binarySearchTreeFindNumber(numbers: $numbers, findNumber: $findNumber) {
-            id
-            status
-        }
-    }
-`;
