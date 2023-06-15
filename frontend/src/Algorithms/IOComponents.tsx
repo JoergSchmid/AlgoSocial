@@ -2,8 +2,7 @@ import { Button, TextField } from "@mui/material";
 import { Status } from "../Profile/Profile";
 
 
-export function InputField({ numberOfInputs, setInput, setSecondInput, showSecondInput }: {
-    numberOfInputs: number,
+export function InputField({ setInput, setSecondInput, showSecondInput }: {
     setInput: (input: string) => void,
     setSecondInput: (input: string) => void,
     showSecondInput: boolean
