@@ -17,16 +17,10 @@ export enum Status {
     ERROR = "ERROR"
 }
 
-export enum InputType {
-    SINGLE_NUMBER = "SINGLE_NUMBER",
-    NUMBER_ARRAY = "NUMBER_ARRAY",
-    TWO_STRINGS = "TWO_STRINGS"
-}
-
 export type AlgorithmType = {
     name: string,
     displayName: string,
-    inputType: InputType
+    numberOfInputs: number
 }
 
 export type PostType = {
@@ -48,7 +42,7 @@ export type TaskType = {
 export const defaultAlgorithm: AlgorithmType[] = [{
     name: "bubblesort",
     displayName: "Bubble Sort",
-    inputType: InputType.NUMBER_ARRAY
+    numberOfInputs: 1
 }]
 
 export default function Profile({ user, avatar, changeUser }: {
@@ -109,19 +103,12 @@ export default function Profile({ user, avatar, changeUser }: {
         });
     }
     function submitTask({ title, message }: PostType): void {
-        const NUMBER_INPUT_MAPPING = {
-            [InputType.SINGLE_NUMBER]: [Number(message)],
-            [InputType.NUMBER_ARRAY]: message.split(",").map((num) => { return Number(num.trim()); }),
-            [InputType.TWO_STRINGS]: []
-        }
-        const numberListInput = NUMBER_INPUT_MAPPING[algorithm.inputType];
-        const stringListInput = algorithm.inputType === InputType.TWO_STRINGS ? message : null;
 
         setPosts(posts => [...posts, {
             title, message, id: -posts.length, task: {
                 id: -1,
                 algorithm: algorithm.name,
-                input: numberListInput,
+                input: message,
                 result: "",
                 status: Status.CALCULATING
             }
@@ -133,8 +120,7 @@ export default function Profile({ user, avatar, changeUser }: {
                 userId: user.userId,
                 title: title,
                 algorithm: algorithm.name,
-                numberListInput: numberListInput,
-                stringListInput: stringListInput
+                input: [message]
             }
         });
     }

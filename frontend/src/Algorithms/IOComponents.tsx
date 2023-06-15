@@ -1,10 +1,9 @@
 import { Button, TextField } from "@mui/material";
-import { InputType, Status } from "../Profile/Profile";
+import { Status } from "../Profile/Profile";
 
 
-export function InputField({ inputType = InputType.SINGLE_NUMBER, error, setInput, setSecondInput, showSecondInput }: {
-    inputType?: InputType,
-    error: boolean,
+export function InputField({ numberOfInputs, setInput, setSecondInput, showSecondInput }: {
+    numberOfInputs: number,
     setInput: (input: string) => void,
     setSecondInput: (input: string) => void,
     showSecondInput: boolean
@@ -15,7 +14,6 @@ export function InputField({ inputType = InputType.SINGLE_NUMBER, error, setInpu
                 id="input_field"
                 data-testid="input_field"
                 variant="outlined"
-                error={error}
                 label={"Enter algorithm input"}
                 onChange={event => setInput(event.target.value === null ? "" : event.target.value)}
                 margin="dense"
@@ -26,7 +24,6 @@ export function InputField({ inputType = InputType.SINGLE_NUMBER, error, setInpu
                     id="input_field2"
                     data-testid="input_field2"
                     variant="outlined"
-                    error={error}
                     label={""}
                     onChange={event => setSecondInput(event.target.value === null ? "" : event.target.value)}
                     margin="dense"

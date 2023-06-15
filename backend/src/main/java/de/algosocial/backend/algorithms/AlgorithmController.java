@@ -15,32 +15,32 @@ public class AlgorithmController {
         algorithmRepository.save(new Algorithm(
                 "bubblesort",
                 "Bubble Sort",
-                Algorithm.InputType.NUMBER_ARRAY
+                1
         ));
         algorithmRepository.save(new Algorithm(
                 "quicksort",
                 "Quick Sort",
-                Algorithm.InputType.NUMBER_ARRAY
+                1
         ));
         algorithmRepository.save(new Algorithm(
                 "isprime",
                 "Check Prime",
-                Algorithm.InputType.SINGLE_NUMBER
+                1
         ));
         algorithmRepository.save(new Algorithm(
                 "binarySearchTree",
                 "Binary Search Tree - Sort",
-                Algorithm.InputType.NUMBER_ARRAY
+                1
         ));
         algorithmRepository.save(new Algorithm(
                 "binarySearchTreeFindNumber",
                 "Binary Search Tree - Find number",
-                Algorithm.InputType.TWO_STRINGS
+                2
         ));
         algorithmRepository.save(new Algorithm(
                 "dijkstra",
                 "Dijkstra",
-                Algorithm.InputType.TWO_STRINGS
+                2
         ));
     }
 

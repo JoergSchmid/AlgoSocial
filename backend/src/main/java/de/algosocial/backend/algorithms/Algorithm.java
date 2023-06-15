@@ -5,12 +5,6 @@ import jakarta.persistence.*;
 
 @Entity
 public class Algorithm {
-    public enum InputType {
-        SINGLE_NUMBER,
-        NUMBER_ARRAY,
-        TWO_STRINGS
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -19,18 +13,18 @@ public class Algorithm {
     @Nonnull
     private final String displayName;
     @Nonnull
-    private InputType inputType;
+    private final int numberOfInputs;
 
-    public Algorithm(@Nonnull String name, @Nonnull String displayName, @Nonnull InputType inputType) {
+    public Algorithm(@Nonnull String name, @Nonnull String displayName, @Nonnull int numberOfInputs) {
         this.name = name;
         this.displayName = displayName;
-        this.inputType = inputType;
+        this.numberOfInputs = numberOfInputs;
     }
 
     protected Algorithm() {
         this.name = "__invalid__: default constructor used.";
         this.displayName = "__invalid__: default constructor used.";
-        this.inputType = InputType.SINGLE_NUMBER;
+        this.numberOfInputs = 0;
     }
 
     public int getId() {
@@ -47,7 +41,7 @@ public class Algorithm {
         return displayName;
     }
 
-    public InputType getInputType() {
-        return inputType;
+    public int getNumberOfInputs() {
+        return numberOfInputs;
     }
 }

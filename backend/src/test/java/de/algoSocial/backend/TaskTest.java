@@ -27,8 +27,8 @@ class TaskTest {
     @Autowired
     private TaskService taskService;
 
-    private final List<Integer> testInputIsPrime = List.of(7);
-    private final List<Integer> testInputList = Arrays.asList(1,3,-2,-1,2,0);
+    private final List<String> testInputIsPrime = List.of("7");
+    private final List<String> testInputList = List.of("1,3,-2,-1,2,0");
 
     private final Task testTask_BubbleSort = new Task("bubblesort", testInputList);
     private final Task testTask_IsPrime = new Task("isprime", testInputIsPrime);
@@ -58,13 +58,13 @@ class TaskTest {
                 .variable("userId", 0)
                 .variable("title", testTask_BubbleSort.getAlgorithm())
                 .variable("algorithm", testTask_BubbleSort.getAlgorithm())
-                .variable("numberListInput", testTask_BubbleSort.getNumberInput())
+                .variable("input", testTask_BubbleSort.getInput())
                 .execute();
         graphQlTester.documentName("addAlgorithmPost")
                 .variable("userId", 0)
                 .variable("title", testTask_IsPrime.getAlgorithm())
                 .variable("algorithm", testTask_IsPrime.getAlgorithm())
-                .variable("numberListInput", testTask_IsPrime.getNumberInput())
+                .variable("input", testTask_IsPrime.getInput())
                 .execute();
     }
 

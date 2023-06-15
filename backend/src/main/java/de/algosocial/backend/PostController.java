@@ -48,17 +48,15 @@ public class PostController {
 
     @MutationMapping
     public Post addAlgorithmPost(@Argument int userId, @Argument String title, @Argument String algorithm,
-                                 @Argument List<Integer> numberListInput, @Argument List<String> stringListInput) throws InterruptedException {
-        Task task = new Task(algorithm, numberListInput, stringListInput);
+                                 @Argument List<String> input) throws InterruptedException {
+        Task task = new Task(algorithm, input);
         taskRepository.save(task);
 
-        // For the post, we must now detect which kind of input was chosen.
-        String input = numberListInput != null ? numberListInput.toString() : stringListInput.get(0);
-        // Currently StringListInput is meant to be a list of up to 2 Strings (i.e. for dijkstra)
-        //if (stringListInput != null && stringListInput.get(1) != null)
-        //    input += " | " + stringListInput.get(1);
+        StringBuilder postMessage = new StringBuilder(input.get(0));
+        for (int i = 1; i < input.size(); i++)
+            postMessage.append(" & ").append(input.get(i));
 
-        Post post = new Post(userId, title, input, task.getId());
+        Post post = new Post(userId, title, postMessage.toString(), task.getId());
         postRepository.save(post);
 
         taskService.startTask(task);

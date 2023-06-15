@@ -3,10 +3,7 @@ import { useEffect, useState } from "react"
 import { SubmitButton, StatusField, ResultField, InputField } from "./IOComponents";
 import { ADD_TASK, GET_ALL_ALGORITHMS, GET_TASK_BY_ID } from "../Requests/gqlRequests";
 import { useMutation, useQuery } from "@apollo/client";
-import { AlgorithmType, InputType, Status, defaultAlgorithm } from "../Profile/Profile";
-
-export const REGEX_SINGLE = /[^0-9]/;
-export const REGEX_MULTIPLE = /[^0-9,]|,,/;
+import { AlgorithmType, Status, defaultAlgorithm } from "../Profile/Profile";
 
 export default function Algorithms() {
     const [availableAlgorithms, setAvailableAlgorithms] = useState<AlgorithmType[]>(defaultAlgorithm)
@@ -14,7 +11,6 @@ export default function Algorithms() {
     const [input, setInput] = useState<string>("");
     const [secondInput, setSecondInput] = useState<string>("");
     const [showSecondInput, setShowSecondInput] = useState<boolean>(false);
-    const [inputError, setInputError] = useState<boolean>(false);
     const [taskID, setTaskID] = useState<number>(-1);
     const [status, setStatus] = useState<Status>(Status.DONE);
     const [result, setResult] = useState<string>("");
@@ -49,40 +45,21 @@ export default function Algorithms() {
         if (selectedAlgorithm) {
             setAlgorithm(selectedAlgorithm);
         }
-        if (selectedAlgorithm?.inputType === InputType.TWO_STRINGS)
+        if (selectedAlgorithm?.numberOfInputs === 2)
             setShowSecondInput(true);
         else
             setShowSecondInput(false);
     }
 
     const handleSubmitButton = () => {
-        const INPUT_TYPE_REGEX_MAPPING = {
-            [InputType.SINGLE_NUMBER]: REGEX_SINGLE,
-            [InputType.NUMBER_ARRAY]: REGEX_MULTIPLE,
-            [InputType.TWO_STRINGS]: / /
+        const inputList = [input];
+        if (showSecondInput) {
+            inputList.push(secondInput);
         }
-
-        let regex = INPUT_TYPE_REGEX_MAPPING[algorithm.inputType];
-        if (regex.test(input)) {
-            setInputError(true);
-            return;
-        }
-        setInputError(false);
-
-        const NUMBER_INPUT_MAPPING = {
-            [InputType.SINGLE_NUMBER]: [Number(input)],
-            [InputType.NUMBER_ARRAY]: input.split(",").map((num) => Number(num.trim())),
-            [InputType.TWO_STRINGS]: input.split(",").map((num) => Number(num.trim()))
-        } // ToDo: This is not really 2 strings. 2 str is meant for dijkstra, this is [num][str].
-
-        const numberListInput = NUMBER_INPUT_MAPPING[algorithm.inputType];
-        const stringListInput = algorithm.inputType === InputType.TWO_STRINGS ? [secondInput] : null;
-
         requestNewTask({
             variables: {
                 algorithm: algorithm.name,
-                numberListInput: numberListInput,
-                stringListInput: stringListInput
+                input: inputList
             },
             onCompleted: (data) => {
                 setTaskID(data.addTask.id);
@@ -115,7 +92,7 @@ export default function Algorithms() {
                 ))}
             </Select>
             <br />
-            <InputField inputType={algorithm.inputType} error={inputError} setInput={setInput} setSecondInput={setSecondInput} showSecondInput={showSecondInput} />
+            <InputField numberOfInputs={algorithm.numberOfInputs} setInput={setInput} setSecondInput={setSecondInput} showSecondInput={showSecondInput} />
             <br />
             <SubmitButton handleSubmitButton={handleSubmitButton} />
             <br /> <br />

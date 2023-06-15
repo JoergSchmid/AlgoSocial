@@ -2,7 +2,6 @@ query postById($id: ID!) {
     taskById(id: $id) {
         id
         algorithm
-        numberListInput
-        stringListInput
+        input
     }
 }

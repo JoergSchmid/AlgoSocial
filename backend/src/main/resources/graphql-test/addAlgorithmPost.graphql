@@ -1,4 +1,4 @@
-mutation addAlgorithmPost($userId: Int!, $title: String!, $algorithm: String!, $input: [Int!]!) {
+mutation addAlgorithmPost($userId: Int!, $title: String!, $algorithm: String!, $input: [String!]!) {
     addAlgorithmPost(userId: $userId, title: $title, algorithm: $algorithm, input: $input) {
         id
     }
