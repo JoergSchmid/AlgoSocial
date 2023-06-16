@@ -18,7 +18,8 @@ export function InputField({ setInput, setSecondInput, showSecondInput }: {
                 margin="dense"
                 sx={{ width: "40ch" }}
             />
-            {showSecondInput &&
+            {showSecondInput && <>
+                <br />
                 <TextField
                     id="input_field2"
                     data-testid="input_field2"
@@ -28,7 +29,7 @@ export function InputField({ setInput, setSecondInput, showSecondInput }: {
                     margin="dense"
                     sx={{ width: "40ch" }}
                 />
-            }
+            </>}
         </>
     );
 }
