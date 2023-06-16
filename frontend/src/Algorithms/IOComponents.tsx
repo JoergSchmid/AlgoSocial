@@ -2,10 +2,10 @@ import { Button, TextField } from "@mui/material";
 import { Status } from "../Profile/Profile";
 
 
-export function InputField({ setInput, setSecondInput, showSecondInput }: {
+export function InputField({ setInput, setSecondInput = () => { }, showSecondInput = false }: {
     setInput: (input: string) => void,
-    setSecondInput: (input: string) => void,
-    showSecondInput: boolean
+    setSecondInput?: (input: string) => void,
+    showSecondInput?: boolean
 }) {
     return (
         <>
@@ -13,7 +13,7 @@ export function InputField({ setInput, setSecondInput, showSecondInput }: {
                 id="input_field"
                 data-testid="input_field"
                 variant="outlined"
-                label={"Enter algorithm input"}
+                label={"Enter algorithm input"} // ToDo: Proper labeling depending on context
                 onChange={event => setInput(event.target.value === null ? "" : event.target.value)}
                 margin="dense"
                 sx={{ width: "40ch" }}

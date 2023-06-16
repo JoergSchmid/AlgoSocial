@@ -2,16 +2,19 @@ import React from 'react';
 import { useState } from "react";
 import { AlgorithmType, PostType } from "../Profile";
 import { Card, Button, TextField, CardContent, MenuItem, Select, SelectChangeEvent, Checkbox } from "@mui/material";
+import { InputField } from '../../Algorithms/IOComponents';
 
 export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm, submitPost, submitTask }: {
     availableAlgorithms: AlgorithmType[],
     algorithm: AlgorithmType,
     setAlgorithm: (algorithm: AlgorithmType) => void,
     submitPost: (post: PostType) => void,
-    submitTask: (post: PostType) => void
+    submitTask: (post: PostType, secondInput: string) => void
 }) {
     const [title, setTitle] = useState<string>(" "); // Contains a space so it doesn´t start with an error message. Space is not really in text field.
-    const [message, setMessage] = useState<string>(" "); // ToDo: Add second input like on alg page
+    const [message, setMessage] = useState<string>(" ");
+    const [secondInput, setSecondInput] = useState<string>("");
+    const [showSecondInput, setShowSecondInput] = useState<boolean>(false);
     const [postAlgorithm, setPostAlgorithm] = useState<boolean>(false);
 
     function isEmpty(text: string): boolean {
@@ -22,6 +25,12 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
         let selectedAlgorithm = availableAlgorithms.find((alg) => alg.displayName === event.target.value);
         if (selectedAlgorithm) {
             setAlgorithm(selectedAlgorithm);
+        }
+        if (selectedAlgorithm?.numberOfInputs === 2) {
+            setShowSecondInput(true);
+        } else {
+            setShowSecondInput(false);
+            setSecondInput("");
         }
     }
 
@@ -37,7 +46,7 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
             return;
         }
 
-        submitTask({ title, message, id: -1 })
+        submitTask({ title, message, id: -1 }, secondInput)
     }
 
 
@@ -61,15 +70,17 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
                         helperText={title === "" ? "Please enter a title." : ""}
                         sx={{ width: "40ch" }}
                     ></TextField><br />
-                    <TextField
-                        variant="outlined"
-                        id="message"
-                        label="Message"
-                        onChange={event => setMessage(event.target.value)}
-                        margin="dense"
-                        multiline
-                        sx={{ width: "40ch" }}
-                    ></TextField><br />
+                    {postAlgorithm ?
+                        <InputField
+                            setInput={setMessage}
+                            setSecondInput={setSecondInput}
+                            showSecondInput={showSecondInput}
+                        />
+                        :
+                        <InputField
+                            setInput={setMessage}
+                        />
+                    }
                     <Checkbox
                         id="checkboxPostAlgorithm"
                         data-testid="checkboxPostAlgorithm"

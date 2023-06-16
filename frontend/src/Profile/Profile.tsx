@@ -102,7 +102,7 @@ export default function Profile({ user, avatar, changeUser }: {
             }
         });
     }
-    function submitTask({ title, message }: PostType): void {
+    function submitTask({ title, message }: PostType, secondInput: string): void {
 
         setPosts(posts => [...posts, {
             title, message, id: -posts.length, task: {
@@ -115,12 +115,17 @@ export default function Profile({ user, avatar, changeUser }: {
         }]);
         setShowPostInput(false);
 
+        const input = [message];
+        if (secondInput !== "") {
+            input.push(secondInput);
+        }
+
         requestNewTask({
             variables: {
                 userId: user.userId,
                 title: title,
                 algorithm: algorithm.name,
-                input: [message]
+                input: input
             }
         });
     }

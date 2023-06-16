@@ -52,7 +52,7 @@ describe('Profile component', () => {
 
         // Check, if TextFields and Button are present
         const titleInput = screen.getByLabelText("Title");
-        const messageInput = screen.getByLabelText("Message");
+        const messageInput = screen.getByLabelText("Message"); // ToDo: Fix label
         const buttonSubmit = screen.getByTestId("btn_submit");
         expect(titleInput).toBeInTheDocument();
         expect(messageInput).toBeInTheDocument();
