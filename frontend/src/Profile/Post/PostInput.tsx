@@ -13,7 +13,6 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
     const [title, setTitle] = useState<string>(" "); // Contains a space so it doesn´t start with an error message. Space is not really in text field.
     const [message, setMessage] = useState<string>(" "); // ToDo: Add second input like on alg page
     const [postAlgorithm, setPostAlgorithm] = useState<boolean>(false);
-    const [inputError, setInputError] = useState<boolean>(false);
 
     function isEmpty(text: string): boolean {
         return text === "" || text === " ";
@@ -38,7 +37,6 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
             return;
         }
 
-        setInputError(false);
         submitTask({ title, message, id: -1 })
     }
 
@@ -68,8 +66,6 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
                         id="message"
                         label="Message"
                         onChange={event => setMessage(event.target.value)}
-                        error={message === "" || inputError}
-                        helperText={message === "" || inputError ? "Invalid input" : ""}
                         margin="dense"
                         multiline
                         sx={{ width: "40ch" }}
