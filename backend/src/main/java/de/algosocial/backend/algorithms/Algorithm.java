@@ -3,6 +3,9 @@ package de.algosocial.backend.algorithms;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Entity
 public class Algorithm {
     @Id
@@ -13,17 +16,21 @@ public class Algorithm {
     @Nonnull
     private final String displayName;
     private final int numberOfInputs;
+    @Nonnull
+    private final List<String> exampleInputs;
 
-    public Algorithm(@Nonnull String name, @Nonnull String displayName, int numberOfInputs) {
+    public Algorithm(@Nonnull String name, @Nonnull String displayName, int numberOfInputs, @Nonnull List<String> exampleInputs) {
         this.name = name;
         this.displayName = displayName;
         this.numberOfInputs = numberOfInputs;
+        this.exampleInputs = exampleInputs;
     }
 
     protected Algorithm() {
         this.name = "__invalid__: default constructor used.";
         this.displayName = "__invalid__: default constructor used.";
         this.numberOfInputs = 0;
+        this.exampleInputs = List.of("__invalid__: default constructor used.");
     }
 
     public int getId() {

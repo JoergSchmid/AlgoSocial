@@ -20,7 +20,8 @@ export enum Status {
 export type AlgorithmType = {
     name: string,
     displayName: string,
-    numberOfInputs: number
+    numberOfInputs: number,
+    exampleInputs: string[]
 }
 
 export type PostType = {
@@ -42,7 +43,8 @@ export type TaskType = {
 export const defaultAlgorithm: AlgorithmType[] = [{
     name: "bubblesort",
     displayName: "Bubble Sort",
-    numberOfInputs: 1
+    numberOfInputs: 1,
+    exampleInputs: ["4,2,5,1,3"]
 }]
 
 export default function Profile({ user, avatar, changeUser }: {

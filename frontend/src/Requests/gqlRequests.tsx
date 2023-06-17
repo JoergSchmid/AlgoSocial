@@ -7,6 +7,7 @@ export const GET_ALL_ALGORITHMS = gql`
             name
             displayName
             numberOfInputs
+            exampleInputs
         }
     }
 `;

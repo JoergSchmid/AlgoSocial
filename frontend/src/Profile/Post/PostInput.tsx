@@ -50,7 +50,7 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
         if (selectedAlgorithm) {
             setAlgorithm(selectedAlgorithm);
         }
-        updateShowSecondInput();
+        updateShowSecondInput(); // ToDo: sometimes this fails somehow
     }
 
     const handleSubmitButtonClick = (event: React.FormEvent<HTMLFormElement>) => {
@@ -92,6 +92,8 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
                             setInput={setMessage}
                             setSecondInput={setSecondInput}
                             showSecondInput={showSecondInput}
+                            exampleInput1={algorithm.exampleInputs[0]}
+                            exampleInput2={algorithm.exampleInputs[1]}
                             errorText1={inputErrorMessage ? "Please enter some values." : ""}
                             errorText2={inputErrorSecondInput ? "Please enter some values." : ""}
                         />

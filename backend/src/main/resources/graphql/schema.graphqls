@@ -59,6 +59,7 @@ type Algorithm {
     name: String!
     displayName: String!
     numberOfInputs: Int!
+    exampleInputs: [String!]!
 }
 
 enum Status {
