@@ -2,10 +2,12 @@ import { Button, TextField } from "@mui/material";
 import { Status } from "../Profile/Profile";
 
 
-export function InputField({ setInput, setSecondInput = () => { }, showSecondInput = false }: {
+export function InputField({ setInput, setSecondInput = () => { }, showSecondInput = false, errorText1 = "", errorText2 = "" }: {
     setInput: (input: string) => void,
     setSecondInput?: (input: string) => void,
-    showSecondInput?: boolean
+    showSecondInput?: boolean,
+    errorText1?: string,
+    errorText2?: string
 }) {
     return (
         <>
@@ -14,6 +16,8 @@ export function InputField({ setInput, setSecondInput = () => { }, showSecondInp
                 data-testid="input_field"
                 variant="outlined"
                 label={"Enter algorithm input"} // ToDo: Proper labeling depending on context
+                error={errorText1 !== ""}
+                helperText={errorText1}
                 onChange={event => setInput(event.target.value === null ? "" : event.target.value)}
                 margin="dense"
                 sx={{ width: "40ch" }}
@@ -25,6 +29,8 @@ export function InputField({ setInput, setSecondInput = () => { }, showSecondInp
                     data-testid="input_field2"
                     variant="outlined"
                     label={""}
+                    error={errorText2 !== ""}
+                    helperText={errorText2}
                     onChange={event => setSecondInput(event.target.value === null ? "" : event.target.value)}
                     margin="dense"
                     sx={{ width: "40ch" }}

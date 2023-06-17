@@ -11,14 +11,29 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
     submitPost: (post: PostType) => void,
     submitTask: (post: PostType, secondInput: string) => void
 }) {
-    const [title, setTitle] = useState<string>(" "); // Contains a space so it doesn´t start with an error message. Space is not really in text field.
-    const [message, setMessage] = useState<string>(" ");
+    const [title, setTitle] = useState<string>("");
+    const [message, setMessage] = useState<string>("");
     const [secondInput, setSecondInput] = useState<string>("");
     const [showSecondInput, setShowSecondInput] = useState<boolean>(false);
     const [postAlgorithm, setPostAlgorithm] = useState<boolean>(false);
+    const [inputErrorTitle, setInputErrorTitle] = useState<boolean>(false);
+    const [inputErrorMessage, setInputErrorMessage] = useState<boolean>(false);
+    const [inputErrorSecondInput, setInputErrorSecondInput] = useState<boolean>(false);
 
-    function isEmpty(text: string): boolean {
-        return text === "" || text === " ";
+    function checkInputFieldsEmpty(): boolean {
+        if (title === "") {
+            setInputErrorTitle(true);
+        } else if (message === "") {
+            setInputErrorTitle(false);
+            setInputErrorMessage(true);
+        } else if (showSecondInput && secondInput === "") {
+            setInputErrorTitle(false);
+            setInputErrorMessage(false);
+            setInputErrorSecondInput(true);
+        } else {
+            return false;
+        }
+        return true;
     }
 
     const updateShowSecondInput = () => {
@@ -41,9 +56,8 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
     const handleSubmitButtonClick = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        if (isEmpty(title) || isEmpty(message)) {
+        if (checkInputFieldsEmpty())
             return;
-        }
 
         if (!postAlgorithm) {
             submitPost({ title, message, id: -1 });
@@ -52,7 +66,6 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
 
         submitTask({ title, message, id: -1 }, secondInput)
     }
-
 
 
     return (
@@ -70,8 +83,8 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
                         id="title"
                         label="Title"
                         onChange={event => setTitle(event.target.value)}
-                        error={title === ""}
-                        helperText={title === "" ? "Please enter a title." : ""}
+                        error={inputErrorTitle}
+                        helperText={inputErrorTitle ? "Please enter a title." : ""}
                         sx={{ width: "40ch" }}
                     ></TextField><br />
                     {postAlgorithm ?
@@ -79,6 +92,8 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
                             setInput={setMessage}
                             setSecondInput={setSecondInput}
                             showSecondInput={showSecondInput}
+                            errorText1={inputErrorMessage ? "Please enter some values." : ""}
+                            errorText2={inputErrorSecondInput ? "Please enter some values." : ""}
                         />
                         :
                         <InputField
