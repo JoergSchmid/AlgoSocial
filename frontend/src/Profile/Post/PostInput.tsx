@@ -21,17 +21,21 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
         return text === "" || text === " ";
     }
 
-    const handleSelectionChange = (event: SelectChangeEvent) => {
-        let selectedAlgorithm = availableAlgorithms.find((alg) => alg.displayName === event.target.value);
-        if (selectedAlgorithm) {
-            setAlgorithm(selectedAlgorithm);
-        }
-        if (selectedAlgorithm?.numberOfInputs === 2) {
+    const updateShowSecondInput = () => {
+        if (algorithm.numberOfInputs === 2) {
             setShowSecondInput(true);
         } else {
             setShowSecondInput(false);
             setSecondInput("");
         }
+    }
+
+    const handleSelectionChange = (event: SelectChangeEvent) => {
+        let selectedAlgorithm = availableAlgorithms.find((alg) => alg.displayName === event.target.value);
+        if (selectedAlgorithm) {
+            setAlgorithm(selectedAlgorithm);
+        }
+        updateShowSecondInput();
     }
 
     const handleSubmitButtonClick = (event: React.FormEvent<HTMLFormElement>) => {
@@ -85,7 +89,7 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
                         id="checkboxPostAlgorithm"
                         data-testid="checkboxPostAlgorithm"
                         style={{ float: "left" }}
-                        onChange={() => setPostAlgorithm(!postAlgorithm)}
+                        onChange={() => { setPostAlgorithm(!postAlgorithm); updateShowSecondInput(); }}
                     />
                     <Select
                         id="postInputSelection"
