@@ -12,10 +12,9 @@ public class Algorithm {
     private final String name;
     @Nonnull
     private final String displayName;
-    @Nonnull
     private final int numberOfInputs;
 
-    public Algorithm(@Nonnull String name, @Nonnull String displayName, @Nonnull int numberOfInputs) {
+    public Algorithm(@Nonnull String name, @Nonnull String displayName, int numberOfInputs) {
         this.name = name;
         this.displayName = displayName;
         this.numberOfInputs = numberOfInputs;
