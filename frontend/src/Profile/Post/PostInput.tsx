@@ -130,7 +130,7 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
                         variant="contained"
                         type="submit"
                         data-testid="btn_submit"
-                        style={{ float: "right", borderRadius: "12px", marginBottom: "5px" }}
+                        style={{ float: "right", borderRadius: "12px", marginTop: "18px", marginBottom: "5px" }}
                     >Submit Post</Button>
                 </form>
             </CardContent>
