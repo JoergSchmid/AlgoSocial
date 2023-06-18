@@ -36,8 +36,8 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
         return true;
     }
 
-    const updateShowSecondInput = () => {
-        if (algorithm.numberOfInputs === 2) {
+    const updateShowSecondInput = (alg = algorithm) => {
+        if (alg.numberOfInputs === 2) {
             setShowSecondInput(true);
         } else {
             setShowSecondInput(false);
@@ -50,7 +50,7 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
         if (selectedAlgorithm) {
             setAlgorithm(selectedAlgorithm);
         }
-        updateShowSecondInput(); // ToDo: sometimes this fails somehow
+        updateShowSecondInput(selectedAlgorithm);
     }
 
     const handleSubmitButtonClick = (event: React.FormEvent<HTMLFormElement>) => {
