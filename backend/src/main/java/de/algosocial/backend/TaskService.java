@@ -1,6 +1,6 @@
 package de.algosocial.backend;
 
-import de.algosocial.backend.algorithms.AlgorithmCalculations;
+import de.algosocial.backend.algorithms.AlgorithmController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -21,17 +21,17 @@ public class TaskService {
 
         try {
             if (Objects.equals(task.getAlgorithm(), "bubblesort")) {
-                result = AlgorithmCalculations.bubbleSort(stringToIntList(input.get(0))).toString();
+                result = AlgorithmController.bubbleSort(stringToIntList(input.get(0))).toString();
             } else if (Objects.equals(task.getAlgorithm(), "quicksort")) {
-                result = AlgorithmCalculations.quickSort(stringToIntList(input.get(0))).toString();
+                result = AlgorithmController.quickSort(stringToIntList(input.get(0))).toString();
             } else if (Objects.equals(task.getAlgorithm(), "isprime")) {
-                result = AlgorithmCalculations.isPrime(Integer.parseInt(input.get(0))) ? "prime" : "not prime";
+                result = AlgorithmController.isPrime(Integer.parseInt(input.get(0))) ? "prime" : "not prime";
             } else if (Objects.equals(task.getAlgorithm(), "binarySearchTree")) {
-                result = AlgorithmCalculations.binarySearchTree(stringToIntList(input.get(0))).toString();
+                result = AlgorithmController.binarySearchTree(stringToIntList(input.get(0))).toString();
             } else if (Objects.equals(task.getAlgorithm(), "binarySearchTreeFindNumber")) {
-                result = String.valueOf(AlgorithmCalculations.binarySearchTreeFindNumber(stringToIntList(input.get(0)), Integer.parseInt(input.get(1))));
+                result = String.valueOf(AlgorithmController.binarySearchTreeFindNumber(stringToIntList(input.get(0)), Integer.parseInt(input.get(1))));
             } else if (Objects.equals(task.getAlgorithm(), "dijkstra")) {
-                result = AlgorithmCalculations.dijkstra(input.get(0), input.get(1));
+                result = AlgorithmController.dijkstra(input.get(0), input.get(1));
             } else {
                 task.setError("Error: Requested algorithm not found.");
                 taskRepository.save(task);
