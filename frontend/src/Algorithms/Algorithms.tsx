@@ -92,7 +92,13 @@ export default function Algorithms() {
                 ))}
             </Select>
             <br />
-            <InputField setInput={setInput} setSecondInput={setSecondInput} showSecondInput={showSecondInput} />
+            <InputField
+                setInput={setInput}
+                setSecondInput={setSecondInput}
+                showSecondInput={showSecondInput}
+                exampleInput1={algorithm.exampleInputs[0]}
+                exampleInput2={algorithm.exampleInputs[1]}
+            />
             <br />
             <SubmitButton handleSubmitButton={handleSubmitButton} />
             <br /> <br />
