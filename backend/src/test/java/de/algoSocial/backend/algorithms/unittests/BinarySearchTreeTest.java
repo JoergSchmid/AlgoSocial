@@ -17,7 +17,7 @@ public class BinarySearchTreeTest {
         for (int i : input)
             binarySearchTree.insert(i);
 
-        List<Integer> result = binarySearchTree.getAll();
+        String result = binarySearchTree.getTree();
 
         Assertions.assertEquals(expected, result);
     }
