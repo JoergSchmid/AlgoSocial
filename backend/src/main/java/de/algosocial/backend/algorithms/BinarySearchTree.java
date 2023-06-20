@@ -21,17 +21,23 @@ public class BinarySearchTree {
         return root;
     }
 
-    public List<Integer> getAll() {
-        return getAllFromNode(root, new ArrayList<>());
+    public String getTree() {
+        StringBuilder result = new StringBuilder();
+        return String.valueOf(getTreeFromNode(root));
     }
 
-    private List<Integer> getAllFromNode(BST_Node node, List<Integer> list) {
+    private StringBuilder getTreeFromNode(BST_Node node) {
+        StringBuilder result = new StringBuilder();
+
         if (node == null)
-            return list;
-        list = getAllFromNode(node.left, list);
-        list.add(node.data);
-        list = getAllFromNode(node.right, list);
-        return list;
+            return result;
+
+        return result
+                .append("(")
+                .append(getTreeFromNode(node.left))
+                .append(",").append(node.data).append(",")
+                .append(getTreeFromNode(node.right))
+                .append(")");
     }
 
     public Integer getMax() {

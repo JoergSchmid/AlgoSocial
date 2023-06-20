@@ -37,7 +37,7 @@ public class AlgorithmController {
         ));
         algorithmRepository.save(new Algorithm(
                 "binarySearchTree",
-                "Binary Search Tree - Sort",
+                "Binary Search Tree",
                 1,
                 List.of("4,2,5,1,3")
         ));
@@ -121,11 +121,11 @@ public class AlgorithmController {
     }
 
     @MutationMapping
-    public static List<Integer> binarySearchTree(@Argument List<Integer> numbers) {
+    public static String binarySearchTree(@Argument List<Integer> numbers) {
         BinarySearchTree bst = new BinarySearchTree();
         for (int i : numbers)
             bst.insert(i);
-        return bst.getAll();
+        return bst.getTree();
     }
 
     @MutationMapping

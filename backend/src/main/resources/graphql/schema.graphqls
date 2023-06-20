@@ -26,7 +26,7 @@ type Mutation {
     isPrime(number: Int!): Boolean!
     bubbleSort(numbers: [Int!]!): [Int!]!
     quickSort(numbers: [Int!]!): [Int!]!
-    binarySearchTree(numbers: [Int!]!): [Int!]!
+    binarySearchTree(numbers: [Int!]!): String!
     binarySearchTreeFindNumber(numbers: [Int!]!, findNumber: Int!): Boolean!
     dijkstra(nodes: String!, edges: String!): String!
 }
