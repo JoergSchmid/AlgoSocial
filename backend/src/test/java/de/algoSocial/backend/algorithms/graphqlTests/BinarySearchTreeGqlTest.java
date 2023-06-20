@@ -21,13 +21,13 @@ public class BinarySearchTreeGqlTest {
     @Test
     void input_standard() {
         List<Integer> input = Arrays.asList(6,5,2,9,1,4,0,8,3,7);
-        List<Integer> expected = Arrays.asList(0,1,2,3,4,5,6,7,8,9);
+        String expected = "(((((,0,),1,),2,((,3,),4,)),5,),6,(((,7,),8,),9,))";
 
-        List<Integer> result = graphQlTester.documentName("binarySearchTree")
+        String result = graphQlTester.documentName("binarySearchTree")
                 .variable("numbers", input)
                 .execute()
                 .path("binarySearchTree")
-                .entityList(Integer.class)
+                .entity(String.class)
                 .get();
 
         Assertions.assertEquals(expected, result);
