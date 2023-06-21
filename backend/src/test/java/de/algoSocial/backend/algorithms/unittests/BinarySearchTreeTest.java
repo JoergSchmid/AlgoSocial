@@ -8,7 +8,7 @@ import java.util.List;
 public class BinarySearchTreeTest {
 
     @Test
-    void createSimpleSearchTree() {
+    void simpleTreeCheckFormat() {
         List<Integer> input = Arrays.asList(2,1,3);
         String expected = "((,1,),2,(,3,))";
 
@@ -23,7 +23,7 @@ public class BinarySearchTreeTest {
     }
 
     @Test
-    void createPresortedSearchTree() {
+    void presortedSearchTreeCheckFormat() {
         List<Integer> input = Arrays.asList(4,3,2,1);
         String expected = "((((,1,),2,),3,),4,)";
 
@@ -38,7 +38,7 @@ public class BinarySearchTreeTest {
     }
 
     @Test
-    void createBiggerSearchTree() {
+    void biggerTreeCheckFormat() {
         List<Integer> input = Arrays.asList(6,5,2,9,1,4,0,8,3,7);
         String expected = "(((((,0,),1,),2,((,3,),4,)),5,),6,(((,7,),8,),9,))";
 
