@@ -12,7 +12,7 @@ import java.util.List;
 public class DijkstraTest {
 
     @Test
-    void createSimpleDijkstraTree() {
+    void createSimpleDijkstraGraph() {
         List<DijkstraNode> nodes = new ArrayList<DijkstraNode>();
 
         // Create 4 nodes
@@ -51,7 +51,7 @@ public class DijkstraTest {
     }
 
     @Test
-    void createComplexTree() {
+    void createComplexGraph() {
         List<DijkstraNode> nodes = new ArrayList<DijkstraNode>();
 
         DijkstraNode a = new DijkstraNode("a");
@@ -117,7 +117,7 @@ public class DijkstraTest {
     }
 
     @Test
-    void createTreeWithOneNode() {
+    void createGraphWithOneNode() {
         List<DijkstraNode> nodes = new ArrayList<DijkstraNode>();
         DijkstraNode node = new DijkstraNode("a");
         nodes.add(node);
@@ -129,7 +129,7 @@ public class DijkstraTest {
     }
 
     @Test
-    void createTreeWithIncompleteConnections() {
+    void createGraphWithIncompleteConnections() {
         List<DijkstraNode> nodes = new ArrayList<DijkstraNode>();
         DijkstraNode a = new DijkstraNode("a");
         DijkstraNode b = new DijkstraNode("b");

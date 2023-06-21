@@ -16,7 +16,7 @@ public class DijkstraGqlTest {
     private GraphQlTester graphQlTester;
 
     @Test
-    void createSimpleTree() {
+    void createSimpleGraph() {
         String nodes = "a,c,b";
         String edges = "(a,b,5),(a,c,1),(b,c,2)";
         String expected = "a,c,b,3.0";
