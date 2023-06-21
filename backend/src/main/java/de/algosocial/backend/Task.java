@@ -68,6 +68,10 @@ public class Task {
         return userId;
     }
 
+    public String getError() {
+        return error;
+    }
+
     public void setStatus(@Nonnull Status status) {
         this.status = status;
     }

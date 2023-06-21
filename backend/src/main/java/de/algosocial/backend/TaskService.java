@@ -13,6 +13,8 @@ import java.util.Objects;
 public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
+    @Autowired
+    private  ErrorLogRepository errorLogRepository;
 
     @Async
     public void startTask(Task task) throws InterruptedException {
@@ -43,6 +45,7 @@ public class TaskService {
         } catch (Exception e) {
             task.setError("Error: Invalid input");
             taskRepository.save(task);
+            errorLogRepository.save(new ErrorLog(task.getUserId(), task.getId(), task.getInput(), task.getError()));
         }
 
     }
