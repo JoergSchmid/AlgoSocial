@@ -21,7 +21,8 @@ public class BinarySearchTree {
         return root;
     }
 
-    public String getTree() {
+    @Override
+    public String toString() {
         StringBuilder result = new StringBuilder();
         return String.valueOf(getTreeFromNode(root));
     }

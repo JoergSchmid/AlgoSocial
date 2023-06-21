@@ -17,7 +17,7 @@ public class BinarySearchTreeTest {
         for (int i : input)
             binarySearchTree.insert(i);
 
-        String result = binarySearchTree.getTree();
+        String result = binarySearchTree.toString();
 
         Assertions.assertEquals(expected, result);
     }
@@ -32,7 +32,7 @@ public class BinarySearchTreeTest {
         for (int i : input)
             binarySearchTree.insert(i);
 
-        String result = binarySearchTree.getTree();
+        String result = binarySearchTree.toString();
 
         Assertions.assertEquals(expected, result);
     }
@@ -47,7 +47,7 @@ public class BinarySearchTreeTest {
         for (int i : input)
             binarySearchTree.insert(i);
 
-        String result = binarySearchTree.getTree();
+        String result = binarySearchTree.toString();
 
         Assertions.assertEquals(expected, result);
     }
@@ -62,7 +62,7 @@ public class BinarySearchTreeTest {
         for (int i : input)
             binarySearchTree.insert(i);
 
-        String result = binarySearchTree.getTree();
+        String result = binarySearchTree.toString();
 
         Assertions.assertEquals(expected, result);
     }

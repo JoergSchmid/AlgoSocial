@@ -126,7 +126,7 @@ public class AlgorithmController {
         BinarySearchTree bst = new BinarySearchTree();
         for (int i : numbers)
             bst.insert(i);
-        return bst.getTree();
+        return bst.toString();
     }
 
     @MutationMapping
