@@ -2,8 +2,6 @@ package de.algosocial.backend.algorithms;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
-
-import java.util.Arrays;
 import java.util.List;
 
 @Entity

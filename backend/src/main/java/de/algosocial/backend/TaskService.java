@@ -4,7 +4,6 @@ import de.algosocial.backend.algorithms.AlgorithmController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,7 +28,7 @@ public class TaskService {
             } else if (Objects.equals(task.getAlgorithm(), "isprime")) {
                 result = AlgorithmController.isPrime(Integer.parseInt(input.get(0))) ? "prime" : "not prime";
             } else if (Objects.equals(task.getAlgorithm(), "binarySearchTree")) {
-                result = AlgorithmController.binarySearchTree(stringToIntList(input.get(0))).toString();
+                result = AlgorithmController.binarySearchTree(stringToIntList(input.get(0)));
             } else if (Objects.equals(task.getAlgorithm(), "binarySearchTreeFindNumber")) {
                 result = String.valueOf(AlgorithmController.binarySearchTreeFindNumber(stringToIntList(input.get(0)), Integer.parseInt(input.get(1))));
             } else if (Objects.equals(task.getAlgorithm(), "dijkstra")) {
