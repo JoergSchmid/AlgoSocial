@@ -3,9 +3,33 @@ package de.algosocial.backend.algorithms;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BinarySearchTree {
+public class BinarySearchTree extends AlgorithmSuperClass {
 
     private BST_Node root;
+
+    @Override
+    public String getResult(List<String> input) {
+        List<Integer> numbers = stringToIntegerList(input.get(0));
+
+        if (input.get(1) != null)
+            return binarySearchTreeFindNumber(numbers, Integer.parseInt(input.get(1))) ? "true" : "false";
+
+        return binarySearchTree(numbers);
+    }
+
+    public static String binarySearchTree(List<Integer> numbers) {
+        BinarySearchTree bst = new BinarySearchTree();
+        for(int i : numbers)
+            bst.insert(i);
+        return bst.toString();
+    }
+
+    public static boolean binarySearchTreeFindNumber(List<Integer> numbers, int findNumber) {
+        BinarySearchTree bst = new BinarySearchTree();
+        for(int i : numbers)
+            bst.insert(i);
+        return bst.findNumber(findNumber);
+    }
 
     public void insert(int n) {
         root = insertNode(root, n);
