@@ -16,8 +16,7 @@ public class ErrorLog {
     private int taskId;
     private List<String> input;
     private String message;
-
-    // ToDo: Just receive Task object
+    
     public ErrorLog(Task task) {
         this.userId = task.getUserId();
         this.taskId = task.getId();
