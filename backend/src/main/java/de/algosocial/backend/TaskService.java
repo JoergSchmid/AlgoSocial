@@ -15,9 +15,12 @@ public class TaskService {
 
     @Async
     public void startTask(Task task) throws InterruptedException {
-        AlgorithmSuperClass algorithm = AlgorithmFactory.getClass(task.getAlgorithm());
+        if (task.getStatus() != Task.Status.CALCULATING) {
+            handleError(task, "Error: Received task has wrong status: " + task.getStatus());
+            return;
+        }
 
-        // ToDo: Add catching wrong task status
+        AlgorithmSuperClass algorithm = AlgorithmFactory.getClass(task.getAlgorithm());
 
         if (algorithm == null) {
             handleError(task, "Error: Requested algorithm not found.");
@@ -30,7 +33,7 @@ public class TaskService {
             handleError(task, "Error: Invalid input.");
             return;
         }
-        
+
         taskRepository.save(task);
     }
 
