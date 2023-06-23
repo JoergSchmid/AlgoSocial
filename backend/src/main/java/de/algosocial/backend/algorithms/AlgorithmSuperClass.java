@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AlgorithmSuperClass {
-    abstract String getResult(List<String> input);
+    public abstract String getResult(List<String> input);
 
     List<Integer> stringToIntegerList(String string) {
         List<Integer> list = new ArrayList<>();
