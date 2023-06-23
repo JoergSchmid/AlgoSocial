@@ -32,8 +32,7 @@ public class TaskService {
             handleError(task, "Error: Invalid input.");
             return;
         }
-
-        task.setStatus(Task.Status.DONE);
+        
         task.setResult(result);
         taskRepository.save(task);
     }

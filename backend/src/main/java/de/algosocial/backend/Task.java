@@ -77,6 +77,7 @@ public class Task {
     }
 
     public void setResult(String result) {
+        this.status = Status.DONE;
         this.result = result;
     }
 
