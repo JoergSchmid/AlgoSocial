@@ -24,16 +24,13 @@ public class TaskService {
             return;
         }
 
-        String result;
-
         try {
-            result = algorithm.getResult(task.getInput());
+            task.setResult(algorithm.getResult(task.getInput()));
         } catch (Exception e) {
             handleError(task, "Error: Invalid input.");
             return;
         }
         
-        task.setResult(result);
         taskRepository.save(task);
     }
 
