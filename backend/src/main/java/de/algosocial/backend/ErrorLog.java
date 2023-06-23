@@ -17,11 +17,12 @@ public class ErrorLog {
     private List<String> input;
     private String message;
 
-    public ErrorLog(int userId, int taskId, List<String> input, String message) {
-        this.userId = userId;
-        this.taskId = taskId;
-        this.input = input;
-        this.message = message;
+    // ToDo: Just receive Task object
+    public ErrorLog(Task task) {
+        this.userId = task.getUserId();
+        this.taskId = task.getId();
+        this.input = task.getInput();
+        this.message = task.getError();
     }
 
     protected ErrorLog() {}

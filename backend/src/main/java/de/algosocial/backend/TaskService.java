@@ -1,14 +1,10 @@
 package de.algosocial.backend;
 
-import de.algosocial.backend.algorithms.AlgorithmController;
 import de.algosocial.backend.algorithms.AlgorithmFactory;
 import de.algosocial.backend.algorithms.AlgorithmSuperClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 @Service
 public class TaskService {
@@ -26,7 +22,7 @@ public class TaskService {
         if (algorithm == null) {
             task.setError("Error: Requested algorithm not found.");
             taskRepository.save(task);
-            errorLogRepository.save(new ErrorLog(task.getUserId(), task.getId(), task.getInput(), task.getError()));
+            errorLogRepository.save(new ErrorLog(task));
             return;
         }
 
@@ -37,7 +33,7 @@ public class TaskService {
         } catch (Exception e) {
             task.setError("Error: Invalid input.");
             taskRepository.save(task);
-            errorLogRepository.save(new ErrorLog(task.getUserId(), task.getId(), task.getInput(), task.getError()));
+            errorLogRepository.save(new ErrorLog(task));
             return;
         }
 
