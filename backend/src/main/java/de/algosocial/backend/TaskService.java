@@ -20,9 +20,7 @@ public class TaskService {
         // ToDo: Add catching wrong task status
 
         if (algorithm == null) {
-            task.setError("Error: Requested algorithm not found.");
-            taskRepository.save(task);
-            errorLogRepository.save(new ErrorLog(task));
+            handleError(task, "Error: Requested algorithm not found.");
             return;
         }
 
@@ -31,14 +29,18 @@ public class TaskService {
         try {
             result = algorithm.getResult(task.getInput());
         } catch (Exception e) {
-            task.setError("Error: Invalid input.");
-            taskRepository.save(task);
-            errorLogRepository.save(new ErrorLog(task));
+            handleError(task, "Error: Invalid input.");
             return;
         }
 
         task.setStatus(Task.Status.DONE);
         task.setResult(result);
         taskRepository.save(task);
+    }
+
+    private void handleError(Task task, String errorMessage) {
+        task.setError(errorMessage);
+        taskRepository.save(task);
+        errorLogRepository.save(new ErrorLog(task));
     }
 }
