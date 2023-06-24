@@ -3,6 +3,17 @@ package de.algosocial.backend.algorithms;
 import java.util.List;
 
 public class IsPrime extends AlgorithmSuperClass {
+    public static AlgorithmProperties properties = new AlgorithmProperties(
+            "isprime",
+            "Check Prime",
+            1,
+            List.of("127"));
+
+    @Override
+    public AlgorithmProperties getProperties() {
+        return properties;
+    }
+
     @Override
     public String getResult(List<String> input) {
         return isPrime(Integer.parseInt(input.get(0))) ? "prime" : "not prime";
@@ -23,4 +34,6 @@ public class IsPrime extends AlgorithmSuperClass {
 
         return true;
     }
+
+
 }

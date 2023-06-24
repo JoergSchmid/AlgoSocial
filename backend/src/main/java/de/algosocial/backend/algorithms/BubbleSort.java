@@ -4,6 +4,17 @@ import java.util.Collections;
 import java.util.List;
 
 public class BubbleSort extends AlgorithmSuperClass {
+    public static AlgorithmProperties properties = new AlgorithmProperties(
+            "bubblesort",
+            "Bubble Sort",
+            1,
+            List.of("4,2,5,1,3"));
+
+    @Override
+    public AlgorithmProperties getProperties() {
+        return properties;
+    }
+
     @Override
     public String getResult(List<String> input) {
         return bubbleSort(stringToIntegerList(input.get(0))).toString();

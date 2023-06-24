@@ -1,9 +1,21 @@
 package de.algosocial.backend.algorithms;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Dijkstra extends AlgorithmSuperClass {
+    public static AlgorithmProperties properties = new AlgorithmProperties(
+            "dijkstra",
+            "Dijkstra",
+            2,
+            Arrays.asList("a,b,c", "(a,b,3),(a,c,6),(b,c,2)"));
+
+    @Override
+    public AlgorithmProperties getProperties() {
+        return properties;
+    }
+
     @Override
     public String getResult(List<String> input) {
         return dijkstra(input.get(0), input.get(1));

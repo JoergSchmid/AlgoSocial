@@ -1,11 +1,21 @@
 package de.algosocial.backend.algorithms;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BinarySearchTree extends AlgorithmSuperClass {
 
     private BST_Node root;
+
+    public static AlgorithmProperties properties = new AlgorithmProperties(
+            "binarySearchTree",
+            "Binary Search Tree",
+            1,
+            List.of("4,2,5,1,3"));
+
+    @Override
+    public AlgorithmProperties getProperties() {
+        return properties;
+    }
 
     @Override
     public String getResult(List<String> input) {

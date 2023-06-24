@@ -3,7 +3,6 @@ import { gql } from "@apollo/client";
 export const GET_ALL_ALGORITHMS = gql`
     query allAlgorithms {
         allAlgorithms {
-            id
             name
             displayName
             numberOfInputs
