@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Dijkstra extends AlgorithmSuperClass {
+public class Dijkstra extends Algorithm {
     public static AlgorithmProperties properties = new AlgorithmProperties(
             "dijkstra",
             "Dijkstra",

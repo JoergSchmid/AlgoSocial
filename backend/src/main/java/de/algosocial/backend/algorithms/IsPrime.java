@@ -2,7 +2,7 @@ package de.algosocial.backend.algorithms;
 
 import java.util.List;
 
-public class IsPrime extends AlgorithmSuperClass {
+public class IsPrime extends Algorithm {
     public static AlgorithmProperties properties = new AlgorithmProperties(
             "isprime",
             "Check Prime",

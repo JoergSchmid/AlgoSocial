@@ -3,7 +3,7 @@ package de.algosocial.backend.algorithms;
 import java.util.Collections;
 import java.util.List;
 
-public class BubbleSort extends AlgorithmSuperClass {
+public class BubbleSort extends Algorithm {
     public static AlgorithmProperties properties = new AlgorithmProperties(
             "bubblesort",
             "Bubble Sort",

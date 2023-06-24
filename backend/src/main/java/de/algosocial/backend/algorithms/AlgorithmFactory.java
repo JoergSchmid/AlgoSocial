@@ -7,7 +7,7 @@ import java.util.Map;
 public class AlgorithmFactory {
 
     // Add new algorithms here
-    public static Map<String, Class<? extends AlgorithmSuperClass>> algorithmMapping = Map.of(
+    public static Map<String, Class<? extends Algorithm>> algorithmMapping = Map.of(
             IsPrime.properties.name(), IsPrime.class,
             BubbleSort.properties.name(), BubbleSort.class,
             QuickSort.properties.name(), QuickSort.class,
@@ -15,7 +15,7 @@ public class AlgorithmFactory {
             Dijkstra.properties.name(), Dijkstra.class
     );
 
-    public static AlgorithmSuperClass getClass(String name) {
+    public static Algorithm getClass(String name) {
         try {
             return algorithmMapping.get(name.toLowerCase()).getDeclaredConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {

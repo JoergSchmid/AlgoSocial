@@ -1,7 +1,7 @@
 package de.algosocial.backend;
 
 import de.algosocial.backend.algorithms.AlgorithmFactory;
-import de.algosocial.backend.algorithms.AlgorithmSuperClass;
+import de.algosocial.backend.algorithms.Algorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class TaskService {
             return;
         }
 
-        AlgorithmSuperClass algorithm = AlgorithmFactory.getClass(task.getAlgorithm());
+        Algorithm algorithm = AlgorithmFactory.getClass(task.getAlgorithm());
 
         if (algorithm == null) {
             handleError(task, "Error: Requested algorithm not found.");

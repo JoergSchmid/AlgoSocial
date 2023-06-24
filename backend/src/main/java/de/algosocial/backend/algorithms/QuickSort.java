@@ -3,7 +3,7 @@ package de.algosocial.backend.algorithms;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuickSort extends AlgorithmSuperClass {
+public class QuickSort extends Algorithm {
     public static AlgorithmProperties properties = new AlgorithmProperties(
             "quicksort",
             "Quick Sort",

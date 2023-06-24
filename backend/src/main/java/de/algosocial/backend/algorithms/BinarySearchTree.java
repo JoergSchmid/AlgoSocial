@@ -2,7 +2,7 @@ package de.algosocial.backend.algorithms;
 
 import java.util.List;
 
-public class BinarySearchTree extends AlgorithmSuperClass {
+public class BinarySearchTree extends Algorithm {
 
     private BST_Node root;
 
