@@ -28,7 +28,7 @@ public class TaskService {
         }
 
         try {
-            task.setResult(algorithm.getResult(task.getInput()));
+            task.setResult(algorithm.calculate(task.getInput()));
         } catch (Exception e) {
             handleError(task, "Error: Invalid input.");
             return;

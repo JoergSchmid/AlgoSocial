@@ -18,7 +18,7 @@ public class BinarySearchTree extends Algorithm {
     }
 
     @Override
-    public String getResult(List<String> input) {
+    public String calculate(List<String> input) {
         List<Integer> numbers = stringToIntegerList(input.get(0));
 
         if (input.get(1) != null)

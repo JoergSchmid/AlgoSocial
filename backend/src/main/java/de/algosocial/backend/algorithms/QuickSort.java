@@ -16,7 +16,7 @@ public class QuickSort extends Algorithm {
     }
 
     @Override
-    public String getResult(List<String> input) {
+    public String calculate(List<String> input) {
         return quickSort(stringToIntegerList(input.get(0))).toString();
     }
 

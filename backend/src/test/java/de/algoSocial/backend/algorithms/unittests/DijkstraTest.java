@@ -39,7 +39,7 @@ public class DijkstraTest {
         nodes.add(d);
 
         // Calculate the distances and paths
-        Dijkstra.calculate(nodes);
+        Dijkstra.calculateMap(nodes);
 
         // Test distances
         Assertions.assertEquals(5, b.getDistanceToInitialNode());
@@ -100,7 +100,7 @@ public class DijkstraTest {
         nodes.add(i);
         nodes.add(j);
 
-        Dijkstra.calculate(nodes);
+        Dijkstra.calculateMap(nodes);
 
         // Test distances
         // Shortest path a to j is a -3- c -2- f -7- d -1- g -4- j = 17
@@ -122,7 +122,7 @@ public class DijkstraTest {
         DijkstraNode node = new DijkstraNode("a");
         nodes.add(node);
 
-        Dijkstra.calculate(nodes);
+        Dijkstra.calculateMap(nodes);
 
         Assertions.assertEquals(0, node.getDistanceToInitialNode());
         Assertions.assertEquals("a", node.getPath());
@@ -142,7 +142,7 @@ public class DijkstraTest {
         nodes.add(b);
         nodes.add(c);
 
-        Dijkstra.calculate(nodes);
+        Dijkstra.calculateMap(nodes);
 
         // Test distances
         Assertions.assertEquals(1, b.getDistanceToInitialNode());

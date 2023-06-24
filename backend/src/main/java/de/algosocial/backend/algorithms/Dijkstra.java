@@ -17,7 +17,7 @@ public class Dijkstra extends Algorithm {
     }
 
     @Override
-    public String getResult(List<String> input) {
+    public String calculate(List<String> input) {
         return dijkstra(input.get(0), input.get(1));
     }
 
@@ -43,7 +43,7 @@ public class Dijkstra extends Algorithm {
         }
 
         // Start calculating
-        calculate(nodeList);
+        calculateMap(nodeList);
 
         // Get last node, which we want to get the path to
         DijkstraNode node = dijkstra_getNodeWithName(nodeList, names, names[names.length-1]);
@@ -52,7 +52,7 @@ public class Dijkstra extends Algorithm {
         return node.getPath() + "," + node.getDistanceToInitialNode().toString();
     }
 
-    public static void calculate(List<DijkstraNode> nodes) {
+    public static void calculateMap(List<DijkstraNode> nodes) {
         // Set all nodes to unvisited and infinite (=null) distance.
         for(DijkstraNode node : nodes)
             node.resetNode();

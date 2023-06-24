@@ -7,7 +7,7 @@ public abstract class Algorithm {
 
     public abstract AlgorithmProperties getProperties();
 
-    public abstract String getResult(List<String> input);
+    public abstract String calculate(List<String> input);
 
     protected List<Integer> stringToIntegerList(String string) {
         List<Integer> list = new ArrayList<>();

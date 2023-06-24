@@ -16,7 +16,7 @@ public class BubbleSort extends Algorithm {
     }
 
     @Override
-    public String getResult(List<String> input) {
+    public String calculate(List<String> input) {
         return bubbleSort(stringToIntegerList(input.get(0))).toString();
     }
 

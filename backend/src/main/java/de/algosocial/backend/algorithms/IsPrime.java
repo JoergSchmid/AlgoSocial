@@ -15,7 +15,7 @@ public class IsPrime extends Algorithm {
     }
 
     @Override
-    public String getResult(List<String> input) {
+    public String calculate(List<String> input) {
         return isPrime(Integer.parseInt(input.get(0))) ? "prime" : "not prime";
     }
 
