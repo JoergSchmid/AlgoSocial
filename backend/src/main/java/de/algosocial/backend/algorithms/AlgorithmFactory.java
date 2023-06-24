@@ -17,7 +17,10 @@ public class AlgorithmFactory {
 
     public static Algorithm getClass(String name) {
         try {
-            return algorithmMapping.get(name.toLowerCase()).getDeclaredConstructor().newInstance();
+            Class<? extends Algorithm> alg = algorithmMapping.get(name.toLowerCase());
+            if (alg == null)
+                return null;
+            return alg.getDeclaredConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
