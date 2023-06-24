@@ -1,5 +1,5 @@
 package de.algoSocial.backend.algorithms.unittests;
-import de.algosocial.backend.algorithms.AlgorithmController;
+import de.algosocial.backend.AlgorithmController;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;

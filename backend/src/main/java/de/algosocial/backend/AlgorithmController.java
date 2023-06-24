@@ -1,5 +1,6 @@
-package de.algosocial.backend.algorithms;
+package de.algosocial.backend;
 
+import de.algosocial.backend.algorithms.*;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
