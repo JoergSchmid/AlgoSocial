@@ -100,6 +100,7 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
                         :
                         <InputField
                             setInput={setMessage}
+                            exampleInput1="Enter message"
                         />
                     }
                     <Checkbox
