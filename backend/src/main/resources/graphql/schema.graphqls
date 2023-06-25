@@ -9,6 +9,8 @@ type Query {
 
     allAlgorithms: [Algorithm!]!
 
+    allErrors: [ErrorLog!]!
+    allErrorsByUser(userId: ID!): [ErrorLog!]!
 
     taskById(id: ID!): Task
     allTasks: [Task!]
@@ -22,6 +24,9 @@ type Mutation {
     addTask(algorithm: String!, input: [String!]!): Task
     removeTask(id: ID!): ID!
     removeAllTasks: Boolean!
+
+    removeError(id: ID!): ID!
+    removeAllErrors: Boolean!
 
     isPrime(number: Int!): Boolean!
     bubbleSort(numbers: [Int!]!): [Int!]!
@@ -59,6 +64,14 @@ type Algorithm {
     displayName: String!
     numberOfInputs: Int!
     exampleInputs: [String!]!
+}
+
+type ErrorLog {
+    id: ID!
+    userId: Int
+    taskId: Int
+    input: [String!]
+    message: String
 }
 
 enum Status {
