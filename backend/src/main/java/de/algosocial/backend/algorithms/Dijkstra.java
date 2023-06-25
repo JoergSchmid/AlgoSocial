@@ -37,8 +37,8 @@ public class Dijkstra extends Algorithm {
             String[] elements = group.split(",");
 
             // Create the edges (=connecting the nodes)
-            dijkstra_getNodeWithName(nodeList, names, elements[0])
-                    .connectWith(dijkstra_getNodeWithName(nodeList, names, elements[1]),
+            getNodeWithName(nodeList, names, elements[0])
+                    .connectWith(getNodeWithName(nodeList, names, elements[1]),
                             Integer.parseInt(elements[2]));
         }
 
@@ -46,7 +46,7 @@ public class Dijkstra extends Algorithm {
         calculateMap(nodeList);
 
         // Get last node, which we want to get the path to
-        DijkstraNode node = dijkstra_getNodeWithName(nodeList, names, names[names.length-1]);
+        DijkstraNode node = getNodeWithName(nodeList, names, names[names.length-1]);
 
         // Return the path and the distance from first to last node
         return node.getPath() + "," + node.getDistanceToInitialNode().toString();
@@ -87,7 +87,7 @@ public class Dijkstra extends Algorithm {
         return index;
     }
 
-    private static DijkstraNode dijkstra_getNodeWithName(
+    private static DijkstraNode getNodeWithName(
             List<DijkstraNode> nodes, String[] names, String name) {
         int index = -1;
         for (int i = 0; i < names.length; i++) {
