@@ -1,3 +1,15 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.8.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.0.5'
@@ -8,9 +20,20 @@ group = 'de.algosocial'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
 repositories {
 	mavenCentral()
 }
+
+jar {
+	manifest {
+		attributes 'Main-Class': 'de.algosocial.backend.BackendApplication'
+	}
+}
+
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
