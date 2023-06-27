@@ -27,14 +27,14 @@ class TaskTest {
     @Autowired
     private TaskService taskService;
 
-    private final List<Integer> testInputIsPrime = List.of(7);
-    private final List<Integer> testInputList = Arrays.asList(1,3,-2,-1,2,0);
+    private final List<String> testInputIsPrime = List.of("7");
+    private final List<String> testInputList = List.of("1,3,-2,-1,2,0");
 
     private final Task testTask_BubbleSort = new Task("bubblesort", testInputList);
     private final Task testTask_IsPrime = new Task("isprime", testInputIsPrime);
 
     @Test
-    @Order(1)
+    @Order(11)
     void postControllerGetsLoaded() {
         Assertions.assertNotNull(postController);
         Assertions.assertNotNull(postRepository);
@@ -42,7 +42,7 @@ class TaskTest {
     }
 
     @Test
-    @Order(2)
+    @Order(12)
     void allPosts_zeroEntries() {
         this.graphQlTester.documentName("allPosts")
                 .execute()
@@ -52,7 +52,7 @@ class TaskTest {
     }
 
     @Test
-    @Order(3)
+    @Order(13)
     void addAlgorithmPost() {
         graphQlTester.documentName("addAlgorithmPost")
                 .variable("userId", 0)
@@ -69,7 +69,7 @@ class TaskTest {
     }
 
     @Test
-    @Order(4)
+    @Order(14)
     void taskById() {
         Task resultTask_bubbleSort =
                 graphQlTester.documentName("taskById")
@@ -94,7 +94,7 @@ class TaskTest {
     }
 
     @Test
-    @Order(5)
+    @Order(15)
     void allTasks_twoEntries() {
         graphQlTester.documentName("allTasks")
                 .execute()
@@ -104,7 +104,7 @@ class TaskTest {
     }
 
     @Test
-    @Order(6)
+    @Order(16)
     void removeTask() {
         graphQlTester.documentName("removeTask")
                 .variable("id", 1)
@@ -112,7 +112,7 @@ class TaskTest {
     }
 
     @Test
-    @Order(7)
+    @Order(17)
     void allTasks_oneEntryLeft() {
         graphQlTester.documentName("allTasks")
                 .execute()
@@ -122,14 +122,14 @@ class TaskTest {
     }
 
     @Test
-    @Order(8)
+    @Order(18)
     void removeAllTasks() {
         graphQlTester.documentName("removeAllTasks")
                 .execute();
     }
 
     @Test
-    @Order(9)
+    @Order(19)
     void allPosts_checkIfEntriesGotRemoved() {
         graphQlTester.documentName("allTasks")
                 .execute()

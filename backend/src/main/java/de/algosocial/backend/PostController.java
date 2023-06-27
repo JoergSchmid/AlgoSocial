@@ -47,12 +47,16 @@ public class PostController {
     }
 
     @MutationMapping
-    public Post addAlgorithmPost(@Argument int userId, @Argument String title,
-                                  @Argument String algorithm, @Argument List<Integer> input) throws InterruptedException {
+    public Post addAlgorithmPost(@Argument int userId, @Argument String title, @Argument String algorithm,
+                                 @Argument List<String> input) throws InterruptedException {
         Task task = new Task(algorithm, input);
         taskRepository.save(task);
 
-        Post post = new Post(userId, title, input.toString(), task.getId());
+        StringBuilder postMessage = new StringBuilder(input.get(0));
+        for (int i = 1; i < input.size(); i++)
+            postMessage.append(" & ").append(input.get(i));
+
+        Post post = new Post(userId, title, postMessage.toString(), task.getId());
         postRepository.save(post);
 
         taskService.startTask(task);

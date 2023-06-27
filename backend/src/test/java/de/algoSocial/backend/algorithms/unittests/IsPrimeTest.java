@@ -1,6 +1,6 @@
 package de.algoSocial.backend.algorithms.unittests;
 
-import de.algosocial.backend.algorithms.AlgorithmCalculations;
+import de.algosocial.backend.AlgorithmController;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -12,9 +12,9 @@ public class IsPrimeTest {
         int[] inputNotPrime = {-5, 0, 1, 4, 6, 9, 10, 15};
 
         for (int i : inputPrime)
-            Assertions.assertTrue(AlgorithmCalculations.isPrime(i));
+            Assertions.assertTrue(AlgorithmController.isPrime(i));
 
         for (int i : inputNotPrime)
-            Assertions.assertFalse(AlgorithmCalculations.isPrime(i));
+            Assertions.assertFalse(AlgorithmController.isPrime(i));
     }
 }

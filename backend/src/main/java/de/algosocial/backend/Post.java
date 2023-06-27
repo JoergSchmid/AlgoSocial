@@ -2,9 +2,6 @@ package de.algosocial.backend;
 
 import jakarta.persistence.*;
 
-import java.util.Arrays;
-import java.util.List;
-
 @Entity
 public class Post {
     @Id
@@ -31,7 +28,7 @@ public class Post {
     protected Post() {}
 
     public int getId() {
-        return userId;
+        return id;
     }
 
     public int getUserId() {

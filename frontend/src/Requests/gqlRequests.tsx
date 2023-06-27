@@ -3,10 +3,10 @@ import { gql } from "@apollo/client";
 export const GET_ALL_ALGORITHMS = gql`
     query allAlgorithms {
         allAlgorithms {
-            id
             name
             displayName
-            inputMultiple
+            numberOfInputs
+            exampleInputs
         }
     }
 `;
@@ -58,7 +58,7 @@ export const ADD_POST = gql`
 `;
 
 export const ADD_ALGORITHM_POST = gql`
-    mutation addAlgorithmPost($userId: Int!, $title: String!, $algorithm: String!, $input: [Int!]!) {
+    mutation addAlgorithmPost($userId: Int!, $title: String!, $algorithm: String!, $input: [String!]!) {
         addAlgorithmPost(userId: $userId, title: $title, algorithm: $algorithm, input: $input) {
             id
             title
@@ -73,9 +73,8 @@ export const REMOVE_POST = gql`
     }
 `;
 
-
 export const ADD_TASK = gql`
-    mutation addTask($algorithm: String!, $input: [Int!]!) {
+    mutation addTask($algorithm: String!, $input: [String!]!) {
         addTask(algorithm: $algorithm, input: $input) {
             id
             status

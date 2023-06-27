@@ -2,22 +2,47 @@ import React from 'react';
 import { useState } from "react";
 import { AlgorithmType, PostType } from "../Profile";
 import { Card, Button, TextField, CardContent, MenuItem, Select, SelectChangeEvent, Checkbox } from "@mui/material";
-import { REGEX_MULTIPLE, REGEX_SINGLE } from '../../Algorithms/Algorithms';
+import { InputField } from '../../Algorithms/IOComponents';
 
 export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm, submitPost, submitTask }: {
     availableAlgorithms: AlgorithmType[],
     algorithm: AlgorithmType,
     setAlgorithm: (algorithm: AlgorithmType) => void,
     submitPost: (post: PostType) => void,
-    submitTask: (post: PostType) => void
+    submitTask: (post: PostType, secondInput: string) => void
 }) {
-    const [title, setTitle] = useState<string>(" "); // Contains a space so it doesn´t start with an error message. Space is not really in text field.
-    const [message, setMessage] = useState<string>(" ");
+    const [title, setTitle] = useState<string>("");
+    const [message, setMessage] = useState<string>("");
+    const [secondInput, setSecondInput] = useState<string>("");
+    const [showSecondInput, setShowSecondInput] = useState<boolean>(false);
     const [postAlgorithm, setPostAlgorithm] = useState<boolean>(false);
-    const [inputError, setInputError] = useState<boolean>(false);
+    const [inputErrorTitle, setInputErrorTitle] = useState<boolean>(false);
+    const [inputErrorMessage, setInputErrorMessage] = useState<boolean>(false);
+    const [inputErrorSecondInput, setInputErrorSecondInput] = useState<boolean>(false);
 
-    function isEmpty(text: string): boolean {
-        return text === "" || text === " ";
+    function checkInputFieldsEmpty(): boolean {
+        if (title === "") {
+            setInputErrorTitle(true);
+        } else if (message === "") {
+            setInputErrorTitle(false);
+            setInputErrorMessage(true);
+        } else if (showSecondInput && secondInput === "") {
+            setInputErrorTitle(false);
+            setInputErrorMessage(false);
+            setInputErrorSecondInput(true);
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    const updateShowSecondInput = (alg = algorithm) => {
+        if (alg.numberOfInputs === 2) {
+            setShowSecondInput(true);
+        } else {
+            setShowSecondInput(false);
+            setSecondInput("");
+        }
     }
 
     const handleSelectionChange = (event: SelectChangeEvent) => {
@@ -25,45 +50,22 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
         if (selectedAlgorithm) {
             setAlgorithm(selectedAlgorithm);
         }
+        updateShowSecondInput(selectedAlgorithm);
     }
 
     const handleSubmitButtonClick = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        if (isEmpty(title) || isEmpty(message)) {
+        if (checkInputFieldsEmpty())
             return;
-        }
 
         if (!postAlgorithm) {
             submitPost({ title, message, id: -1 });
             return;
         }
 
-        const regex = algorithm.inputMultiple ? REGEX_MULTIPLE : REGEX_SINGLE;
-        if (regex.test(message)) {
-            setInputError(true);
-            return;
-        }
-
-        const LARGEST_INT = 2147483647;
-        if (algorithm.inputMultiple) {
-            for (const num of message) {
-                if (parseInt(num.trim()) > LARGEST_INT) {
-                    setInputError(true);
-                    return;
-                }
-
-            }
-        } else if (Number(message) > LARGEST_INT) {
-            setInputError(true);
-            return;
-        }
-
-
-        setInputError(false);
-        submitTask({ title, message, id: -1 })
+        submitTask({ title, message, id: -1 }, secondInput)
     }
-
 
 
     return (
@@ -81,26 +83,31 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
                         id="title"
                         label="Title"
                         onChange={event => setTitle(event.target.value)}
-                        error={title === ""}
-                        helperText={title === "" ? "Please enter a title." : ""}
+                        error={inputErrorTitle}
+                        helperText={inputErrorTitle ? "Please enter a title." : ""}
                         sx={{ width: "40ch" }}
                     ></TextField><br />
-                    <TextField
-                        variant="outlined"
-                        id="message"
-                        label="Message"
-                        onChange={event => setMessage(event.target.value)}
-                        error={message === "" || inputError}
-                        helperText={message === "" || inputError ? "Invalid input" : ""}
-                        margin="dense"
-                        multiline
-                        sx={{ width: "40ch" }}
-                    ></TextField><br />
+                    {postAlgorithm ?
+                        <InputField
+                            setInput={setMessage}
+                            setSecondInput={setSecondInput}
+                            showSecondInput={showSecondInput}
+                            exampleInput1={algorithm.exampleInputs[0]}
+                            exampleInput2={algorithm.exampleInputs[1]}
+                            errorText1={inputErrorMessage ? "Please enter some values." : ""}
+                            errorText2={inputErrorSecondInput ? "Please enter some values." : ""}
+                        />
+                        :
+                        <InputField
+                            setInput={setMessage}
+                            exampleInput1="Enter message"
+                        />
+                    }
                     <Checkbox
                         id="checkboxPostAlgorithm"
                         data-testid="checkboxPostAlgorithm"
                         style={{ float: "left" }}
-                        onChange={() => setPostAlgorithm(!postAlgorithm)}
+                        onChange={() => { setPostAlgorithm(!postAlgorithm); updateShowSecondInput(); }}
                     />
                     <Select
                         id="postInputSelection"
@@ -124,7 +131,7 @@ export default function PostInput({ availableAlgorithms, algorithm, setAlgorithm
                         variant="contained"
                         type="submit"
                         data-testid="btn_submit"
-                        style={{ float: "right", borderRadius: "12px", marginBottom: "5px" }}
+                        style={{ float: "right", borderRadius: "12px", marginTop: "18px", marginBottom: "5px" }}
                     >Submit Post</Button>
                 </form>
             </CardContent>

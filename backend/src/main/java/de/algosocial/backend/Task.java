@@ -22,8 +22,8 @@ public class Task {
     @Nonnull
     private final String algorithm;
 
-    @Nonnull
-    private final List<Integer> input;
+
+    private final List<String> input;
 
     @Nonnull
     private Status status;
@@ -32,7 +32,7 @@ public class Task {
 
     private String error;
 
-    public Task(@Nonnull String algorithm, @Nonnull List<Integer> input) {
+    public Task(@Nonnull String algorithm, @Nonnull List<String> input) {
         this.algorithm = algorithm;
         this.input = input;
         this.status = Status.CALCULATING;
@@ -41,7 +41,7 @@ public class Task {
     protected Task() {
         this.algorithm = "__invalid__: default constructor used.";
         this.status = Status.ERROR;
-        input = new ArrayList<Integer>();
+        input = new ArrayList<String>();
     }
 
     public int getId() {
@@ -52,7 +52,7 @@ public class Task {
         return algorithm;
     }
 
-    public List<Integer> getInput() {
+    public List<String> getInput() {
         return input;
     }
 
@@ -68,11 +68,16 @@ public class Task {
         return userId;
     }
 
+    public String getError() {
+        return error;
+    }
+
     public void setStatus(@Nonnull Status status) {
         this.status = status;
     }
 
     public void setResult(String result) {
+        this.status = Status.DONE;
         this.result = result;
     }
 

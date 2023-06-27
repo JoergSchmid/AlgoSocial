@@ -9,6 +9,8 @@ type Query {
 
     allAlgorithms: [Algorithm!]!
 
+    allErrors: [ErrorLog!]!
+    allErrorsByUser(userId: ID!): [ErrorLog!]!
 
     taskById(id: ID!): Task
     allTasks: [Task!]
@@ -16,16 +18,22 @@ type Query {
 
 type Mutation {
     addPost(userId: Int!, title: String!, message: String!): Post
-    addAlgorithmPost(userId: Int!, title: String!, algorithm: String!, input: [Int!]!): Post
+    addAlgorithmPost(userId: Int!, title: String!, algorithm: String!, input: [String!]!): Post
     removePost(id: ID!): ID
 
-    addTask(algorithm: String!, input: [Int!]!): Task
+    addTask(algorithm: String!, input: [String!]!): Task
     removeTask(id: ID!): ID!
     removeAllTasks: Boolean!
+
+    removeError(id: ID!): ID!
+    removeAllErrors: Boolean!
 
     isPrime(number: Int!): Boolean!
     bubbleSort(numbers: [Int!]!): [Int!]!
     quickSort(numbers: [Int!]!): [Int!]!
+    binarySearchTree(numbers: [Int!]!): String!
+    binarySearchTreeFindNumber(numbers: [Int!]!, findNumber: Int!): Boolean!
+    dijkstra(nodes: String!, edges: String!): String!
 }
 
 type User {
@@ -46,16 +54,24 @@ type Post {
 type Task {
     id: ID!
     algorithm: String!
-    input: [Int!]
+    input: [String!]
     status: Status!
     result: String
 }
 
 type Algorithm {
-    id: ID!
     name: String!
     displayName: String!
-    inputMultiple: Boolean!
+    numberOfInputs: Int!
+    exampleInputs: [String!]!
+}
+
+type ErrorLog {
+    id: ID!
+    userId: Int
+    taskId: Int
+    input: [String!]
+    message: String
 }
 
 enum Status {

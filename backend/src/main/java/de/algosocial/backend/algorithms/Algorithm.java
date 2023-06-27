@@ -1,46 +1,19 @@
 package de.algosocial.backend.algorithms;
 
-import jakarta.annotation.Nonnull;
-import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity
-public class Algorithm {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    @Nonnull
-    private final String name;
-    @Nonnull
-    private final String displayName;
-    boolean inputMultiple;
+public abstract class Algorithm {
 
-    public Algorithm(@Nonnull String name, @Nonnull String displayName, boolean inputMultiple) {
-        this.name = name;
-        this.displayName = displayName;
-        this.inputMultiple = inputMultiple;
-    }
+    public abstract AlgorithmProperties getProperties();
 
-    protected Algorithm() {
-        this.name = "__invalid__: default constructor used.";
-        this.displayName = "__invalid__: default constructor used.";
-        this.inputMultiple = false;
-    }
+    public abstract String calculate(List<String> input);
 
-    public int getId() {
-        return id;
-    }
-
-    @Nonnull
-    public String getName() {
-        return name;
-    }
-
-    @Nonnull
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public boolean isInputMultiple() {
-        return inputMultiple;
+    protected List<Integer> stringToIntegerList(String string) {
+        List<Integer> list = new ArrayList<>();
+        String[] strings = string.split(",");
+        for (String str : strings)
+            list.add(Integer.parseInt(str));
+        return list;
     }
 }

@@ -20,7 +20,8 @@ export enum Status {
 export type AlgorithmType = {
     name: string,
     displayName: string,
-    inputMultiple: boolean
+    numberOfInputs: number,
+    exampleInputs: string[]
 }
 
 export type PostType = {
@@ -33,7 +34,8 @@ export type PostType = {
 export type TaskType = {
     id: number,
     algorithm: string,
-    input: number[],
+    input: number[] | string,
+    input2?: number | string,
     status: Status,
     result: string
 }
@@ -41,7 +43,8 @@ export type TaskType = {
 export const defaultAlgorithm: AlgorithmType[] = [{
     name: "bubblesort",
     displayName: "Bubble Sort",
-    inputMultiple: true
+    numberOfInputs: 1,
+    exampleInputs: ["4,2,5,1,3"]
 }]
 
 export default function Profile({ user, avatar, changeUser }: {
@@ -101,30 +104,30 @@ export default function Profile({ user, avatar, changeUser }: {
             }
         });
     }
-    function submitTask({ title, message }: PostType): void {
-
-        const requestInput = algorithm.inputMultiple ?
-            message.split(",").map((num) => {
-                return Number(num.trim());
-            }) : [Number(message)];
+    function submitTask({ title, message }: PostType, secondInput: string): void {
 
         setPosts(posts => [...posts, {
             title, message, id: -posts.length, task: {
                 id: -1,
                 algorithm: algorithm.name,
-                input: requestInput,
+                input: message,
                 result: "",
                 status: Status.CALCULATING
             }
         }]);
         setShowPostInput(false);
 
+        const input = [message];
+        if (secondInput !== "") {
+            input.push(secondInput);
+        }
+
         requestNewTask({
             variables: {
                 userId: user.userId,
                 title: title,
                 algorithm: algorithm.name,
-                input: requestInput
+                input: input
             }
         });
     }

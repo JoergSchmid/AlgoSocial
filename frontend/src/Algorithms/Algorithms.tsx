@@ -5,14 +5,12 @@ import { ADD_TASK, GET_ALL_ALGORITHMS, GET_TASK_BY_ID } from "../Requests/gqlReq
 import { useMutation, useQuery } from "@apollo/client";
 import { AlgorithmType, Status, defaultAlgorithm } from "../Profile/Profile";
 
-export const REGEX_SINGLE = /[^0-9]/;
-export const REGEX_MULTIPLE = /[^0-9,]|,,/;
-
 export default function Algorithms() {
     const [availableAlgorithms, setAvailableAlgorithms] = useState<AlgorithmType[]>(defaultAlgorithm)
     const [algorithm, setAlgorithm] = useState<AlgorithmType>(defaultAlgorithm[0]);
     const [input, setInput] = useState<string>("");
-    const [inputError, setInputError] = useState<boolean>(false);
+    const [secondInput, setSecondInput] = useState<string>("");
+    const [showSecondInput, setShowSecondInput] = useState<boolean>(false);
     const [taskID, setTaskID] = useState<number>(-1);
     const [status, setStatus] = useState<Status>(Status.DONE);
     const [result, setResult] = useState<string>("");
@@ -47,21 +45,21 @@ export default function Algorithms() {
         if (selectedAlgorithm) {
             setAlgorithm(selectedAlgorithm);
         }
+        if (selectedAlgorithm?.numberOfInputs === 2)
+            setShowSecondInput(true);
+        else
+            setShowSecondInput(false);
     }
 
     const handleSubmitButton = () => {
-        let regex = algorithm.inputMultiple ? REGEX_MULTIPLE : REGEX_SINGLE;
-        if (regex.test(input)) {
-            setInputError(true);
-            return;
+        const inputList = [input];
+        if (showSecondInput) {
+            inputList.push(secondInput);
         }
-        setInputError(false);
-        let requestInput = algorithm.inputMultiple ?
-            input.split(",").map((num) => Number(num.trim())) : input;
         requestNewTask({
             variables: {
                 algorithm: algorithm.name,
-                input: requestInput
+                input: inputList
             },
             onCompleted: (data) => {
                 setTaskID(data.addTask.id);
@@ -94,7 +92,13 @@ export default function Algorithms() {
                 ))}
             </Select>
             <br />
-            <InputField multiple={algorithm.inputMultiple} error={inputError} setInput={setInput} />
+            <InputField
+                setInput={setInput}
+                setSecondInput={setSecondInput}
+                showSecondInput={showSecondInput}
+                exampleInput1={algorithm.exampleInputs[0]}
+                exampleInput2={algorithm.exampleInputs[1]}
+            />
             <br />
             <SubmitButton handleSubmitButton={handleSubmitButton} />
             <br /> <br />

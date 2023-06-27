@@ -1,0 +1,3 @@
+mutation binarySearchTree($numbers: [Int!]!) {
+    binarySearchTree(numbers: $numbers)
+}
