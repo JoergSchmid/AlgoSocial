@@ -1,9 +1,9 @@
 services:
   backend:
-    image: algoback
+    image: algoback:1.0.3
 
   frontend:
-    image: algofront
+    image: algofront:1.0.0
     ports:
       - 3000:3000
     environment:
