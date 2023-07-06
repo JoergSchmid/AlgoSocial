@@ -21,9 +21,6 @@ public class BinarySearchTree extends Algorithm {
     public String calculate(List<String> input) {
         List<Integer> numbers = stringToIntegerList(input.get(0));
 
-        if (input.get(1) != null)
-            return binarySearchTreeFindNumber(numbers, Integer.parseInt(input.get(1))) ? "true" : "false";
-
         return binarySearchTree(numbers);
     }
 
