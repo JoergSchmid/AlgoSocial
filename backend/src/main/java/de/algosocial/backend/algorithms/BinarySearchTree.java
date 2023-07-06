@@ -7,7 +7,7 @@ public class BinarySearchTree extends Algorithm {
     private BST_Node root;
 
     public static AlgorithmProperties properties = new AlgorithmProperties(
-            "binarySearchTree",
+            "binarysearchtree",
             "Binary Search Tree",
             1,
             List.of("4,2,5,1,3"));
