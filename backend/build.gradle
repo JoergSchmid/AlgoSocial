@@ -17,7 +17,7 @@ plugins {
 }
 
 group = 'de.algosocial'
-version = '1.0.3'
+version = '1.0.3-dev'
 sourceCompatibility = '17'
 
 

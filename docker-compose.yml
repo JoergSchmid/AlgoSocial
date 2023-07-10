@@ -3,8 +3,6 @@ services:
     image: algoback:1.0.3
 
   frontend:
-    image: algofront:1.0.0
+    image: algofront:1.0.1
     ports:
       - 3000:3000
-    environment:
-      BACKEND_SERVER: "backend:8080"
