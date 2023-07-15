@@ -18,7 +18,7 @@ const exampleUsers: User[] = [
   {
     userId: 0,
     name: "Joerg",
-    description: "Cats cats cats!",
+    description: "<- Click to change profile",
     pictureIndex: 0
   }, {
     userId: 1,
