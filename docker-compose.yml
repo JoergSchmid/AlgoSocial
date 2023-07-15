@@ -1,8 +1,13 @@
 services:
   backend:
     image: algoback:1.0.3
+    volumes:
+      - algosocial:/usr/app/
 
   frontend:
     image: algofront:1.0.1
     ports:
       - 3000:3000
+
+volumes:
+  algosocial:
