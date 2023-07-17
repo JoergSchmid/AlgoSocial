@@ -7,7 +7,7 @@ public class BinarySearchTree extends Algorithm {
     private BST_Node root;
 
     public static AlgorithmProperties properties = new AlgorithmProperties(
-            "binarySearchTree",
+            "binarysearchtree",
             "Binary Search Tree",
             1,
             List.of("4,2,5,1,3"));
@@ -20,9 +20,6 @@ public class BinarySearchTree extends Algorithm {
     @Override
     public String calculate(List<String> input) {
         List<Integer> numbers = stringToIntegerList(input.get(0));
-
-        if (input.get(1) != null)
-            return binarySearchTreeFindNumber(numbers, Integer.parseInt(input.get(1))) ? "true" : "false";
 
         return binarySearchTree(numbers);
     }

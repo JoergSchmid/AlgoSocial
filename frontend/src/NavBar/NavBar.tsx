@@ -1,13 +1,12 @@
-import { AppBar, Avatar, Box, Container, IconButton, Toolbar, Tooltip } from "@mui/material"
+import { AppBar, Avatar, Box, Container, IconButton, Toolbar } from "@mui/material"
 import MenuIcon from '@mui/icons-material/Menu';
 import { useEffect, useState } from "react";
-import { LeftLogoWhenBig, NavigationMenuWhenBig, PopupMenuWhenSmall, RightProfileIconMenu, TitleAndLogoWhenSmall } from "./NavBarComponents";
+import { LeftLogoWhenBig, NavigationMenuWhenBig, PopupMenuWhenSmall, TitleAndLogoWhenSmall } from "./NavBarComponents";
 import ToggleThemeButton from "./ToggleThemeButton";
 
 export default function NavBar({ avatar, changePage }: { avatar: string, changePage: (toPage: string) => void }) {
   const [theme, setTheme] = useState<string>("light");
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   function toggleTheme() {
     if (theme === "light") {
@@ -24,16 +23,9 @@ export default function NavBar({ avatar, changePage }: { avatar: string, changeP
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
   };
 
   const handlePageButtonClick = (page: string) => {
@@ -64,12 +56,9 @@ export default function NavBar({ avatar, changePage }: { avatar: string, changeP
           <NavigationMenuWhenBig handlePageButtonClick={handlePageButtonClick} />
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Profile" src={avatar} />
-              </IconButton>
-            </Tooltip>
-            <RightProfileIconMenu anchorElUser={anchorElUser} handleCloseUserMenu={handleCloseUserMenu} />
+            <IconButton sx={{ p: 0 }}>
+              <Avatar alt="Profile" src={avatar} />
+            </IconButton>
           </Box>
         </Toolbar>
       </Container>

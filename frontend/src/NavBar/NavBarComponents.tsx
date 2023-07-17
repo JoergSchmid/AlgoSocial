@@ -2,7 +2,6 @@ import { Avatar, Box, Button, Menu, MenuItem, Typography } from "@mui/material"
 import logo from "../static/images/logo.png"
 
 export const pages = ['Profile', 'Algorithms'];
-const settings = ['Profile', 'Account', 'Logout'];
 
 export function LeftLogoWhenBig() {
     return (
@@ -98,32 +97,5 @@ export function NavigationMenuWhenBig({ handlePageButtonClick }: { handlePageBut
                 </Button>
             ))}
         </Box>
-    );
-}
-
-export function RightProfileIconMenu({ anchorElUser, handleCloseUserMenu }: { anchorElUser: null | HTMLElement, handleCloseUserMenu: (event: React.MouseEvent<HTMLElement>) => void }) {
-    return (
-        <Menu
-            sx={{ mt: '45px' }}
-            id="menu-appbar"
-            anchorEl={anchorElUser}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={Boolean(anchorElUser)}
-            onClose={handleCloseUserMenu}>
-
-            {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-            ))}
-        </Menu>
     );
 }
