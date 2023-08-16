@@ -1,4 +1,3 @@
 Dockerfile
 .dockerignore
 *.db
-./Preview_Pictures
