@@ -1,6 +1,8 @@
 services:
   backend:
     image: algoback
+    ports:
+      - 8080:8080
     volumes:
       - algosocial:/usr/app/db/
 
