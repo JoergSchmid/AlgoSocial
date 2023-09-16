@@ -5,11 +5,8 @@ Post some algorithms with React and Java Spring!
 
 #### Build docker images
 ```
-cd backend
-docker build -t algoback .
-cd ..
-cd frontend
-docker build -t algofront .
+docker build -t algoback ./backend
+docker build -t algofront ./frontend
 ```
 
 #### Start Application
