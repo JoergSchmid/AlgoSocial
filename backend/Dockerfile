@@ -1,4 +1,4 @@
-# Mulit Stage Docker Build according to
+# Multi Stage Docker Build according to
 # https://stackoverflow.com/questions/61108021/gradle-and-docker-how-to-run-a-gradle-build-within-docker-container
 
 # gradle image to use gradle build
